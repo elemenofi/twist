@@ -24,7 +24,7 @@ class Sequence {
     double millisTempo = 60000 / tempo;
     unsigned long lastMillis = 0;
     int ppqn = 0;
-    int m_ppqn = 24;
+    int max_ppqn = 24;
   
   public:
     Sequence (Led* leds[5], boolean state, Piano *piano) {
@@ -46,20 +46,20 @@ class Sequence {
       // 96
 
       if (value < 400) {
-        m_ppqn = 6;
+        max_ppqn = 6;
 
         // ...
         if (ppqn >= 6) {
           ppqn = 0;
         }
       } else if (value >= 400 && value < 800) {
-        m_ppqn = 8;
+        max_ppqn = 8;
 
         if (ppqn >= 8) {
           ppqn = 0;
         }
       } else if (value >= 800 && value <= 1023) {
-        m_ppqn = 12;
+        max_ppqn = 12;
       }
     };
 
@@ -101,7 +101,7 @@ class Sequence {
     void advancePPQN () {
       ++ppqn;
           
-      if (ppqn == m_ppqn) {
+      if (ppqn == max_ppqn) {
         doStep(); 
         ppqn = 0;
       }
@@ -168,8 +168,8 @@ class Sequence {
           break;
 
         case usbMIDI.Clock: // 0xF8
-          Serial.println('clock');
-          Serial.println(m_ppqn);
+          Serial.println("clock");
+          Serial.println(ppqn);
           advancePPQN();
           break;
 

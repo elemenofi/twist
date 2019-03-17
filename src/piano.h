@@ -16,10 +16,12 @@ class Piano {
     // Fourth parameter is the velocity (64 = normal, 127 = fastest).
     void noteOn(byte channel, byte pitch, byte velocity) {
       usbMIDI.sendNoteOn(pitch, velocity, channel);
+      usbMIDI.send_now();
     };
 
     void noteOff(byte channel, byte pitch, byte velocity) {
       usbMIDI.sendNoteOff(pitch, velocity, channel);
+      usbMIDI.send_now();
     };
 
     // First parameter is the event type (0x0B = control change).
