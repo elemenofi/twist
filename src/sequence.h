@@ -38,6 +38,11 @@ class Sequence {
       m_piano = piano;
     };
 
+    void controlPitch (int value, int id) {
+      int newValue = map(value, 0, 1023, 38, 51);
+      m_piano->notes[id] = newValue;
+    };
+
     void controlTempo (int value) {
       // implement internal clock
       // int tempo = map(value, 0, 1023, 60, 280);

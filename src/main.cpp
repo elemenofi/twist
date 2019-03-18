@@ -82,25 +82,27 @@ class Knob {
     uint8_t m_pin;
     int m_value;
     int m_lastValue;
+    int m_id;
     Sequence &m_sequence;
     Knobs m_knobType;
   
   public:
-    Knob (uint8_t pin, Sequence& sequence, Knobs knobType): m_sequence(sequence) {
+    Knob (uint8_t pin, Sequence& sequence, Knobs knobType, int id): m_sequence(sequence) {
       m_pin = pin;
       m_knobType = knobType;
+      m_id = id;
     };
 
     void check () {
       m_value = analogRead(m_pin);
 
       if (m_value != m_lastValue) {
-        // Serial.print("a");
+        m_sequence.controlPitch(m_value, m_id);
         if (m_knobType == TEMPO) {
-          m_sequence.controlTempo(m_value);
+        // m_sequence.controlTempo(m_value);
         } else if (m_knobType == LENGTH) {
         } else if (m_knobType == NOTE) {
-        } else if (m_knobType == MAGIC) {
+        } else if (m_knobType == MAGIC) {  
         }
 
         m_lastValue = m_value;
@@ -132,10 +134,10 @@ Button button4(4, step4pin, *leds[3], sequence1);
 Button button5(5, shiftPin, *leds[4], sequence1);
 Button button6(6, startStopPin, *leds[4], sequence1, true);
 
-Knob knob1(A0, sequence1, TEMPO);
-Knob knob2(A1, sequence1, LENGTH);
-Knob knob3(A2, sequence1, NOTE);
-Knob knob4(A3, sequence1, MAGIC);
+Knob knob1(A0, sequence1, TEMPO, 0);
+Knob knob2(A1, sequence1, LENGTH, 1);
+Knob knob3(A2, sequence1, NOTE, 2);
+Knob knob4(A3, sequence1, MAGIC, 3);
 
 void setup() {
   Serial.begin(9600);
