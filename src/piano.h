@@ -6,7 +6,8 @@
 class Piano {
   private:
     int notes[4] = {38, 41, 45, 51};
-    int activeNote = 38;
+    int activeNote = 0;
+    
   public:
     Piano () {};
     // First parameter is the event type (0x09 = note on, 0x08 = note off).
@@ -32,9 +33,10 @@ class Piano {
       usbMIDI.sendControlChange(control, value, channel);
     };
 
-    void stopStep (int step) {
+    void stopStep () {
+      Serial.println(activeNote);
       noteOff(0, activeNote, 127);
-    }
+    };
 
     void playStep (int step) {
       noteOn(0, notes[step], 127);

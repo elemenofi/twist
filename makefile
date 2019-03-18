@@ -7,12 +7,12 @@
 # Optimize           Faster
 # Keyboard Layout    US English
 #
-# 2019-03-17 22:16
+# 2019-03-18 19:36
 #******************************************************************************
 SHELL            := cmd.exe
 export SHELL
 
-TARGET_NAME      := caribe
+TARGET_NAME      := caribeTY
 BOARD_ID         := TEENSY36
 
 MCU              := mk66fx1m0
@@ -26,7 +26,7 @@ LIBS_LOCAL       :=
 CORE_BASE        := C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3
 GCC_BASE         := C:\PROGRA~2\Arduino\hardware\tools\arm
 UPL_PJRC_B       := C:\PROGRA~2\Arduino\hardware\tools
-UPL_TYCMD_B      := 
+UPL_TYCMD_B      := C:\PROGRA~2\TyTools
 UPL_CLICMD_B     := 
 
 FLAGS_CPU   := -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant

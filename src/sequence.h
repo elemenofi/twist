@@ -70,7 +70,7 @@ class Sequence {
     };
 
     void doStep () {      
-      m_piano->stopStep(m_currentStep);
+      m_piano->stopStep();
       
       if (m_state) {
         m_leds[m_currentStep]->blink();
@@ -123,53 +123,15 @@ class Sequence {
 
     void processMidi () {
       byte type, channel, data1, data2, cable;
-
-      // fetch the MIDI message, defined by these 5 numbers (except SysEX)
-      //
+ 
       type = usbMIDI.getType();       // which MIDI message, 128-255
       channel = usbMIDI.getChannel(); // which MIDI channel, 1-16
       data1 = usbMIDI.getData1();     // first data byte of message, 0-127
       data2 = usbMIDI.getData2();     // second data byte of message, 0-127
       cable = usbMIDI.getCable();     // which virtual cable with MIDIx8, 0-7
 
-      // uncomment if using multiple virtual cables
-      //Serial.print("cable ");
-      //Serial.print(cable, DEC);
-      //Serial.print(": ");
-
-      // print info about the message
-      //
       switch (type) {
-        case usbMIDI.NoteOff: // 0x80
-          Serial.print("Note Off, ch=");
-          Serial.print(channel, DEC);
-          Serial.print(", note=");
-          Serial.print(data1, DEC);
-          Serial.print(", velocity=");
-          Serial.println(data2, DEC);
-          break;
-
-        case usbMIDI.NoteOn: // 0x90
-          Serial.print("Note On, ch=");
-          Serial.print(channel, DEC);
-          Serial.print(", note=");
-          Serial.print(data1, DEC);
-          Serial.print(", velocity=");
-          Serial.println(data2, DEC);
-          break;
-
-        case usbMIDI.ControlChange: // 0xB0
-          Serial.print("Control Change, ch=");
-          Serial.print(channel, DEC);
-          Serial.print(", control=");
-          Serial.print(data1, DEC);
-          Serial.print(", value=");
-          Serial.println(data2, DEC);
-          break;
-
-        case usbMIDI.Clock: // 0xF8
-          Serial.println("clock");
-          Serial.println(ppqn);
+        case usbMIDI.Clock: // 0xF8 
           advancePPQN();
           break;
 
