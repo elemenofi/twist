@@ -35,14 +35,12 @@ class Piano {
     };
 
     void stopStep () {
-      Serial.println(activeNote);
       noteOff(0, activeNote, 127);
     };
 
     void playStep (int step) {
       noteOn(0, notes[step], 127);
       activeNote = notes[step];
-      Serial.println(activeNote);
     };
 };
 

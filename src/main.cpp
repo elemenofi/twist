@@ -6,7 +6,6 @@
 class Button {
   private:
     int m_id;
-    int m_pin;
     int m_state;
     int m_lastState;
     int m_reading;
@@ -16,6 +15,7 @@ class Button {
     Sequence &m_sequence;
 
   public:
+    int m_pin;
     Button ();
     Button (
       int id,
@@ -63,8 +63,6 @@ class Button {
       boolean debounced = debounce(m_reading);
 
       if (debounced) {
-        Serial.println("Clicked button");
-        Serial.println(m_id);
         onClick();
       }
  
@@ -95,11 +93,14 @@ class Knob {
       m_id = id;
     };
 
-    void check () {
+    void check (uint8_t shiftReading = LOW) {
       m_value = analogRead(m_pin);
 
       if (m_value != m_lastValue) {
-        m_sequence.controlPitch(m_value, m_id);
+        if (shiftReading == HIGH) {
+        } else {
+          m_sequence.controlPitch(m_value, m_id);
+        }
         if (m_knobType == TEMPO) {
         // m_sequence.controlTempo(m_value);
         } else if (m_knobType == LENGTH) {
@@ -155,14 +156,14 @@ void loop() {
   button3.check();
   button4.check();
   button5.check();
-  button6.check();
+  // button6.check();
   led1.check();
   led2.check();
   led3.check();
   led4.check();
   led5.check();
-  knob1.check();
-  knob2.check();
-  knob3.check();
-  knob4.check();
+  knob1.check(digitalRead(button5.m_pin));
+  knob2.check(digitalRead(button5.m_pin));
+  knob3.check(digitalRead(button5.m_pin));
+  knob4.check(digitalRead(button5.m_pin));
 }
