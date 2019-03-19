@@ -98,6 +98,7 @@ class Knob {
 
       if (m_value != m_lastValue) {
         if (shiftReading == HIGH) {
+          m_sequence.controlVelocity(m_value, m_id);
         } else {
           m_sequence.controlPitch(m_value, m_id);
         }

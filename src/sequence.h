@@ -39,8 +39,13 @@ class Sequence {
     };
 
     void controlPitch (int value, int id) {
-      int newValue = map(value, 0, 1023, 38, 51);
+      int newValue = map(value, 0, 1023, 51, 38);
       m_piano->notes[id] = newValue;
+    };
+
+    void controlVelocity (int value, int id) {
+      int newValue = map(value, 0, 1023, 127, 0);
+      m_piano->notesVelocities[id] = newValue;
     };
 
     void controlTempo (int value) {

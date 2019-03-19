@@ -11,6 +11,8 @@ class Piano {
     Piano () {};
     
     int notes[4] = {38, 41, 45, 51};
+    int notesVelocities[4] = {100, 100, 100, 100};
+
     // First parameter is the event type (0x09 = note on, 0x08 = note off).
     // Second parameter is note-on/note-off, combined with the channel.
     // Channel can be anything between 0-15. Typically reported to the user as 1-16.
@@ -39,7 +41,7 @@ class Piano {
     };
 
     void playStep (int step) {
-      noteOn(0, notes[step], 127);
+      noteOn(0, notes[step], notesVelocities[step]);
       activeNote = notes[step];
     };
 };
