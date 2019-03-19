@@ -4,6 +4,13 @@
 #include "led.h"
 #include <cstdlib>
 
+enum Modes {
+  PITCH,
+  VELOCITY,
+};
+
+Modes globalMode = PITCH;
+
 class Button {
   private:
     int m_id;
@@ -17,6 +24,7 @@ class Button {
 
   public:
     int m_pin;
+    Modes m_mode;
     Button ();
     Button (
       int id,
@@ -28,14 +36,19 @@ class Button {
       m_id = id;
       m_pin = pin;
       m_startStop = startStop;
+      m_mode = VELOCITY;
 
       pinMode(pin, INPUT);
     };
 
     void onClick () {
       if (m_state == LOW && m_startStop) {
-        m_led.toggle();
-        m_sequence.toggle();
+        if (globalMode == PITCH) {
+          globalMode = VELOCITY;
+        } else if (globalMode == VELOCITY) {
+          globalMode = PITCH;
+        }
+
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.toggleStep(m_id - 1);
@@ -78,6 +91,7 @@ enum Knobs {
   NOTE,
 };
 
+
 class Knob {
   private:
     uint8_t m_pin;
@@ -94,23 +108,18 @@ class Knob {
       m_id = id;
     };
 
-    void check (uint8_t shiftReading = LOW) {
+    void check () {
       m_value = analogRead(m_pin);
 
-      // if (m_pin == A1) {
-        // Serial.println(m_value);
-      // }
+
       int diff = std::abs(m_value - m_lastValue);
-
-
       if (m_value != m_lastValue && diff > 10) {
-        if (shiftReading == HIGH) {
-          Serial.println("with");
+        if (globalMode == VELOCITY) {
           m_sequence.controlVelocity(m_value, m_id);
-        } else {
-          Serial.println("without");
+        } else if (globalMode == PITCH) {
           m_sequence.controlPitch(m_value, m_id);
         }
+
         if (m_knobType == TEMPO) {
         // m_sequence.controlTempo(m_value);
         } else if (m_knobType == LENGTH) {
@@ -173,8 +182,8 @@ void loop() {
   led3.check();
   led4.check();
   led5.check();
-  knob1.check(digitalRead(button5.m_pin));
-  knob2.check(digitalRead(button5.m_pin));
-  knob3.check(digitalRead(button5.m_pin));
-  knob4.check(digitalRead(button5.m_pin));
+  knob1.check();
+  knob2.check();
+  knob3.check();
+  knob4.check();
 }

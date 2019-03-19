@@ -44,7 +44,8 @@ class Sequence {
     };
 
     void controlVelocity (int value, int id) {
-      int newValue = map(value, 0, 1023, 127, 0);
+      int newValue = map(value, 0, 1023, 127, 63);
+      Serial.println(newValue);
       m_piano->notesVelocities[id] = newValue;
     };
 
