@@ -153,7 +153,7 @@ Button button1(1, step1pin, *leds[0], sequence1);
 Button button2(2, step2pin, *leds[1], sequence1);
 Button button3(3, step3pin, *leds[2], sequence1);
 Button button4(4, step4pin, *leds[3], sequence1);
-Button button5(5, shiftPin, *leds[4], sequence1);
+Button button5(5, shiftPin, *leds[4], sequence1, true);
 Button button6(6, startStopPin, *leds[4], sequence1, true);
 
 Knob knob1(A0, sequence1, TEMPO, 0);
