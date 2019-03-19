@@ -63,6 +63,8 @@ class Button {
       boolean debounced = debounce(m_reading);
 
       if (debounced) {
+        Serial.println("Clicked button");
+        Serial.println(m_id);
         onClick();
       }
  
@@ -121,7 +123,7 @@ Led led1(3, LOW);
 Led led2(5, LOW);
 Led led3(7, LOW);
 Led led4(9, LOW);
-Led led5(13, LOW);
+Led led5(11, LOW);
 
 Led* leds[5] = {&led1, &led2, &led3, &led4, &led5};
 Piano piano;
