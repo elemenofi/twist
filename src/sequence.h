@@ -121,14 +121,14 @@ class Sequence {
       m_state = true;
       ppqn = 0;
       doStep();
-      m_leds[4]->toggle();
+      digitalWrite(13, HIGH);
     };
 
     void stopPPQN () {
       m_state = false;
       ppqn = 0;
       m_currentStep = 0;
-      m_leds[4]->toggle();
+      digitalWrite(13, LOW);
     };
 
     void processMidi () {

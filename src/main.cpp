@@ -2,6 +2,7 @@
 #include "sequence.h"
 #include "piano.h"
 #include "led.h"
+#include <cstdlib>
 
 class Button {
   private:
@@ -96,10 +97,18 @@ class Knob {
     void check (uint8_t shiftReading = LOW) {
       m_value = analogRead(m_pin);
 
-      if (m_value != m_lastValue) {
+      // if (m_pin == A1) {
+        // Serial.println(m_value);
+      // }
+      int diff = std::abs(m_value - m_lastValue);
+
+
+      if (m_value != m_lastValue && diff > 10) {
         if (shiftReading == HIGH) {
+          Serial.println("with");
           m_sequence.controlVelocity(m_value, m_id);
         } else {
+          Serial.println("without");
           m_sequence.controlPitch(m_value, m_id);
         }
         if (m_knobType == TEMPO) {
@@ -144,6 +153,7 @@ Knob knob3(A2, sequence1, NOTE, 2);
 Knob knob4(A3, sequence1, MAGIC, 3);
 
 void setup() {
+  pinMode(13, OUTPUT);
   Serial.begin(9600);
 }
 
