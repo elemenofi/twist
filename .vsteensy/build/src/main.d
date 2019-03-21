@@ -36,6 +36,4 @@
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/elapsedMillis.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/Arduino.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/IntervalTimer.h \
- src/sequence.h src/piano.h \
- C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/usb_midi.h \
- src/led.h
+ src/sequence.h src/led.h

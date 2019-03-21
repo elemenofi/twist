@@ -1,7 +1,6 @@
 #ifndef sequence_h
 #define sequence_h
 
-#include "piano.h"
 #include "led.h"
 
 class Step {
@@ -17,7 +16,6 @@ class Sequence {
   private:
     Led* m_leds[5];
     Step m_steps[4];
-    Piano* m_piano;
     boolean m_state;
     int m_currentStep;
     int tempo = 120;
@@ -25,9 +23,13 @@ class Sequence {
     unsigned long lastMillis = 0;
     int ppqn = 0;
     int max_ppqn = 24;
+    int activeNote = 0;
+    int notes[4] = {38, 41, 45, 51};
+    int notesVelocities[4] = {100, 100, 100, 100};
+    int notesLengths[4] = {1, 1, 1, 1};
   
   public:
-    Sequence (Led* leds[5], boolean state, Piano *piano) {
+    Sequence (Led* leds[5], boolean state) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];
       m_leds[2] = leds[2];
@@ -35,30 +37,27 @@ class Sequence {
       m_leds[4] = leds[4];
       m_state = state;
       m_currentStep = 0;
-      m_piano = piano;
+    };
+
+    void controlLength (int value, int id) {
+      int newValue = map(value, 0, 1023, 4, 1);
+      notesLengths[id] = newValue;
     };
 
     void controlPitch (int value, int id) {
       int newValue = map(value, 0, 1023, 51, 38);
-      m_piano->notes[id] = newValue;
+      notes[id] = newValue;
     };
 
     void controlVelocity (int value, int id) {
       int newValue = map(value, 0, 1023, 127, 63);
-      m_piano->notesVelocities[id] = newValue;
+      notesVelocities[id] = newValue;
     };
 
     void controlTempo (int value) {
-      // implement internal clock
-      // int tempo = map(value, 0, 1023, 60, 280);
-      // Serial.println(tempo);
-      // millisTempo = 60000 / tempo;
-      // 96
-
       if (value < 400) {
         max_ppqn = 6;
 
-        // ...
         if (ppqn >= 6) {
           ppqn = 0;
         }
@@ -79,15 +78,12 @@ class Sequence {
       return num;
     };
 
-    void doStep () {      
-      m_piano->stopStep();
-      
+    void doStep () {  
       if (m_state) {
         m_leds[m_currentStep]->blink();
 
-
         if (m_steps[m_currentStep].m_state) {
-          m_piano->playStep(m_currentStep);
+          playStep(m_currentStep);
         }
 
         m_currentStep++;
@@ -96,8 +92,6 @@ class Sequence {
           m_currentStep = 0;
         }
       }
-
-      lastMillis = millis();
     };
 
     void toggle () {
@@ -110,7 +104,13 @@ class Sequence {
 
     void advancePPQN () {
       ++ppqn;
-          
+      if (ppqn) {
+        // here i have to check the note length
+        // of the active note to see if i do the stop step
+        stopStep();
+      }
+
+
       if (ppqn == max_ppqn) {
         doStep(); 
         ppqn = 0;
@@ -167,6 +167,38 @@ class Sequence {
         size = size - 1;
       }
     }
+
+    // First parameter is the event type (0x09 = note on, 0x08 = note off).
+    // Second parameter is note-on/note-off, combined with the channel.
+    // Channel can be anything between 0-15. Typically reported to the user as 1-16.
+    // Third parameter is the note number (48 = middle C).
+    // Fourth parameter is the velocity (64 = normal, 127 = fastest).
+    void noteOn(byte channel, byte pitch, byte velocity) {
+      usbMIDI.sendNoteOn(pitch, velocity, channel);
+      usbMIDI.send_now();
+    };
+
+    void noteOff(byte channel, byte pitch, byte velocity) {
+      usbMIDI.sendNoteOff(pitch, velocity, channel);
+      usbMIDI.send_now();
+    };
+
+    // First parameter is the event type (0x0B = control change).
+    // Second parameter is the event type, combined with the channel.
+    // Third parameter is the control number number (0-119).
+    // Fourth parameter is the control value (0-127).
+    void controlChange (byte channel, byte control, byte value) {
+      usbMIDI.sendControlChange(control, value, channel);
+    };
+
+    void stopStep () {
+      noteOff(0, activeNote, 127);
+    };
+
+    void playStep (int step) {
+      noteOn(0, notes[step], notesVelocities[step]);
+      activeNote = notes[step];
+    };
 };
 
 #endif

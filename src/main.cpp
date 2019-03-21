@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "sequence.h"
-#include "piano.h"
 #include "led.h"
 #include <cstdlib>
 
@@ -132,13 +131,18 @@ class Knob {
           if (m_knobType == FIRST) {
             m_sequence.controlTempo(m_value);
           } else if (m_knobType == SECOND) {
+            
           } else if (m_knobType == THIRD) {
           } else if (m_knobType == FOURTH) {  
+            // delay
+            // transpose
           }
         } else if (currentMode == VELOCITY) {
           m_sequence.controlVelocity(m_value, m_id);
         } else if (currentMode == PITCH) {
           m_sequence.controlPitch(m_value, m_id);
+        } else if (currentMode == PITCH) {
+          m_sequence.controlLength(m_value, m_id);
         }
 
         m_lastValue = m_value;
@@ -160,8 +164,7 @@ Led led4(9, LOW);
 Led led5(11, LOW);
 
 Led* leds[5] = {&led1, &led2, &led3, &led4, &led5};
-Piano piano;
-Sequence sequence1(leds, false, &piano);
+Sequence sequence1(leds, false);
 
 Button button1(1, step1pin, *leds[0], sequence1);
 Button button2(2, step2pin, *leds[1], sequence1);
