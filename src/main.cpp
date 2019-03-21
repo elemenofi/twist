@@ -8,7 +8,7 @@ enum Modes {
   GLOBAL,
   PITCH,
   VELOCITY,
-  LENGTH,
+  NOTELENGTH,
   SWING,
   CHORD,
   ARP,
@@ -17,10 +17,10 @@ enum Modes {
 };
 
 enum Knobs {
-  TEMPO,
-  NOTELENGTH,
-  MAGIC,
-  NOTE,
+  FIRST,
+  SECOND,
+  THIRD,
+  FOURTH,
 };
 
 Modes currentMode = GLOBAL;
@@ -57,19 +57,19 @@ class Button {
 
     void onClick () {
       if (m_state == LOW && m_startStop) {
-        // NOTELENGTH
-        // SWING
-
         if (currentMode == GLOBAL) {
           currentMode = PITCH;
+          Serial.println("PITCH");
         } else if (currentMode == PITCH) {
           currentMode = VELOCITY;
+          Serial.println("VELOCITY");
         } else if (currentMode == VELOCITY) {
-          currentMode = LENGTH;
-        } else if (currentMode == LENGTH) {
+          currentMode = NOTELENGTH;
+          Serial.println("NOTELENGTH");
+        } else if (currentMode == NOTELENGTH) {
           currentMode = GLOBAL;
+          Serial.println("GLOBAL");
         }
-
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.toggleStep(m_id - 1);
@@ -124,20 +124,21 @@ class Knob {
     void check () {
       m_value = analogRead(m_pin);
 
-
+      // "filter"
       int diff = std::abs(m_value - m_lastValue);
+
       if (m_value != m_lastValue && diff > 10) {
-        if (currentMode == VELOCITY) {
+        if (currentMode == GLOBAL) {
+          if (m_knobType == FIRST) {
+            m_sequence.controlTempo(m_value);
+          } else if (m_knobType == SECOND) {
+          } else if (m_knobType == THIRD) {
+          } else if (m_knobType == FOURTH) {  
+          }
+        } else if (currentMode == VELOCITY) {
           m_sequence.controlVelocity(m_value, m_id);
         } else if (currentMode == PITCH) {
           m_sequence.controlPitch(m_value, m_id);
-        }
-
-        if (m_knobType == TEMPO) {
-          m_sequence.controlTempo(m_value);
-        } else if (m_knobType == LENGTH) {
-        } else if (m_knobType == NOTE) {
-        } else if (m_knobType == MAGIC) {  
         }
 
         m_lastValue = m_value;
@@ -169,10 +170,10 @@ Button button4(4, step4pin, *leds[3], sequence1);
 Button button5(5, shiftPin, *leds[4], sequence1, true);
 Button button6(6, startStopPin, *leds[4], sequence1, true);
 
-Knob knob1(A0, sequence1, TEMPO, 0);
-Knob knob2(A1, sequence1, NOTELENGTH, 1);
-Knob knob3(A2, sequence1, NOTE, 2);
-Knob knob4(A3, sequence1, MAGIC, 3);
+Knob knob1(A0, sequence1, FIRST, 0);
+Knob knob2(A1, sequence1, SECOND, 1);
+Knob knob3(A2, sequence1, THIRD, 2);
+Knob knob4(A3, sequence1, FOURTH, 3);
 
 void setup() {
   pinMode(13, OUTPUT);
