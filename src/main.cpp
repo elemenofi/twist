@@ -5,11 +5,25 @@
 #include <cstdlib>
 
 enum Modes {
+  GLOBAL,
   PITCH,
   VELOCITY,
+  LENGTH,
+  SWING,
+  CHORD,
+  ARP,
+  RANDOM,
+  SCALE,
 };
 
-Modes globalMode = PITCH;
+enum Knobs {
+  TEMPO,
+  NOTELENGTH,
+  MAGIC,
+  NOTE,
+};
+
+Modes currentMode = GLOBAL;
 
 class Button {
   private:
@@ -36,17 +50,24 @@ class Button {
       m_id = id;
       m_pin = pin;
       m_startStop = startStop;
-      m_mode = VELOCITY;
+      m_mode = GLOBAL;
 
       pinMode(pin, INPUT);
     };
 
     void onClick () {
       if (m_state == LOW && m_startStop) {
-        if (globalMode == PITCH) {
-          globalMode = VELOCITY;
-        } else if (globalMode == VELOCITY) {
-          globalMode = PITCH;
+        // NOTELENGTH
+        // SWING
+
+        if (currentMode == GLOBAL) {
+          currentMode = PITCH;
+        } else if (currentMode == PITCH) {
+          currentMode = VELOCITY;
+        } else if (currentMode == VELOCITY) {
+          currentMode = LENGTH;
+        } else if (currentMode == LENGTH) {
+          currentMode = GLOBAL;
         }
 
       } else if (m_state == LOW) {
@@ -84,14 +105,6 @@ class Button {
     };
 };
 
-enum Knobs {
-  TEMPO,
-  LENGTH,
-  MAGIC,
-  NOTE,
-};
-
-
 class Knob {
   private:
     uint8_t m_pin;
@@ -114,14 +127,14 @@ class Knob {
 
       int diff = std::abs(m_value - m_lastValue);
       if (m_value != m_lastValue && diff > 10) {
-        if (globalMode == VELOCITY) {
+        if (currentMode == VELOCITY) {
           m_sequence.controlVelocity(m_value, m_id);
-        } else if (globalMode == PITCH) {
+        } else if (currentMode == PITCH) {
           m_sequence.controlPitch(m_value, m_id);
         }
 
         if (m_knobType == TEMPO) {
-        // m_sequence.controlTempo(m_value);
+          m_sequence.controlTempo(m_value);
         } else if (m_knobType == LENGTH) {
         } else if (m_knobType == NOTE) {
         } else if (m_knobType == MAGIC) {  
@@ -157,7 +170,7 @@ Button button5(5, shiftPin, *leds[4], sequence1, true);
 Button button6(6, startStopPin, *leds[4], sequence1, true);
 
 Knob knob1(A0, sequence1, TEMPO, 0);
-Knob knob2(A1, sequence1, LENGTH, 1);
+Knob knob2(A1, sequence1, NOTELENGTH, 1);
 Knob knob3(A2, sequence1, NOTE, 2);
 Knob knob4(A3, sequence1, MAGIC, 3);
 
@@ -176,7 +189,6 @@ void loop() {
   button3.check();
   button4.check();
   button5.check();
-  // button6.check();
   led1.check();
   led2.check();
   led3.check();
