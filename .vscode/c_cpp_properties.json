@@ -5,19 +5,9 @@
       "includePath": [
         "src/**",
         "lib/**",
-        "C:\\Users\\manue\\Documents\\Arduino\\libraries\\",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\teensy\\avr\\cores\\usb_midi",
         "${workspaceRoot}",
         "C:/Program Files (x86)/Arduino/hardware/teensy/avr/cores/teensy3/**",
-        "C:/Users/manue/Documents/Arduino/libraries/**",
-        "C:\\Program Files (x86)\\Arduino\\tools\\",
-        "C:\\Program Files (x86)\\Arduino\\tools\\**",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
-        "${workspaceRoot}",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\lib\\gcc\\avr\\4.9.2\\include",
-        "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\mega"
+        "C:/Users/manue/Documents/Arduino/libraries/**"
       ],
       "forcedInclude": [
         "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"

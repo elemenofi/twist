@@ -2,6 +2,7 @@
 #define sequence_h
 
 #include "led.h"
+#include "definitions.h"
 
 class Step {
   public:

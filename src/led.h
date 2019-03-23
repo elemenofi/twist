@@ -1,6 +1,8 @@
 #ifndef led_h
 #define led_h
 
+#include "definitions.h"
+
 class Led {
   private:
     int m_pin;
@@ -26,9 +28,6 @@ class Led {
 
     void toggle () {
       m_state = !m_state;
-
-      Serial.print("Toggling led");
-      Serial.print(m_pin);
 
       digitalWrite(m_pin, m_state); 
     };
