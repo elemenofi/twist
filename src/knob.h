@@ -20,30 +20,36 @@ class Knob {
       m_id = id;
     };
 
+    void onChange () {
+      if (currentMode == GLOBAL) {
+        if (m_knobType == FIRST) {
+          m_sequence.controlTempo(m_value);
+        } else if (m_knobType == SECOND) {
+          
+        } else if (m_knobType == THIRD) {
+        } else if (m_knobType == FOURTH) {  
+          // delay
+          // transpose
+        }
+      } else if (currentMode == VELOCITY) {
+        m_sequence.controlVelocity(m_value, m_id);
+      } else if (currentMode == PITCH) {
+        m_sequence.controlPitch(m_value, m_id);
+      } else if (currentMode == PITCH) {
+        m_sequence.controlLength(m_value, m_id);
+      }
+    }
+
     void check () {
       m_value = analogRead(m_pin);
 
       // "filter"
       int diff = abs(m_value - m_lastValue);
 
-      if (m_value != m_lastValue && diff > 10) {
-        if (currentMode == GLOBAL) {
-          if (m_knobType == FIRST) {
-            m_sequence.controlTempo(m_value);
-          } else if (m_knobType == SECOND) {
-            
-          } else if (m_knobType == THIRD) {
-          } else if (m_knobType == FOURTH) {  
-            // delay
-            // transpose
-          }
-        } else if (currentMode == VELOCITY) {
-          m_sequence.controlVelocity(m_value, m_id);
-        } else if (currentMode == PITCH) {
-          m_sequence.controlPitch(m_value, m_id);
-        } else if (currentMode == PITCH) {
-          m_sequence.controlLength(m_value, m_id);
-        }
+      const boolean isChanging = m_value != m_lastValue && diff > 10;
+
+      if (isChanging) {
+        onChange();
 
         m_lastValue = m_value;
       }

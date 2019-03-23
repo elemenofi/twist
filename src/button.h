@@ -35,24 +35,28 @@ class Button {
 
     void onClick () {
       if (m_state == LOW && m_startStop) {
-        if (currentMode == GLOBAL) {
-          currentMode = PITCH;
-          Serial.println("PITCH");
-        } else if (currentMode == PITCH) {
-          currentMode = VELOCITY;
-          Serial.println("VELOCITY");
-        } else if (currentMode == VELOCITY) {
-          currentMode = NOTELENGTH;
-          Serial.println("NOTELENGTH");
-        } else if (currentMode == NOTELENGTH) {
-          currentMode = GLOBAL;
-          Serial.println("GLOBAL");
-        }
+        toggleGlobalMode();
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.toggleStep(m_id - 1);
       } 
     };
+
+    void toggleGlobalMode() {
+      if (currentMode == GLOBAL) {
+        currentMode = PITCH;
+        Serial.println("PITCH");
+      } else if (currentMode == PITCH) {
+        currentMode = VELOCITY;
+        Serial.println("VELOCITY");
+      } else if (currentMode == VELOCITY) {
+        currentMode = NOTELENGTH;
+        Serial.println("NOTELENGTH");
+      } else if (currentMode == NOTELENGTH) {
+        currentMode = GLOBAL;
+        Serial.println("GLOBAL");
+      }
+    }
 
     boolean debounce (int reading) {
       if (reading != m_lastState) {  

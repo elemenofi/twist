@@ -43,6 +43,7 @@ class Sequence {
     void controlLength (int value, int id) {
       int newValue = map(value, 0, 1023, 4, 1);
       notesLengths[id] = newValue;
+      Serial.println(newValue);
     };
 
     void controlPitch (int value, int id) {
@@ -79,6 +80,15 @@ class Sequence {
       return num;
     };
 
+    void stopStep () {
+      noteOff(0, activeNote, 127);
+    };
+
+    void playStep (int step) {
+      noteOn(0, notes[step], notesVelocities[step]);
+      activeNote = notes[step];
+    };
+
     void doStep () {  
       if (m_state) {
         m_leds[m_currentStep]->blink();
@@ -101,35 +111,6 @@ class Sequence {
 
     void toggleStep (int id) {
       m_steps[id].m_state = !m_steps[id].m_state;
-    };
-
-    void advancePPQN () {
-      ++ppqn;
-      if (ppqn) {
-        // here i have to check the note length
-        // of the active note to see if i do the stop step
-        stopStep();
-      }
-
-
-      if (ppqn == max_ppqn) {
-        doStep(); 
-        ppqn = 0;
-      }
-    };
-
-    void startPPQN () {
-      m_state = true;
-      ppqn = 0;
-      doStep();
-      digitalWrite(13, HIGH);
-    };
-
-    void stopPPQN () {
-      m_state = false;
-      ppqn = 0;
-      m_currentStep = 0;
-      digitalWrite(13, LOW);
     };
 
     void processMidi () {
@@ -158,6 +139,35 @@ class Sequence {
           Serial.println("Opps, an unknown MIDI message type!");
       }
     }
+
+     void advancePPQN () {
+      ++ppqn;
+      if (ppqn >= notesLengths[m_currentStep]) {
+        // here i have to check the note length
+        // of the active note to see if i do the stop step
+        stopStep();
+      }
+
+
+      if (ppqn == max_ppqn) {
+        doStep(); 
+        ppqn = 0;
+      }
+    };
+
+    void startPPQN () {
+      m_state = true;
+      ppqn = 0;
+      doStep();
+      digitalWrite(13, HIGH);
+    };
+
+    void stopPPQN () {
+      m_state = false;
+      ppqn = 0;
+      m_currentStep = 0;
+      digitalWrite(13, LOW);
+    };
 
     void printBytes(const byte *data, unsigned int size) {
       while (size > 0) {
@@ -190,15 +200,6 @@ class Sequence {
     // Fourth parameter is the control value (0-127).
     void controlChange (byte channel, byte control, byte value) {
       usbMIDI.sendControlChange(control, value, channel);
-    };
-
-    void stopStep () {
-      noteOff(0, activeNote, 127);
-    };
-
-    void playStep (int step) {
-      noteOn(0, notes[step], notesVelocities[step]);
-      activeNote = notes[step];
     };
 };
 
