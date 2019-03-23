@@ -35,7 +35,7 @@ class Knob {
         m_sequence.controlVelocity(m_value, m_id);
       } else if (currentMode == PITCH) {
         m_sequence.controlPitch(m_value, m_id);
-      } else if (currentMode == PITCH) {
+      } else if (currentMode == NOTELENGTH) {
         m_sequence.controlLength(m_value, m_id);
       }
     }

@@ -41,9 +41,8 @@ class Sequence {
     };
 
     void controlLength (int value, int id) {
-      int newValue = map(value, 0, 1023, 4, 1);
+      int newValue = map(value, 0, 1023, max_ppqn, 1);
       notesLengths[id] = newValue;
-      Serial.println(newValue);
     };
 
     void controlPitch (int value, int id) {
@@ -81,7 +80,7 @@ class Sequence {
     };
 
     void stopStep () {
-      noteOff(0, activeNote, 127);
+      controlChange(0, 123, 127);
     };
 
     void playStep (int step) {
@@ -142,6 +141,7 @@ class Sequence {
 
      void advancePPQN () {
       ++ppqn;
+
       if (ppqn >= notesLengths[m_currentStep]) {
         // here i have to check the note length
         // of the active note to see if i do the stop step
