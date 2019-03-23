@@ -80,6 +80,7 @@ class Sequence {
     };
 
     void stopStep () {
+      // implement polyphony
       controlChange(0, 123, 127);
     };
 
