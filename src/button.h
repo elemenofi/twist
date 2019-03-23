@@ -9,7 +9,7 @@ class Button {
     int m_state;
     int m_lastState;
     int m_reading;
-    boolean m_startStop;
+    boolean m_shiftButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
     Sequence &m_sequence;
@@ -23,18 +23,18 @@ class Button {
       int pin, 
       Led& led,
       Sequence& sequence,
-      boolean startStop = false
+      boolean shiftButton = false
     ): m_led(led), m_sequence(sequence) {
       m_id = id;
       m_pin = pin;
-      m_startStop = startStop;
+      m_shiftButton = shiftButton;
       m_mode = GLOBAL;
 
       pinMode(pin, INPUT);
     };
 
     void onClick () {
-      if (m_state == LOW && m_startStop) {
+      if (m_state == LOW && m_shiftButton) {
         toggleGlobalMode();
       } else if (m_state == LOW) {
         m_led.toggle();

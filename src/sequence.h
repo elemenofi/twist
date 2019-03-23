@@ -15,7 +15,7 @@ class Step {
 
 class Sequence {
   private:
-    Led* m_leds[5];
+    Led* m_leds[6];
     Step m_steps[4];
     boolean m_state;
     int m_currentStep;
@@ -36,6 +36,7 @@ class Sequence {
       m_leds[2] = leds[2];
       m_leds[3] = leds[3];
       m_leds[4] = leds[4];
+      m_leds[5] = leds[5];
       m_state = state;
       m_currentStep = 0;
     };
@@ -79,6 +80,7 @@ class Sequence {
       return num;
     };
 
+    // move step function to step class
     void stopStep () {
       // implement polyphony
       controlChange(0, 123, 127);
@@ -113,6 +115,7 @@ class Sequence {
       m_steps[id].m_state = !m_steps[id].m_state;
     };
 
+    // move midi to midi class
     void processMidi () {
       byte type, channel, data1, data2, cable;
  
@@ -160,14 +163,14 @@ class Sequence {
       m_state = true;
       ppqn = 0;
       doStep();
-      digitalWrite(13, HIGH);
+      m_leds[5]->toggle();
     };
 
     void stopPPQN () {
       m_state = false;
       ppqn = 0;
       m_currentStep = 0;
-      digitalWrite(13, LOW);
+      m_leds[5]->toggle();
     };
 
     void printBytes(const byte *data, unsigned int size) {
