@@ -43,18 +43,24 @@ class Button {
     };
 
     void toggleGlobalMode() {
+      m_led.blink();
+      
       if (currentMode == GLOBAL) {
         currentMode = PITCH;
         Serial.println("PITCH");
+        m_sequence.m_leds[0]->blink(3);
       } else if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
+        m_sequence.m_leds[1]->blink(3);
       } else if (currentMode == VELOCITY) {
         currentMode = NOTELENGTH;
         Serial.println("NOTELENGTH");
+        m_sequence.m_leds[2]->blink(3);
       } else if (currentMode == NOTELENGTH) {
         currentMode = GLOBAL;
         Serial.println("GLOBAL");
+        m_sequence.m_leds[3]->blink(3);
       }
     }
 

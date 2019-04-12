@@ -15,7 +15,6 @@ class Step {
 
 class Sequence {
   private:
-    Led* m_leds[6];
     Step m_steps[4];
     boolean m_state;
     int m_currentStep;
@@ -30,6 +29,7 @@ class Sequence {
     int notesLengths[4] = {1, 1, 1, 1};
   
   public:
+    Led* m_leds[6];
     Sequence (Led* leds[5], boolean state) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];

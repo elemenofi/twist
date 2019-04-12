@@ -12,6 +12,7 @@ class Led {
     boolean blinking = false;
   
   public:
+    int blinkingCounter;
     Led (int pin = 0, int state = LOW) {
       m_pin = pin;
       m_state = state;
@@ -20,9 +21,10 @@ class Led {
       digitalWrite(m_pin, m_state);
     };
 
-    void blink () {
+    void blink (int times = 0) {
       digitalWrite(m_pin, !digitalRead(m_pin));
       blinking = true;
+      blinkingCounter = times;
       lastBlink = millis();  
     };
 
@@ -32,11 +34,18 @@ class Led {
       digitalWrite(m_pin, m_state); 
     };
 
-    void check () {
-      if (blinking) {
-        if (millis() - lastBlink > blinkLength) {
-          digitalWrite(m_pin, !digitalRead(m_pin));
-          blinking = false;
+    int check () {
+      if (!blinking) {
+        return 0;
+      }
+      
+      if (millis() - lastBlink > blinkLength) {
+        digitalWrite(m_pin, !digitalRead(m_pin));
+        blinking = false;
+
+        if (blinkingCounter > 0) {
+          blink();
+          blinkingCounter--;
         }
       }
     };
