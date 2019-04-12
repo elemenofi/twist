@@ -10,6 +10,7 @@ class Button {
     int m_lastState;
     int m_reading;
     boolean m_shiftButton;
+    boolean m_playButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
     Sequence &m_sequence;
@@ -23,11 +24,13 @@ class Button {
       int pin, 
       Led& led,
       Sequence& sequence,
-      boolean shiftButton = false
+      boolean shiftButton = false,
+      boolean playButton = false
     ): m_led(led), m_sequence(sequence) {
       m_id = id;
       m_pin = pin;
       m_shiftButton = shiftButton;
+      m_playButton = playButton;
       m_mode = GLOBAL;
 
       pinMode(pin, INPUT);
@@ -36,13 +39,20 @@ class Button {
     void onClick () {
       if (m_state == LOW && m_shiftButton) {
         toggleGlobalMode();
+      } else if (m_state == LOW && m_playButton) {
+        m_led.toggle();
+        play();
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.toggleStep(m_id - 1);
       } 
-    };
+    }
 
-    void toggleGlobalMode() {
+    void play () {
+      Serial.println("Play");
+    }
+
+    void toggleGlobalMode () {
       m_led.blink();
       
       if (currentMode == GLOBAL) {
