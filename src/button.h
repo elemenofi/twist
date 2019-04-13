@@ -17,8 +17,9 @@ class Button {
 
   public:
     int m_pin;
-    Modes m_mode;
+
     Button ();
+    
     Button (
       int id,
       int pin, 
@@ -31,7 +32,6 @@ class Button {
       m_pin = pin;
       m_shiftButton = shiftButton;
       m_playButton = playButton;
-      m_mode = GLOBAL;
 
       pinMode(pin, INPUT);
     };
@@ -39,7 +39,7 @@ class Button {
     void onClick () {
       if (m_state == LOW && m_shiftButton) {
         m_led.toggle();
-        toggleGlobalMode();
+        m_sequence.toggleGlobalMode();
       } else if (m_state == LOW && m_playButton) {
         m_led.toggle();
         play();
@@ -51,28 +51,6 @@ class Button {
 
     void play () {
       Serial.println("Play");
-    }
-
-    void toggleGlobalMode () {
-      m_led.blink();
-      
-      if (currentMode == GLOBAL) {
-        currentMode = PITCH;
-        Serial.println("PITCH");
-        m_sequence.m_leds[0]->blink(3);
-      } else if (currentMode == PITCH) {
-        currentMode = VELOCITY;
-        Serial.println("VELOCITY");
-        m_sequence.m_leds[1]->blink(3);
-      } else if (currentMode == VELOCITY) {
-        currentMode = NOTELENGTH;
-        Serial.println("NOTELENGTH");
-        m_sequence.m_leds[2]->blink(3);
-      } else if (currentMode == NOTELENGTH) {
-        currentMode = GLOBAL;
-        Serial.println("GLOBAL");
-        m_sequence.m_leds[3]->blink(3);
-      }
     }
 
     boolean debounce (int reading) {

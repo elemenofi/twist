@@ -30,6 +30,8 @@ class Sequence {
   
   public:
     Led* m_leds[6];
+    Modes m_mode;
+
     Sequence (Led* leds[6], boolean state) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];
@@ -39,7 +41,30 @@ class Sequence {
       m_leds[5] = leds[5];
       m_state = state;
       m_currentStep = 0;
+      m_mode = GLOBAL;
     };
+
+    void toggleGlobalMode () {
+      m_leds[4]->blink(3);
+      
+      if (currentMode == GLOBAL) {
+        currentMode = PITCH;
+        Serial.println("PITCH");
+        m_leds[0]->blink(3);
+      } else if (currentMode == PITCH) {
+        currentMode = VELOCITY;
+        Serial.println("VELOCITY");
+        m_leds[1]->blink(3);
+      } else if (currentMode == VELOCITY) {
+        currentMode = NOTELENGTH;
+        Serial.println("NOTELENGTH");
+        m_leds[2]->blink(3);
+      } else if (currentMode == NOTELENGTH) {
+        currentMode = GLOBAL;
+        Serial.println("GLOBAL");
+        m_leds[3]->blink(3);
+      }
+    }
 
     void controlLength (int value, int id) {
       int newValue = map(value, 0, 1023, max_ppqn, 1);
