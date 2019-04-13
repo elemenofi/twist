@@ -24,12 +24,17 @@ class Knob {
       if (currentMode == GLOBAL) {
         if (m_knobType == FIRST) {
           m_sequence.controlTempo(m_value);
+          Serial.println("First");
         } else if (m_knobType == SECOND) {
-          
+          Serial.println("Second");          
         } else if (m_knobType == THIRD) {
+          Serial.println("Third");
         } else if (m_knobType == FOURTH) {  
           // delay
           // transpose
+          Serial.println("Fourth");
+        } else if (m_knobType == FIFTH) {
+          Serial.println("Fifth");
         }
       } else if (currentMode == VELOCITY) {
         m_sequence.controlVelocity(m_value, m_id);

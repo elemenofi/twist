@@ -33,6 +33,7 @@ Knob knob1(A0, sequence1, FIRST, 0);
 Knob knob2(A1, sequence1, SECOND, 1);
 Knob knob3(A2, sequence1, THIRD, 2);
 Knob knob4(A3, sequence1, FOURTH, 3);
+Knob knob5(A4, sequence1, FIFTH, 4);
 
 void setup() {
   Serial.begin(9600);
@@ -56,4 +57,8 @@ void loop() {
   led5.check();
   led6.check();
   knob1.check();
+  knob2.check();
+  knob3.check();
+  knob4.check();
+  knob5.check();
 }

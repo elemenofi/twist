@@ -18,6 +18,7 @@ enum Knobs {
   SECOND,
   THIRD,
   FOURTH,
+  FIFTH,
 };
 
 Modes currentMode = GLOBAL;
