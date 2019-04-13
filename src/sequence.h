@@ -30,7 +30,7 @@ class Sequence {
   
   public:
     Led* m_leds[6];
-    Sequence (Led* leds[5], boolean state) {
+    Sequence (Led* leds[6], boolean state) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];
       m_leds[2] = leds[2];

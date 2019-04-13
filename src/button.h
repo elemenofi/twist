@@ -38,6 +38,7 @@ class Button {
 
     void onClick () {
       if (m_state == LOW && m_shiftButton) {
+        m_led.toggle();
         toggleGlobalMode();
       } else if (m_state == LOW && m_playButton) {
         m_led.toggle();

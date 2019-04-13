@@ -56,7 +56,4 @@ void loop() {
   led5.check();
   led6.check();
   knob1.check();
-  knob2.check();
-  knob3.check();
-  knob4.check();
 }
