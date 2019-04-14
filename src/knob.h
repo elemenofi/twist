@@ -21,37 +21,25 @@ class Knob {
     };
 
     void onChange () {
-      // delay
-      // transpose
-      // acting weird
-
       if (m_knobType == FIFTH) {
         m_sequence.controlTempo(m_value);
-      }
-
-      if (currentMode == GLOBAL) {
-        if (m_knobType == FIRST) {
-        } else if (m_knobType == SECOND) {
-        } else if (m_knobType == THIRD) {
-
-        } else if (m_knobType == FOURTH) {  
-        } else if (m_knobType == FIFTH) {
+      } else {
+        if (currentMode == VELOCITY) {
+          m_sequence.controlVelocity(m_value, m_id);
+        } else if (currentMode == PITCH) {
+          m_sequence.controlPitch(m_value, m_id);
+        } else if (currentMode == NOTELENGTH) {
+          m_sequence.controlLength(m_value, m_id);
         }
-      } else if (currentMode == VELOCITY) {
-        m_sequence.controlVelocity(m_value, m_id);
-      } else if (currentMode == PITCH) {
-        m_sequence.controlPitch(m_value, m_id);
-      } else if (currentMode == NOTELENGTH) {
-        m_sequence.controlLength(m_value, m_id);
       }
     }
 
     void check () {
       m_value = analogRead(m_pin);
 
-      // "filter"
       int diff = abs(m_value - m_lastValue);
 
+      // "filter"
       const boolean isChanging = m_value != m_lastValue && diff > 10;
 
       if (isChanging) {

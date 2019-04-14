@@ -41,17 +41,18 @@ class Sequence {
       m_leds[5] = leds[5];
       m_state = state;
       m_currentStep = 0;
-      m_mode = GLOBAL;
+      m_mode = PITCH;
     };
 
     void toggleGlobalMode () {
       m_leds[4]->blink(3);
       
-      if (currentMode == GLOBAL) {
-        currentMode = PITCH;
-        Serial.println("PITCH");
-        m_leds[0]->blink(3);
-      } else if (currentMode == PITCH) {
+      // i would like to add a global mode here 
+      // where each knob does something globally
+      // special, but no good ideas yet so just a
+      // reminder
+      
+      if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
         m_leds[1]->blink(3);
@@ -60,8 +61,8 @@ class Sequence {
         Serial.println("NOTELENGTH");
         m_leds[2]->blink(3);
       } else if (currentMode == NOTELENGTH) {
-        currentMode = GLOBAL;
-        Serial.println("GLOBAL");
+        currentMode = PITCH;
+        Serial.println("PITCH");
         m_leds[3]->blink(3);
       }
     }
@@ -131,6 +132,10 @@ class Sequence {
         }
       }
     };
+
+    void play () {
+      Serial.println("Play");
+    }
 
     void toggle () {
       m_state = !m_state;

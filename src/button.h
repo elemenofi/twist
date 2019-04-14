@@ -50,7 +50,7 @@ class Button {
     }
 
     void play () {
-      Serial.println("Play");
+      m_sequence.play();
     }
 
     boolean debounce (int reading) {
