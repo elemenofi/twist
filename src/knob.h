@@ -21,15 +21,20 @@ class Knob {
     };
 
     void onChange () {
+      // delay
+      // transpose
+      // acting weird
+
+      if (m_knobType == FIFTH) {
+        m_sequence.controlTempo(m_value);
+      }
+
       if (currentMode == GLOBAL) {
         if (m_knobType == FIRST) {
-          m_sequence.controlTempo(m_value);
         } else if (m_knobType == SECOND) {
         } else if (m_knobType == THIRD) {
-          // acting weird
+
         } else if (m_knobType == FOURTH) {  
-          // delay
-          // transpose
         } else if (m_knobType == FIFTH) {
         }
       } else if (currentMode == VELOCITY) {
