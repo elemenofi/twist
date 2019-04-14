@@ -25,9 +25,8 @@ class Step {
       m_state = !m_state;
     };
 
-    int play () {
+    void play () {
       m_controller.noteOn(0, m_pitch, m_velocity);
-      return m_pitch;
     };
 
     void stop () {
@@ -36,7 +35,7 @@ class Step {
     };
 
     void controlLength (int value) {
-      int newValue = map(value, 0, 1023, m_controller.getPPQN(), 1);
+      int newValue = map(value, 0, 1023, 24, 1);
       m_length = newValue;
     };
 
@@ -49,9 +48,6 @@ class Step {
       int newValue = map(value, 0, 1023, 127, 63);
       m_velocity = newValue;
     };
-
-    
-
 };
 
 #endif

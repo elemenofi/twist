@@ -2,19 +2,8 @@
 #define controller_h
 
 class Controller {
-  private:
-    int max_ppqn = 24;
-    
   public:
     Controller () {};
-
-    void setPPQN (int ppqn) {
-      max_ppqn = ppqn;
-    }
-
-    int getPPQN () {
-      return max_ppqn;
-    }
 
     // First parameter is the event type (0x09 = note on, 0x08 = note off).
     // Second parameter is note-on/note-off, combined with the channel.
