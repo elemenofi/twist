@@ -45,7 +45,7 @@ class Button {
         play();
       } else if (m_state == LOW) {
         m_led.toggle();
-        m_sequence.toggleStep(m_id - 1);
+        m_sequence.m_steps[m_id - 1].toggle();
       } 
     }
 

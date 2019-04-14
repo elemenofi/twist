@@ -11,11 +11,15 @@ class Step {
     Step (boolean state = false) {
       m_state = state;
     };
+
+    void toggle () {
+      m_state = !m_state;
+    };
+
 };
 
 class Sequence {
   private:
-    Step m_steps[4];
     boolean m_state;
     int m_currentStep;
     int tempo = 120;
@@ -29,6 +33,7 @@ class Sequence {
     int notesLengths[4] = {1, 1, 1, 1};
   
   public:
+    Step m_steps[4];
     Led* m_leds[6];
     Modes m_mode;
 
@@ -139,10 +144,6 @@ class Sequence {
 
     void toggle () {
       m_state = !m_state;
-    };
-
-    void toggleStep (int id) {
-      m_steps[id].m_state = !m_steps[id].m_state;
     };
 
     // move midi to midi class
