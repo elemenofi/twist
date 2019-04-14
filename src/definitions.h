@@ -2,15 +2,9 @@
 #define definitions_h
 
 enum Modes {
-  GLOBAL,
   PITCH,
   VELOCITY,
   NOTELENGTH,
-  SWING,
-  CHORD,
-  ARP,
-  RANDOM,
-  SCALE,
 };
 
 enum Knobs {
@@ -21,6 +15,6 @@ enum Knobs {
   FIFTH,
 };
 
-Modes currentMode = GLOBAL;
+Modes currentMode = PITCH;
 
 #endif
