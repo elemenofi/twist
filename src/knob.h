@@ -25,11 +25,11 @@ class Knob {
         m_sequence.controlTempo(m_value);
       } else {
         if (currentMode == VELOCITY) {
-          m_sequence.controlVelocity(m_value, m_id);
+          m_sequence.m_steps[m_id]->controlVelocity(m_value);
         } else if (currentMode == PITCH) {
-          m_sequence.controlPitch(m_value, m_id);
+          m_sequence.m_steps[m_id]->controlPitch(m_value);
         } else if (currentMode == NOTELENGTH) {
-          m_sequence.controlLength(m_value, m_id);
+          m_sequence.m_steps[m_id]->controlLength(m_value);
         }
       }
     }

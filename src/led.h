@@ -8,7 +8,7 @@ class Led {
     int m_pin;
     int m_state;
     unsigned long lastBlink;
-    int blinkLength = 25;
+    unsigned long blinkLength = 25;
     boolean blinking = false;
   
   public:
@@ -48,6 +48,8 @@ class Led {
           blinkingCounter--;
         }
       }
+
+      return 1;
     };
 };
 

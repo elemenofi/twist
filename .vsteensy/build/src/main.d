@@ -36,4 +36,5 @@
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/elapsedMillis.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/Arduino.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/IntervalTimer.h \
- src/sequence.h src/led.h src/definitions.h src/knob.h src/button.h
+ src/sequence.h src/led.h src/definitions.h src/controller.h src/step.h \
+ src/knob.h src/button.h

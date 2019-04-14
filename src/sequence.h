@@ -3,20 +3,8 @@
 
 #include "led.h"
 #include "definitions.h"
-
-class Step {
-  public:
-    boolean m_state;
-
-    Step (boolean state = false) {
-      m_state = state;
-    };
-
-    void toggle () {
-      m_state = !m_state;
-    };
-
-};
+#include "controller.h"
+#include "step.h"
 
 class Sequence {
   private:
@@ -28,25 +16,28 @@ class Sequence {
     int ppqn = 0;
     int max_ppqn = 24;
     int activeNote = 0;
-    int notes[4] = {38, 41, 45, 51};
-    int notesVelocities[4] = {100, 100, 100, 100};
-    int notesLengths[4] = {1, 1, 1, 1};
   
   public:
-    Step m_steps[4];
+    Step* m_steps[4];
     Led* m_leds[6];
     Modes m_mode;
+    Controller &m_controller;
 
-    Sequence (Led* leds[6], boolean state) {
+    Sequence (Step* steps[4], Led* leds[6], boolean state, Controller& controller): m_controller(controller) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];
       m_leds[2] = leds[2];
       m_leds[3] = leds[3];
       m_leds[4] = leds[4];
       m_leds[5] = leds[5];
+      m_steps[0] = steps[0];
+      m_steps[1] = steps[1];
+      m_steps[2] = steps[2];
+      m_steps[3] = steps[3];
       m_state = state;
       m_currentStep = 0;
       m_mode = PITCH;
+      m_controller = controller;
     };
 
     void toggleGlobalMode () {
@@ -60,32 +51,17 @@ class Sequence {
       if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
-        m_leds[1]->blink(3);
+        m_leds[0]->blink(3);
       } else if (currentMode == VELOCITY) {
         currentMode = NOTELENGTH;
         Serial.println("NOTELENGTH");
-        m_leds[2]->blink(3);
+        m_leds[1]->blink(3);
       } else if (currentMode == NOTELENGTH) {
         currentMode = PITCH;
         Serial.println("PITCH");
-        m_leds[3]->blink(3);
+        m_leds[2]->blink(3);
       }
     }
-
-    void controlLength (int value, int id) {
-      int newValue = map(value, 0, 1023, max_ppqn, 1);
-      notesLengths[id] = newValue;
-    };
-
-    void controlPitch (int value, int id) {
-      int newValue = map(value, 0, 1023, 51, 38);
-      notes[id] = newValue;
-    };
-
-    void controlVelocity (int value, int id) {
-      int newValue = map(value, 0, 1023, 127, 63);
-      notesVelocities[id] = newValue;
-    };
 
     void controlTempo (int value) {
       if (value < 400) {
@@ -103,6 +79,8 @@ class Sequence {
       } else if (value >= 800 && value <= 1023) {
         max_ppqn = 12;
       }
+
+      m_controller.setPPQN(max_ppqn);
     };
 
     int randValue (int min, int max) {
@@ -111,23 +89,12 @@ class Sequence {
       return num;
     };
 
-    // move step function to step class
-    void stopStep () {
-      // implement polyphony
-      controlChange(0, 123, 127);
-    };
-
-    void playStep (int step) {
-      noteOn(0, notes[step], notesVelocities[step]);
-      activeNote = notes[step];
-    };
-
     void doStep () {  
       if (m_state) {
         m_leds[m_currentStep]->blink();
 
-        if (m_steps[m_currentStep].m_state) {
-          playStep(m_currentStep);
+        if (m_steps[m_currentStep]->m_state) {
+          activeNote = m_steps[m_currentStep]->play();
         }
 
         m_currentStep++;
@@ -177,10 +144,10 @@ class Sequence {
      void advancePPQN () {
       ++ppqn;
 
-      if (ppqn >= notesLengths[m_currentStep]) {
+      if (ppqn >= m_steps[m_currentStep]->m_length) {
         // here i have to check the note length
         // of the active note to see if i do the stop step
-        stopStep();
+        m_steps[m_currentStep]->stop();
       }
 
 
@@ -213,29 +180,6 @@ class Sequence {
         size = size - 1;
       }
     }
-
-    // First parameter is the event type (0x09 = note on, 0x08 = note off).
-    // Second parameter is note-on/note-off, combined with the channel.
-    // Channel can be anything between 0-15. Typically reported to the user as 1-16.
-    // Third parameter is the note number (48 = middle C).
-    // Fourth parameter is the velocity (64 = normal, 127 = fastest).
-    void noteOn(byte channel, byte pitch, byte velocity) {
-      usbMIDI.sendNoteOn(pitch, velocity, channel);
-      usbMIDI.send_now();
-    };
-
-    void noteOff(byte channel, byte pitch, byte velocity) {
-      usbMIDI.sendNoteOff(pitch, velocity, channel);
-      usbMIDI.send_now();
-    };
-
-    // First parameter is the event type (0x0B = control change).
-    // Second parameter is the event type, combined with the channel.
-    // Third parameter is the control number number (0-119).
-    // Fourth parameter is the control value (0-127).
-    void controlChange (byte channel, byte control, byte value) {
-      usbMIDI.sendControlChange(control, value, channel);
-    };
 };
 
 #endif
