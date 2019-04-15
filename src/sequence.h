@@ -67,6 +67,18 @@ class Sequence {
       }
     };
 
+    boolean stepIsOver (int ppqn) {
+      return ppqn >= m_steps[m_currentStep]->m_length;
+    };
+
+    void stopCurrentStep () {
+      m_steps[m_currentStep]->stop();
+    };
+
+    void resetStep () {
+      m_currentStep = 0;
+    };
+
     void play () {
       Serial.println("Play");
     };

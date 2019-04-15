@@ -25,7 +25,7 @@ Step step4(controller);
 Step* steps[4] = {&step1, &step2, &step3, &step4};
 Led* leds[6] = {&led1, &led2, &led3, &led4, &led5, &led6};
 
-Sequence sequence1(steps, leds, controller);
+Sequence sequence1(steps, leds);
 
 Transport transport(sequence1);
 

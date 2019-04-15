@@ -69,10 +69,10 @@ class Transport {
     void advancePPQN () {
       ++ppqn;
 
-      if (ppqn >= m_sequence.m_steps[m_sequence.m_currentStep]->m_length) {
+      if (m_sequence.stepIsOver(ppqn)) {
         // here i have to check the note length
         // of the active note to see if i do the stop step
-        m_sequence.m_steps[m_sequence.m_currentStep]->stop();
+        m_sequence.stopCurrentStep();
       }
 
 
@@ -92,7 +92,7 @@ class Transport {
     void stopPPQN () {
       m_state = false;
       ppqn = 0;
-      m_sequence.m_currentStep = 0;
+      m_sequence.resetStep();
       m_sequence.m_leds[5]->toggle();
     };
 
