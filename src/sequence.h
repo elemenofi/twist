@@ -3,7 +3,6 @@
 
 #include "led.h"
 #include "definitions.h"
-#include "controller.h"
 #include "step.h"
 
 class Sequence {
@@ -15,9 +14,8 @@ class Sequence {
     Step* m_steps[4];
     Led* m_leds[6];
     Modes m_mode;
-    Controller &m_controller;
 
-    Sequence (Step* steps[4], Led* leds[6], Controller& controller): m_controller(controller) {
+    Sequence (Step* steps[4], Led* leds[6]) {
       m_leds[0] = leds[0];
       m_leds[1] = leds[1];
       m_leds[2] = leds[2];
@@ -30,7 +28,6 @@ class Sequence {
       m_steps[3] = steps[3];
       m_currentStep = 0;
       m_mode = PITCH;
-      m_controller = controller;
     };
 
     void toggleGlobalMode () {
