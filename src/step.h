@@ -18,7 +18,7 @@ class Step {
       m_controller = controller;
       m_pitch = 38;
       m_velocity = 100;
-      m_length = 1;
+      m_length = 4;
     };
 
     void toggle () {

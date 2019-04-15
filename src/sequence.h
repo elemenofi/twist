@@ -11,6 +11,7 @@ class Sequence {
     Step* m_steps[4];
     Led* m_leds[6];
     Modes m_mode;
+    boolean m_reverse;
 
     Sequence (Step* steps[4], Led* leds[6]) {
       m_leds[0] = leds[0];
@@ -25,6 +26,7 @@ class Sequence {
       m_steps[3] = steps[3];
       m_currentStep = 0;
       m_mode = PITCH;
+      m_reverse = false;
     };
 
     void toggleGlobalMode () {
@@ -54,10 +56,18 @@ class Sequence {
         m_steps[m_currentStep]->play();
       }
 
-      m_currentStep++;
+      if (!m_reverse) {
+        m_currentStep++;
 
-      if (m_currentStep > 3) {
-        m_currentStep = 0;
+        if (m_currentStep > 3) {
+          m_currentStep = 0;
+        }
+      } else {
+        m_currentStep--;
+
+        if (m_currentStep == -1) {
+          m_currentStep = 3;
+        }
       }
     };
 
@@ -73,8 +83,8 @@ class Sequence {
       m_currentStep = 0;
     };
 
-    void play () {
-      Serial.println("Play");
+    void reverse () {
+      m_reverse = !m_reverse;
     };
 };
 

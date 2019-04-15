@@ -10,7 +10,7 @@ class Button {
     int m_lastState;
     int m_reading;
     boolean m_shiftButton;
-    boolean m_playButton;
+    boolean m_reverseButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
     Sequence &m_sequence;
@@ -26,12 +26,12 @@ class Button {
       Led& led,
       Sequence& sequence,
       boolean shiftButton = false,
-      boolean playButton = false
+      boolean reverseButton = false
     ): m_led(led), m_sequence(sequence) {
       m_id = id;
       m_pin = pin;
       m_shiftButton = shiftButton;
-      m_playButton = playButton;
+      m_reverseButton = reverseButton;
 
       pinMode(pin, INPUT);
     };
@@ -40,17 +40,17 @@ class Button {
       if (m_state == LOW && m_shiftButton) {
         m_led.toggle();
         m_sequence.toggleGlobalMode();
-      } else if (m_state == LOW && m_playButton) {
+      } else if (m_state == LOW && m_reverseButton) {
         m_led.toggle();
-        play();
+        reverse();
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.m_steps[m_id - 1]->toggle();
       } 
     }
 
-    void play () {
-      m_sequence.play();
+    void reverse () {
+      m_sequence.reverse();
     }
 
     boolean debounce (int reading) {
