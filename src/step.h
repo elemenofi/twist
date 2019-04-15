@@ -30,7 +30,6 @@ class Step {
     };
 
     void stop () {
-      // implement polyphony
       m_controller.controlChange(0, 123, 127);
     };
 

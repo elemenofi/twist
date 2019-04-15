@@ -75,7 +75,6 @@ class Transport {
         m_sequence.stopCurrentStep();
       }
 
-
       if (ppqn == max_ppqn) {
         m_sequence.doStep(); 
         ppqn = 0;

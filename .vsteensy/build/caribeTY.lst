@@ -5640,10 +5640,10 @@ void loop() {
 
 00001878 <_GLOBAL__sub_I_currentMode>:
     1878:	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+#include "controller.h"
 #include "transport.h"
 #include "step.h"
 
-Controller controller;
 
 Led led1(3, LOW);
     187c:	movs	r2, #0
@@ -5654,10 +5654,10 @@ Led led1(3, LOW);
   knob5.check();
 }
     187e:	sub	sp, #12
+#include "controller.h"
 #include "transport.h"
 #include "step.h"
 
-Controller controller;
 
 Led led1(3, LOW);
     1880:	movs	r1, #3
