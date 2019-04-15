@@ -8,7 +8,6 @@
 #include "transport.h"
 #include "step.h"
 
-Controller controller;
 
 Led led1(3, LOW);
 Led led2(5, LOW);
@@ -16,17 +15,16 @@ Led led3(7, LOW);
 Led led4(9, LOW);
 Led led5(11, LOW);
 Led led6(24, LOW);
+Led* leds[6] = {&led1, &led2, &led3, &led4, &led5, &led6};
 
+Controller controller;
 Step step1(controller);
 Step step2(controller);
 Step step3(controller);
 Step step4(controller);
-
 Step* steps[4] = {&step1, &step2, &step3, &step4};
-Led* leds[6] = {&led1, &led2, &led3, &led4, &led5, &led6};
 
 Sequence sequence1(steps, leds);
-
 Transport transport(sequence1);
 
 Button button1(1, step1pin, *leds[0], sequence1);
