@@ -5,10 +5,7 @@
 #include "definitions.h"
 #include "step.h"
 
-class Sequence {
-  private:
-    int activeNote = 0;
-  
+class Sequence {  
   public:
     int m_currentStep;
     Step* m_steps[4];
@@ -41,15 +38,12 @@ class Sequence {
       if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
-        m_leds[0]->blink(3);
       } else if (currentMode == VELOCITY) {
         currentMode = NOTELENGTH;
         Serial.println("NOTELENGTH");
-        m_leds[1]->blink(3);
       } else if (currentMode == NOTELENGTH) {
         currentMode = PITCH;
         Serial.println("PITCH");
-        m_leds[2]->blink(3);
       }
     }
 
