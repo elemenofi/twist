@@ -31,17 +31,25 @@ class Led {
     void toggle () {
       m_state = !m_state;
 
-      digitalWrite(m_pin, m_state); 
+      digitalWrite(m_pin, m_state);
+
+      if (blinking) {
+        digitalWrite(m_pin, !m_state);
+      }
+    };
+
+    boolean blinkTimePassed () {
+      return millis() - lastBlink > blinkLength;
     };
 
     int check () {
-      if (blinking && millis() - lastBlink > blinkLength) {
+      if (blinking && blinkTimePassed()) {
         digitalWrite(m_pin, !digitalRead(m_pin));
         blinking = false;
         lastBlink = millis();        
       }
 
-      if (!blinking && blinkingCounter > 0 && millis() - lastBlink > blinkLength) {
+      if (!blinking && blinkingCounter > 0 && blinkTimePassed()) {
         blink(blinkingCounter - 1);
         blinkingCounter--;
       }
