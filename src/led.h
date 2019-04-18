@@ -8,7 +8,7 @@ class Led {
     int m_pin;
     int m_state;
     unsigned long lastBlink;
-    unsigned long blinkLength = 25;
+    unsigned long blinkLength = 75;
     boolean blinking = false;
   
   public:
@@ -31,25 +31,28 @@ class Led {
     void toggle () {
       m_state = !m_state;
 
-      digitalWrite(m_pin, m_state); 
+      digitalWrite(m_pin, m_state);
+
+      if (blinking) {
+        digitalWrite(m_pin, !m_state);
+      }
+    };
+
+    boolean blinkTimePassed () {
+      return millis() - lastBlink > blinkLength;
     };
 
     int check () {
-      if (!blinking) {
-        return 0;
-      }
-      
-      if (millis() - lastBlink > blinkLength) {
+      if (blinking && blinkTimePassed()) {
         digitalWrite(m_pin, !digitalRead(m_pin));
         blinking = false;
-
-        if (blinkingCounter > 0) {
-          blink();
-          blinkingCounter--;
-        }
+        lastBlink = millis();        
       }
 
-      return 1;
+      if (!blinking && blinkingCounter > 0 && blinkTimePassed()) {
+        blink(blinkingCounter - 1);
+        blinkingCounter--;
+      }
     };
 };
 
