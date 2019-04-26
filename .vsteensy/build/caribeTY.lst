@@ -3920,8 +3920,8 @@ void loop() {
     109a:	sub.w	r2, r0, #800	; 0x320
     109e:	cmp	r2, #223	; 0xdf
     10a0:	bhi.w	a8a <loop+0x5f6>
-        max_ppqn = 12;
-    10a4:	movs	r2, #12
+        max_ppqn = 10;
+    10a4:	movs	r2, #10
     10a6:	str	r2, [r3, #4]
     10a8:	ldr	r0, [r4, #4]
     10aa:	b.n	a8a <loop+0x5f6>
@@ -3943,8 +3943,8 @@ void loop() {
     10b6:	sub.w	r2, r0, #800	; 0x320
     10ba:	cmp	r2, #223	; 0xdf
     10bc:	bhi.w	942 <loop+0x4ae>
-        max_ppqn = 12;
-    10c0:	movs	r2, #12
+        max_ppqn = 10;
+    10c0:	movs	r2, #10
     10c2:	str	r2, [r3, #4]
     10c4:	ldr	r0, [r4, #4]
     10c6:	b.n	942 <loop+0x4ae>
@@ -3966,8 +3966,8 @@ void loop() {
     10d2:	sub.w	r2, r0, #800	; 0x320
     10d6:	cmp	r2, #223	; 0xdf
     10d8:	bhi.w	99c <loop+0x508>
-        max_ppqn = 12;
-    10dc:	movs	r2, #12
+        max_ppqn = 10;
+    10dc:	movs	r2, #10
     10de:	str	r2, [r3, #4]
     10e0:	ldr	r0, [r4, #4]
     10e2:	b.n	99c <loop+0x508>
@@ -3989,8 +3989,8 @@ void loop() {
     10ee:	sub.w	r2, r0, #800	; 0x320
     10f2:	cmp	r2, #223	; 0xdf
     10f4:	bhi.w	9f6 <loop+0x562>
-        max_ppqn = 12;
-    10f8:	movs	r2, #12
+        max_ppqn = 10;
+    10f8:	movs	r2, #10
     10fa:	str	r2, [r3, #4]
     10fc:	ldr	r0, [r4, #4]
     10fe:	b.n	9f6 <loop+0x562>
@@ -4012,8 +4012,8 @@ void loop() {
     110a:	sub.w	r2, r0, #800	; 0x320
     110e:	cmp	r2, #223	; 0xdf
     1110:	bhi.w	8e8 <loop+0x454>
-        max_ppqn = 12;
-    1114:	movs	r2, #12
+        max_ppqn = 10;
+    1114:	movs	r2, #10
     1116:	str	r2, [r3, #4]
     1118:	ldr	r0, [r4, #4]
     111a:	b.w	8e8 <loop+0x454>

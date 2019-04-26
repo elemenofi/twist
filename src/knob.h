@@ -37,6 +37,8 @@ class Knob {
     }
 
     void check () {
+      // todo latch
+
       m_value = analogRead(m_pin);
 
       int diff = abs(m_value - m_lastValue);

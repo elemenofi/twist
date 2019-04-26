@@ -34,7 +34,7 @@ class Transport {
           ppqn = 0;
         }
       } else if (value >= 800 && value <= 1023) {
-        max_ppqn = 12;
+        max_ppqn = 10;
       }
     };
 
