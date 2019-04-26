@@ -90,6 +90,14 @@ class Sequence {
     void reverse () {
       m_reverse = !m_reverse;
     };
+
+    void stopSteps (int ppqn) {
+      if (stepIsOver(ppqn)) {
+        // here i have to check the note length
+        // of the active note to see if i do the stop step
+        stopCurrentStep();
+      }
+    }
 };
 
 #endif

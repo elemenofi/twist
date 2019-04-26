@@ -69,11 +69,7 @@ class Transport {
     void advancePPQN () {
       ++ppqn;
 
-      if (m_sequence.stepIsOver(ppqn)) {
-        // here i have to check the note length
-        // of the active note to see if i do the stop step
-        m_sequence.stopCurrentStep();
-      }
+      m_sequence.stopSteps(ppqn);
 
       if (ppqn == max_ppqn) {
         m_sequence.doStep(); 
