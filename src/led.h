@@ -30,6 +30,7 @@ class Led {
 
     void toggle () {
       m_state = !m_state;
+      Serial.println("Toggling");
 
       digitalWrite(m_pin, m_state);
 
@@ -37,6 +38,18 @@ class Led {
         digitalWrite(m_pin, !m_state);
       }
     };
+
+    void off () {
+      blinking = false;
+      m_state = 0;
+      digitalWrite(m_pin, m_state);
+    }
+
+    void on () {
+      blinking = false;
+      m_state = 1;
+      digitalWrite(m_pin, m_state);
+    }
 
     boolean blinkTimePassed () {
       return millis() - lastBlink > blinkLength;
