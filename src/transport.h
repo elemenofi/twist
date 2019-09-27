@@ -9,16 +9,11 @@ class Transport {
     boolean m_state;
     int max_ppqn = 24;
     int ppqn = 0;
-    Sequence &m_sequence;
     
   public:
-    Transport (Sequence& sequence): m_sequence(sequence) {
+    Transport () {
       m_state = false;
     };
-
-    int getPPQN () {
-      return max_ppqn;
-    }
 
     void controlTempo (int value) {
       if (value < 400) {
@@ -68,11 +63,8 @@ class Transport {
 
     void advancePPQN () {
       ++ppqn;
-
-      m_sequence.stopSteps(ppqn);
-
+      
       if (ppqn == max_ppqn) {
-        m_sequence.doStep(); 
         ppqn = 0;
       }
     };
@@ -80,15 +72,11 @@ class Transport {
     void startPPQN () {
       m_state = true;
       ppqn = 0;
-      m_sequence.doStep(); 
-      m_sequence.m_leds[5]->toggle();
     };
 
     void stopPPQN () {
       m_state = false;
       ppqn = 0;
-      m_sequence.resetStep();
-      m_sequence.m_leds[5]->toggle();
     };
 
     void printBytes(const byte *data, unsigned int size) {

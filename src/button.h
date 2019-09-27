@@ -13,7 +13,6 @@ class Button {
     boolean m_reverseButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
-    Sequence &m_sequence;
 
   public:
     int m_pin;
@@ -24,10 +23,9 @@ class Button {
       int id,
       int pin, 
       Led& led,
-      Sequence& sequence,
       boolean shiftButton = false,
       boolean reverseButton = false
-    ): m_led(led), m_sequence(sequence) {
+    ): m_led(led) {
       m_id = id;
       m_pin = pin;
       m_shiftButton = shiftButton;
@@ -38,18 +36,15 @@ class Button {
 
     void onClick () {
       if (m_state == LOW && m_shiftButton) {
-        m_sequence.toggleGlobalMode();
       } else if (m_state == LOW && m_reverseButton) {
         m_led.toggle();
         reverse();
       } else if (m_state == LOW) {
         m_led.toggle();
-        m_sequence.m_steps[m_id - 1]->toggle();
       } 
     }
 
     void reverse () {
-      m_sequence.reverse();
     }
 
     boolean debounce (int reading) {
@@ -64,7 +59,7 @@ class Button {
           return true;       
         }
       }
-
+      
       return false;
     }
 

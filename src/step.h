@@ -4,8 +4,7 @@
 #include "controller.h"
 
 class Step {
-  private:
-    Controller &m_controller;
+
 
   public:
     boolean m_state;
@@ -13,9 +12,9 @@ class Step {
     int m_velocity;
     int m_length;
 
-    Step (Controller& controller): m_controller(controller) {
+    Step () {
       m_state = false;
-      m_controller = controller;
+      
       m_pitch = 38;
       m_velocity = 100;
       m_length = 4;
@@ -23,14 +22,6 @@ class Step {
 
     void toggle () {
       m_state = !m_state;
-    };
-
-    void play () {
-      m_controller.noteOn(0, m_pitch, m_velocity);
-    };
-
-    void stop () {
-      m_controller.controlChange(0, 123, 127);
     };
 
     void controlLength (int value) {

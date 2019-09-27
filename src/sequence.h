@@ -59,7 +59,6 @@ class Sequence {
       m_leds[m_currentStep]->blink();
 
       if (m_steps[m_currentStep]->m_state) {
-        m_steps[m_currentStep]->play();
       }
 
       if (!m_reverse) {
@@ -82,7 +81,6 @@ class Sequence {
     };
 
     void stopCurrentStep () {
-      m_steps[m_currentStep]->stop();
     };
 
     void resetStep () {
