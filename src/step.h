@@ -5,7 +5,6 @@
 
 class Step {
 
-
   public:
     boolean m_state;
     int m_pitch;

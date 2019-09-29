@@ -1,4 +1,5 @@
 #include <Arduino.h>
+
 #include "sequence.h"
 #include "led.h"
 #include "knob.h"
@@ -22,23 +23,22 @@ Button button3(3, step3pin, *leds[2]);
 Button button4(4, step4pin, *leds[3]);
 Button button5(5, shiftPin, *leds[4], true);
 Button button6(6, playPin, *leds[5], false, true);
+Button* buttons[6] = {&button1, &button2, &button3, &button4, &button5, &button6};
 
 Knob knob1(A0, FIRST, 0);
 Knob knob2(A1, SECOND, 1);
 Knob knob3(A2, THIRD, 2);
 Knob knob4(A3, FOURTH, 3);
 Knob knob5(A4, FIFTH, 4);
+Knob* knobs[5] = {&knob1, &knob2, &knob3, &knob4, &knob5};
 
-Transport transport;
+Sequence sequence(leds, buttons, knobs);
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  if (usbMIDI.read()) {
-  }
-  
   button1.check();
   button2.check();
   button3.check();
@@ -56,4 +56,5 @@ void loop() {
   knob3.check();
   knob4.check();
   knob5.check();
+  sequence.check();
 }

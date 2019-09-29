@@ -55,7 +55,7 @@ class Led {
       return millis() - lastBlink > blinkLength;
     };
 
-    int check () {
+    void check () {
       if (blinking && blinkTimePassed()) {
         digitalWrite(m_pin, !digitalRead(m_pin));
         blinking = false;

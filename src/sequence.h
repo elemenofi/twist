@@ -2,34 +2,40 @@
 #define sequence_h
 
 #include "led.h"
+#include "button.h"
+#include "knob.h"
 #include "definitions.h"
 #include "step.h"
+#include "transport.h"
 
-class Sequence {  
+class Sequence {
   public:
-    int m_currentStep;
-    Step* m_steps[4];
     Led* m_leds[6];
+    Button* m_buttons[6];
+    Knob* m_knobs[5];
     Modes m_mode;
+    int m_currentStep;
     boolean m_reverse;
+    Step* steps[4] = {0,0,0,0};
 
-    Sequence (Step* steps[4], Led* leds[6]) {
-      m_leds[0] = leds[0];
-      m_leds[1] = leds[1];
-      m_leds[2] = leds[2];
-      m_leds[3] = leds[3];
-      m_leds[4] = leds[4];
-      m_leds[5] = leds[5];
-      m_steps[0] = steps[0];
-      m_steps[1] = steps[1];
-      m_steps[2] = steps[2];
-      m_steps[3] = steps[3];
+    Sequence (
+      Led* leds[6]
+    ) {
+      memcpy(m_leds, leds, 6);
+      memcpy(m_buttons, buttons, 6);
+      memcpy(m_knobs, knobs, 6);
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;
       m_leds[4]->toggle();
       m_leds[5]->toggle();
     };
+
+    void check () {
+      if (usbMIDI.read()) {
+        processMidi();
+      }
+    }
 
     void toggleGlobalMode () {
       
@@ -41,25 +47,25 @@ class Sequence {
       if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
-        m_leds[4]->blink(999);
+        // m_leds[4]->blink(999);
       } else if (currentMode == VELOCITY) {
         currentMode = NOTELENGTH;
         Serial.println("NOTELENGTH");
-        m_leds[4]->blink();
-        m_leds[4]->off();
+        // m_leds[4]->blink();
+        // m_leds[4]->off();
       } else if (currentMode == NOTELENGTH) {
         currentMode = PITCH;
         Serial.println("PITCH");
-        m_leds[4]->blink(); // shut the 999 blinks off
-        m_leds[4]->on();
+        // m_leds[4]->blink(); // shut the 999 blinks off
+        // m_leds[4]->on();
       }
     }
 
     void doStep () {  
-      m_leds[m_currentStep]->blink();
+      // m_leds[m_currentStep]->blink();
 
-      if (m_steps[m_currentStep]->m_state) {
-      }
+      // if (m_steps[m_currentStep]->m_state) {
+      // }
 
       if (!m_reverse) {
         m_currentStep++;
@@ -77,7 +83,8 @@ class Sequence {
     };
 
     boolean stepIsOver (int ppqn) {
-      return ppqn >= m_steps[m_currentStep]->m_length;
+      // return ppqn >= m_steps[m_currentStep]->m_length;
+      return true;
     };
 
     void stopCurrentStep () {
@@ -97,7 +104,10 @@ class Sequence {
         // of the active note to see if i do the stop step
         stopCurrentStep();
       }
-    }
+    };
+
+    void processMidi () {
+    };
 };
 
 #endif
