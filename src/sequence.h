@@ -1,6 +1,8 @@
 #ifndef sequence_h
 #define sequence_h
 
+#include <Arduino.h>
+
 #include "led.h"
 #include "button.h"
 #include "knob.h"
@@ -19,21 +21,35 @@ class Sequence {
     Step* steps[4] = {0,0,0,0};
 
     Sequence (
-      Led* leds[6]
+      Led* leds[6],
+      Button* buttons[6],
+      Knob* knobs[5]
     ) {
-      memcpy(m_leds, leds, 6);
-      memcpy(m_buttons, buttons, 6);
-      memcpy(m_knobs, knobs, 6);
+      assignControls(leds, buttons, knobs);
+      
       m_currentStep = 0;
       m_mode = PITCH;
-      m_reverse = false;
-      m_leds[4]->toggle();
-      m_leds[5]->toggle();
+      m_reverse = false;      
     };
 
     void check () {
       if (usbMIDI.read()) {
         processMidi();
+      }
+    }
+
+    void assignControls (Led* leds[6], Button* buttons[6], Knob* knobs[5]) {
+      for (int i = 0; i < 6; i++) {
+        m_leds[i] = leds[i];
+        m_leds[i]->blink(3);
+      }
+
+      for (int i = 0; i < 6; i++) {
+        m_buttons[i] = buttons[i];
+      }
+
+      for (int i = 0; i < 5; i++) {
+        m_knobs[i] = knobs[i];
       }
     }
 
