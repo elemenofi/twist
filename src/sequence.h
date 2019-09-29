@@ -19,6 +19,7 @@ class Sequence {
     int m_currentStep;
     boolean m_reverse;
     Step* steps[4] = {0,0,0,0};
+    Transport transport;
 
     Sequence (
       Led* leds[6],
@@ -26,7 +27,6 @@ class Sequence {
       Knob* knobs[5]
     ) {
       assignControls(leds, buttons, knobs);
-      
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;      
@@ -34,7 +34,7 @@ class Sequence {
 
     void check () {
       if (usbMIDI.read()) {
-        processMidi();
+        transport.processMidiClock();
       }
     }
 
@@ -120,9 +120,6 @@ class Sequence {
         // of the active note to see if i do the stop step
         stopCurrentStep();
       }
-    };
-
-    void processMidi () {
     };
 };
 

@@ -35,7 +35,7 @@ class Transport {
     };
 
      // move midi to midi class
-    void processMidi () {
+    void processMidiClock () {
       // byte type, channel, data1, data2, cable;
       byte type;
  
