@@ -14,7 +14,7 @@ Led led2(5, LOW);
 Led led3(7, LOW);
 Led led4(9, LOW);
 Led led5(11, LOW);
-Led led6(24, HIGH);
+Led led6(24, LOW);
 Led* leds[6] = {&led1, &led2, &led3, &led4, &led5, &led6};
 
 Button button1(1, step1pin, *leds[0]);

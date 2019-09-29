@@ -63,22 +63,22 @@ class Sequence {
       if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
-        // m_leds[4]->blink(999);
+        m_leds[4]->blink(999);
       } else if (currentMode == VELOCITY) {
         currentMode = NOTELENGTH;
         Serial.println("NOTELENGTH");
-        // m_leds[4]->blink();
-        // m_leds[4]->off();
+        m_leds[4]->blink();
+        m_leds[4]->off();
       } else if (currentMode == NOTELENGTH) {
         currentMode = PITCH;
         Serial.println("PITCH");
-        // m_leds[4]->blink(); // shut the 999 blinks off
-        // m_leds[4]->on();
+        m_leds[4]->blink(); // shut the 999 blinks off
+        m_leds[4]->on();
       }
     }
 
     void doStep () {  
-      // m_leds[m_currentStep]->blink();
+      m_leds[m_currentStep]->blink();
 
       // if (m_steps[m_currentStep]->m_state) {
       // }

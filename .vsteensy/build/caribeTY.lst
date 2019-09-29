@@ -2925,7 +2925,7 @@ Led led1(3, LOW);
      bf2:	ldr	r0, [pc, #432]	; (da4 <_GLOBAL__sub_I_currentMode+0x1bc>)
 Led led4(9, LOW);
 Led led5(11, LOW);
-Led led6(24, HIGH);
+Led led6(24, LOW);
 Led* leds[6] = {&led1, &led2, &led3, &led4, &led5, &led6};
 
 Button button1(1, step1pin, *leds[0]);
@@ -2957,8 +2957,8 @@ Led led5(11, LOW);
      c1a:	movs	r1, #11
      c1c:	ldr	r0, [pc, #408]	; (db8 <_GLOBAL__sub_I_currentMode+0x1d0>)
      c1e:	bl	46c <Led::Led(int, int)>
-Led led6(24, HIGH);
-     c22:	movs	r2, #1
+Led led6(24, LOW);
+     c22:	movs	r2, #0
      c24:	movs	r1, #24
      c26:	ldr	r0, [pc, #404]	; (dbc <_GLOBAL__sub_I_currentMode+0x1d4>)
       boolean shiftButton = false,
