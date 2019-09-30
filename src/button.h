@@ -13,10 +13,11 @@ class Button {
     boolean m_reverseButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
-    boolean m_wasPressed;
 
   public:
     int m_pin;
+    boolean m_wasPressed;
+
 
     Button ();
     
@@ -37,18 +38,8 @@ class Button {
     };
 
     void onPress () {
-      if (m_state == LOW && m_shiftButton) {
-        m_led.toggle();
-      } else if (m_state == LOW && m_reverseButton) {
-        m_led.toggle();
-        reverse();
-      } else if (m_state == LOW) {
-        m_led.toggle();
-        m_wasPressed = true;
-      } 
-    }
-
-    void reverse () {
+      m_wasPressed = true;
+      m_led.toggle();
     }
 
     boolean debounce (int reading) {
@@ -78,13 +69,6 @@ class Button {
       }
  
       m_lastState = m_reading;
-
-      if (m_wasPressed) {
-        m_wasPressed = false;
-        return true;
-      } else {
-        return false;
-      }
     };
 };
 

@@ -48,8 +48,12 @@ class Sequence {
         if (m_buttons[i]->check()) m_steps[i]->toggle();
       }
       
-      m_buttons[4]->check();
-      m_buttons[5]->check();
+      if (m_buttons[4]->check()) toggleGlobalMode();
+      if (m_buttons[5]->m_wasPressed) {
+        Serial.println("Reverse"); 
+        m_reverse = !m_reverse;
+        m_buttons[5]->m_wasPressed = false;
+      }
 
       for (int i = 0; i < 6; i++) {
         m_leds[i]->check();
@@ -122,10 +126,6 @@ class Sequence {
           m_currentStep = 3;
         }
       }
-    };
-
-    void reverse () {
-      m_reverse = !m_reverse;
     };
 };
 
