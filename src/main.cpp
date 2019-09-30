@@ -36,22 +36,22 @@ void setup() {
 }
 
 void loop() {
-  button1.check();
-  button2.check();
-  button3.check();
-  button4.check();
-  button5.check();
-  button6.check();
-  led1.check();
-  led2.check();
-  led3.check();
-  led4.check();
-  led5.check();
-  led6.check();
-  knob1.check();
-  knob2.check();
-  knob3.check();
-  knob4.check();
-  knob5.check();
+  // button1.check();
+  // button2.check();
+  // button3.check();
+  // button4.check();
+  // button5.check();
+  // button6.check();
+  // led1.check();
+  // led2.check();
+  // led3.check();
+  // led4.check();
+  // led5.check();
+  // led6.check();
+  // knob1.check();
+  // knob2.check();
+  // knob3.check();
+  // knob4.check();
+  // knob5.check();
   sequence.check();
 }

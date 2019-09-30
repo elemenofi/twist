@@ -43,6 +43,21 @@ class Sequence {
       if (usbMIDI.read()) {
         transport.processMidiClock();
       }
+
+      for (int i = 0; i < 4; i++) {
+        if (m_buttons[i]->check()) m_steps[i]->toggle();
+      }
+      
+      m_buttons[4]->check();
+      m_buttons[5]->check();
+
+      for (int i = 0; i < 6; i++) {
+        m_leds[i]->check();
+      }
+
+      for (int i = 0; i < 5; i++) {
+        m_knobs[i]->check();
+      }
     };
 
     void assignControls (Led* leds[6], Button* buttons[6], Knob* knobs[5]) {
@@ -52,7 +67,7 @@ class Sequence {
       }
 
       for (int i = 0; i < 4; i++) {
-        Step *step = new Step(controller);
+        Step* step = new Step(controller);
         m_steps[i] = step;
       }
 
@@ -61,11 +76,8 @@ class Sequence {
       }
 
       for (int i = 0; i < 5; i++) {
-
         m_knobs[i] = knobs[i];
       }
-
-      
     };
 
     void toggleGlobalMode () {
@@ -95,7 +107,7 @@ class Sequence {
     void advanceStep () {  
       m_leds[m_currentStep]->blink();
 
-      m_steps[m_currentStep]->advance();
+      m_steps[m_currentStep]->play();
 
       if (!m_reverse) {
         m_currentStep++;

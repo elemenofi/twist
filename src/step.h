@@ -21,15 +21,11 @@ class Step {
     };
 
     void toggle () {
-      Serial.print("Toggling step");
       m_state = !m_state;
     };
 
-    void advance () {
-      if (m_state) play();
-    };
-
     void play () {
+      if (!m_state) return;
       m_controller.noteOn(0, m_pitch, m_velocity);
     };
 

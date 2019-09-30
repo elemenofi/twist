@@ -13,6 +13,7 @@ class Button {
     boolean m_reverseButton;
     unsigned long m_lastDebounceTime;
     Led &m_led;
+    boolean m_wasPressed;
 
   public:
     int m_pin;
@@ -30,11 +31,12 @@ class Button {
       m_pin = pin;
       m_shiftButton = shiftButton;
       m_reverseButton = reverseButton;
+      m_wasPressed = false;
 
       pinMode(pin, INPUT);
     };
 
-    void onClick () {
+    void onPress () {
       if (m_state == LOW && m_shiftButton) {
         m_led.toggle();
       } else if (m_state == LOW && m_reverseButton) {
@@ -42,6 +44,7 @@ class Button {
         reverse();
       } else if (m_state == LOW) {
         m_led.toggle();
+        m_wasPressed = true;
       } 
     }
 
@@ -64,16 +67,24 @@ class Button {
       return false;
     }
 
-    void check (void) {
+    // a debounced button press
+    boolean check (void) {
       m_reading = digitalRead(m_pin);
 
       boolean debounced = debounce(m_reading);
 
       if (debounced) {
-        onClick();
+        onPress();
       }
  
       m_lastState = m_reading;
+
+      if (m_wasPressed) {
+        m_wasPressed = false;
+        return true;
+      } else {
+        return false;
+      }
     };
 };
 
