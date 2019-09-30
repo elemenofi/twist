@@ -2,8 +2,20 @@
 #define controller_h
 
 class Controller {
+  int notePitches[16];
+  int noteLengths[16];
+  int noteLengthsPlayed[16];
+
   public:
-    Controller () {};
+    Controller () {
+      // notePitches       = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+      // noteLengths       = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+      // noteLengthsPlayed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    };
+
+    void processNotes () {
+      // kill notes that have been completely played
+    }
 
     // First parameter is the event type (0x09 = note on, 0x08 = note off).
     // Second parameter is note-on/note-off, combined with the channel.

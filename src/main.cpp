@@ -5,9 +5,6 @@
 #include "knob.h"
 #include "button.h"
 #include "definitions.h"
-#include "controller.h"
-#include "transport.h"
-#include "step.h"
 
 Led led1(3, LOW);
 Led led2(5, LOW);

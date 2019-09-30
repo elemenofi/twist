@@ -9,6 +9,7 @@
 #include "definitions.h"
 #include "step.h"
 #include "transport.h"
+#include "controller.h"
 
 class Sequence {
   public:
@@ -20,6 +21,7 @@ class Sequence {
     int m_currentStep;
     boolean m_reverse;
     Transport transport;
+    Controller controller;
 
     Sequence (
       Led* leds[6],
@@ -49,6 +51,11 @@ class Sequence {
         m_leds[i]->blink(3);
       }
 
+      for (int i = 0; i < 4; i++) {
+        Step *step = new Step(controller);
+        m_steps[i] = step;
+      }
+
       for (int i = 0; i < 6; i++) {
         m_buttons[i] = buttons[i];
       }
@@ -58,10 +65,7 @@ class Sequence {
         m_knobs[i] = knobs[i];
       }
 
-      for (int i = 0; i < 4; i++) {
-        Step *step = new Step();
-        m_steps[i] = step;
-      }
+      
     };
 
     void toggleGlobalMode () {
@@ -91,7 +95,7 @@ class Sequence {
     void advanceStep () {  
       m_leds[m_currentStep]->blink();
 
-      m_steps[m_currentStep]->play();
+      m_steps[m_currentStep]->advance();
 
       if (!m_reverse) {
         m_currentStep++;
