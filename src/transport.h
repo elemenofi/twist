@@ -1,15 +1,14 @@
 #ifndef transport_h
 #define transport_h
 
-#include "sequence.h"
 #include "definitions.h"
-#include "sequence.h"
 
 class Transport {
   private:
     boolean m_state;
     int max_ppqn = 24;
     int ppqn = 0;
+    boolean isTimeForStep = false;
     
   public:
     Transport () {
@@ -67,6 +66,7 @@ class Transport {
       ++ppqn;
       
       if (ppqn == max_ppqn) {
+        isTimeForStep = true;
         ppqn = 0;
       }
     };
@@ -74,6 +74,7 @@ class Transport {
     void startPPQN () {
       m_state = true;
       ppqn = 0;
+      isTimeForStep = true;
     };
 
     void stopPPQN () {
@@ -81,7 +82,14 @@ class Transport {
       ppqn = 0;
     };
 
-    // return ppqn is max to lets sequence know
+    boolean isItTimeForStep () {
+      if (isTimeForStep) {
+        isTimeForStep = false;
+        return true;
+      } else {
+        return false;
+      }
+    };
 
     void printBytes(const byte *data, unsigned int size) {
       while (size > 0) {

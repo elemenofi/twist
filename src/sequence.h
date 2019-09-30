@@ -15,10 +15,10 @@ class Sequence {
     Led* m_leds[6];
     Button* m_buttons[6];
     Knob* m_knobs[5];
+    Step* m_steps[4];
     Modes m_mode;
     int m_currentStep;
     boolean m_reverse;
-    int steps[4] = {0,0,1,0};
     Transport transport;
 
     Sequence (
@@ -32,13 +32,16 @@ class Sequence {
       m_reverse = false;      
     };
 
+    // isTimeForStep has to be called before we advance the midi clock
     void check () {
+      if (transport.isItTimeForStep()) {
+        advanceStep();
+      }
+
       if (usbMIDI.read()) {
         transport.processMidiClock();
       }
-
-      // ask transport if step should play
-    }
+    };
 
     void assignControls (Led* leds[6], Button* buttons[6], Knob* knobs[5]) {
       for (int i = 0; i < 6; i++) {
@@ -51,9 +54,15 @@ class Sequence {
       }
 
       for (int i = 0; i < 5; i++) {
+
         m_knobs[i] = knobs[i];
       }
-    }
+
+      for (int i = 0; i < 4; i++) {
+        Step *step = new Step();
+        m_steps[i] = step;
+      }
+    };
 
     void toggleGlobalMode () {
       
@@ -77,10 +86,12 @@ class Sequence {
         m_leds[4]->blink(); // shut the 999 blinks off
         m_leds[4]->on();
       }
-    }
+    };
 
-    void doStep () {  
+    void advanceStep () {  
       m_leds[m_currentStep]->blink();
+
+      m_steps[m_currentStep]->play();
 
       if (!m_reverse) {
         m_currentStep++;
