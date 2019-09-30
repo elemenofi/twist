@@ -35,7 +35,9 @@ class Button {
     };
 
     void onClick () {
+
       if (m_state == LOW && m_shiftButton) {
+        m_led.toggle();
       } else if (m_state == LOW && m_reverseButton) {
         m_led.toggle();
         reverse();

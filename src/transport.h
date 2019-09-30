@@ -81,6 +81,8 @@ class Transport {
       ppqn = 0;
     };
 
+    // return ppqn is max to lets sequence know
+
     void printBytes(const byte *data, unsigned int size) {
       while (size > 0) {
         byte b = *data++;

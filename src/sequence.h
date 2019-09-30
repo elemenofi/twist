@@ -18,7 +18,7 @@ class Sequence {
     Modes m_mode;
     int m_currentStep;
     boolean m_reverse;
-    Step* steps[4] = {0,0,0,0};
+    int steps[4] = {0,0,1,0};
     Transport transport;
 
     Sequence (
@@ -36,6 +36,8 @@ class Sequence {
       if (usbMIDI.read()) {
         transport.processMidiClock();
       }
+
+      // ask transport if step should play
     }
 
     void assignControls (Led* leds[6], Button* buttons[6], Knob* knobs[5]) {
@@ -80,9 +82,6 @@ class Sequence {
     void doStep () {  
       m_leds[m_currentStep]->blink();
 
-      // if (m_steps[m_currentStep]->m_state) {
-      // }
-
       if (!m_reverse) {
         m_currentStep++;
 
@@ -98,28 +97,8 @@ class Sequence {
       }
     };
 
-    boolean stepIsOver (int ppqn) {
-      // return ppqn >= m_steps[m_currentStep]->m_length;
-      return true;
-    };
-
-    void stopCurrentStep () {
-    };
-
-    void resetStep () {
-      m_currentStep = 0;
-    };
-
     void reverse () {
       m_reverse = !m_reverse;
-    };
-
-    void stopSteps (int ppqn) {
-      if (stepIsOver(ppqn)) {
-        // here i have to check the note length
-        // of the active note to see if i do the stop step
-        stopCurrentStep();
-      }
     };
 };
 
