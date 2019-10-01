@@ -8,7 +8,6 @@
 #include "transport.h"
 #include "step.h"
 
-
 Led led1(3, LOW);
 Led led2(5, LOW);
 Led led3(7, LOW);
@@ -24,21 +23,23 @@ Step step3(controller);
 Step step4(controller);
 Step* steps[4] = {&step1, &step2, &step3, &step4};
 
-Sequence sequence1(steps, leds);
-Transport transport(sequence1);
+Sequence sequence(steps, leds);
+Transport transport(sequence);
 
-Button button1(1, step1pin, *leds[0], sequence1);
-Button button2(2, step2pin, *leds[1], sequence1);
-Button button3(3, step3pin, *leds[2], sequence1);
-Button button4(4, step4pin, *leds[3], sequence1);
-Button button5(5, shiftPin, *leds[4], sequence1, true);
-Button button6(6, playPin, *leds[5], sequence1, false, true);
+// implement a hold function to be able to switch pages with the right and left
+Button button1(1, step1pin, *leds[0], sequence);
+Button button2(2, step2pin, *leds[1], sequence);
+Button button3(3, step3pin, *leds[2], sequence);
+Button button4(4, step4pin, *leds[3], sequence);
+Button button5(5, shiftPin, *leds[4], sequence, true);
+Button button6(6, playPin, *leds[5], sequence, false, true);
 
-Knob knob1(A0, sequence1, transport, FIRST, 0);
-Knob knob2(A1, sequence1, transport, SECOND, 1);
-Knob knob3(A2, sequence1, transport, THIRD, 2);
-Knob knob4(A3, sequence1, transport, FOURTH, 3);
-Knob knob5(A4, sequence1, transport, FIFTH, 4);
+Knob knob1(A0, sequence, transport, FIRST, 0);
+Knob knob2(A1, sequence, transport, SECOND, 1);
+Knob knob3(A2, sequence, transport, THIRD, 2);
+Knob knob4(A3, sequence, transport, FOURTH, 3);
+Knob knob5(A4, sequence, transport, FIFTH, 4);
+// implement a scale knob that transposes the sequencer
 
 void setup() {
   Serial.begin(9600);

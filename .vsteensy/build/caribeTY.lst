@@ -177,6 +177,7 @@ SYMBOL TABLE:
 1fff0c98 g     O .data	00000018 usb_string_manufacturer_name_default
 00003e48 g     F .text	00000020 serial_available
 1fff1898 g     O .bss	00000004 usb_midi_handleProgramChange
+1fff16e4 g     O .bss	00000030 sequence
 00003d54  w    F .text	00000048 hard_fault_isr
 00003d9c  w    F .text	00000006 dma_ch6_isr
 000039fc g     F .text	00000020 Print::println()
@@ -215,7 +216,7 @@ SYMBOL TABLE:
 00003d9c  w    F .text	00000006 porte_isr
 00000494 g     F .text	00001664 loop
 00003d9c  w    F .text	00000006 portb_isr
-1fff170c g     O .bss	00000014 step3
+1fff173c g     O .bss	00000014 step3
 000027c0 g     F .text	0000002c usb_midi_flush_output
 00003d9c  w    F .text	00000006 spi1_isr
 00003c7c g     F .text	000000d8 uart3_status_isr
@@ -270,7 +271,7 @@ SYMBOL TABLE:
 00003d9c  w    F .text	00000006 dma_ch9_isr
 00003d9c  w    F .text	00000006 pit2_isr
 00004148 g     F .text	00000020 serial3_available
-1fff1720 g     O .bss	00000014 step4
+1fff1750 g     O .bss	00000014 step4
 1fff1cfc g     O .bss	00000004 __malloc_max_sbrked_mem
 000024c0 g     F .text	0000000a pinMode
 00002c68 g     F .text	0000004c usb_free
@@ -287,7 +288,7 @@ SYMBOL TABLE:
 1fff1e74 g       .bss	00000000 __bss_end
 00003d9c  w    F .text	00000006 can0_wakeup_isr
 00003d9c  w    F .text	00000006 flash_cmd_isr
-1fff17a4 g     O .bss	0000001c knob5
+1fff17d4 g     O .bss	0000001c knob5
 000039d0  w    F .text	00000004 usb_serial_class::clear()
 00004168 g     F .text	000000d8 uart2_status_isr
 00003db4 g     F .text	0000002c _sbrk
@@ -307,7 +308,7 @@ SYMBOL TABLE:
 00003d9c  w    F .text	00000006 spi0_isr
 00003d9c  w    F .text	00000006 dma_ch3_isr
 00003d9c  w    F .text	00000006 flash_error_isr
-1fff1750 g     O .bss	0000001c knob2
+1fff1780 g     O .bss	0000001c knob2
 00003a38 g     F .text	00000020 serial5_available
 00003d9c  w    F .text	00000006 uart5_error_isr
 00003d9c  w    F .text	00000006 rtc_seconds_isr
@@ -344,7 +345,7 @@ SYMBOL TABLE:
 00003d9c  w    F .text	00000006 ftm3_isr
 00003d9c  w    F .text	00000006 tsi0_isr
 1fff15f0 g     O .bss	00000018 led6
-1fff1734 g     O .bss	0000001c knob1
+1fff1764 g     O .bss	0000001c knob1
 00003d9c  w    F .text	00000006 spi2_isr
 00003a20  w    F .text	00000002 serialEvent4()
 000039f8  w    F .text	00000002 serialEvent()
@@ -357,10 +358,10 @@ SYMBOL TABLE:
 1fff15d8 g     O .bss	00000018 led5
 1fff19c5 g     O .bss	00000001 usb_rx_memory_needed
 00002e88 g     F .text	000009b0 usb_isr
-1fff16e4 g     O .bss	00000014 step1
+1fff1714 g     O .bss	00000014 step1
 1fff18d4 g     O .bss	00000004 usb_midi_handleNoteOff
 00005034  w    O .text	00000028 vtable for usb_serial_class
-1fff176c g     O .bss	0000001c knob3
+1fff179c g     O .bss	0000001c knob3
 00003d9c  w    F .text	00000006 uart3_error_isr
 1fff1ce4 g     O .bss	00000004 MillisTimer::listActive
 00003d9c  w    F .text	00000006 porta_isr
@@ -408,7 +409,7 @@ SYMBOL TABLE:
 000024cc g     F .text	000000a4 delay
 00003d9c  w    F .text	00000006 tpm0_isr
 000050d8 g     F .fini	00000000 _fini
-1fff16f8 g     O .bss	00000014 step2
+1fff1728 g     O .bss	00000014 step2
 00003d9c  w    F .text	00000006 i2s0_rx_isr
 00003d9c  w    F .text	00000006 uart4_error_isr
 00002724 g     F .text	0000009c usb_midi_write_packed
@@ -426,9 +427,8 @@ SYMBOL TABLE:
 00005068 g     O .text	00000054 usb_descriptor_list
 00002cb4 g     F .text	0000003c usb_rx
 0000046c  w    F .text	00000024 Led::Led(int, int)
-1fff1788 g     O .bss	0000001c knob4
+1fff17b8 g     O .bss	0000001c knob4
 00003d9c  w    F .text	00000006 dma_ch10_isr
-1fff17c0 g     O .bss	00000030 sequence1
 1fff18b0 g     O .bss	00000004 usb_midi_handleStart
 00003d9c  w    F .text	00000006 uart0_error_isr
 00002c28 g     F .text	00000040 usb_malloc
@@ -1010,10 +1010,10 @@ void ResetHandler(void)
      48e:	pop	{r3, r4, r5, pc}
 
 00000490 <setup>:
-Knob knob2(A1, sequence1, transport, SECOND, 1);
-Knob knob3(A2, sequence1, transport, THIRD, 2);
-Knob knob4(A3, sequence1, transport, FOURTH, 3);
-Knob knob5(A4, sequence1, transport, FIFTH, 4);
+Knob knob2(A1, sequence, transport, SECOND, 1);
+Knob knob3(A2, sequence, transport, THIRD, 2);
+Knob knob4(A3, sequence, transport, FOURTH, 3);
+Knob knob5(A4, sequence, transport, FIFTH, 4);
 
 void setup() {
      490:	bx	lr
@@ -2404,11 +2404,11 @@ void loop() {
      a30:	.word	0x1fff184c
      a34:	.word	0x1fff15d8
      a38:	.word	0x1fff15f0
-     a3c:	.word	0x1fff1734
+     a3c:	.word	0x1fff1764
      a40:	.word	0x1fff1800
-     a44:	.word	0x1fff1750
-     a48:	.word	0x1fff176c
-     a4c:	.word	0x1fff1788
+     a44:	.word	0x1fff1780
+     a48:	.word	0x1fff179c
+     a4c:	.word	0x1fff17b8
     }
 
     void check () {
@@ -3082,7 +3082,7 @@ void loop() {
      d00:	strb	r3, [r5, #16]
      d02:	b.n	880 <loop+0x3ec>
      d04:	.word	0x1fff1800
-     d08:	.word	0x1fff17a4
+     d08:	.word	0x1fff17d4
      d0c:	.word	0x1fff15f0
      d10:	.word	0x1fff187c
      d14:	.word	0x1fff15d8
@@ -5868,10 +5868,10 @@ void loop() {
 
 00001af8 <_GLOBAL__sub_I_currentMode>:
     1af8:	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+#include "definitions.h"
 #include "controller.h"
 #include "transport.h"
 #include "step.h"
-
 
 Led led1(3, LOW);
     1afc:	movs	r2, #0
@@ -5998,41 +5998,42 @@ Led led6(24, LOW);
     1b7e:	str	r4, [r1, #12]
     1b80:	mov	r2, r7
     1b82:	add.w	r0, r3, #24
-    boolean m_reverse;
-
-    Sequence (Step* steps[4], Led* leds[6]) {
-
-      for (int i = 0; i < 6; i++) {
-        m_leds[i] = leds[i];
-    1b86:	ldr.w	r1, [r2], #4
-    1b8a:	str.w	r1, [r3, #4]!
     Modes m_mode;
     boolean m_reverse;
 
     Sequence (Step* steps[4], Led* leds[6]) {
+      for (int i = 0; i < 6; i++) {
+        m_leds[i] = leds[i];
+    1b86:	ldr.w	r1, [r2], #4
+    1b8a:	str.w	r1, [r3, #4]!
+    Led* m_leds[6];
+    Modes m_mode;
+    boolean m_reverse;
 
+    Sequence (Step* steps[4], Led* leds[6]) {
       for (int i = 0; i < 6; i++) {
     1b8e:	cmp	r0, r3
     1b90:	bne.n	1b86 <_GLOBAL__sub_I_currentMode+0x8e>
         m_leds[i] = leds[i];
       };
-      
-      m_steps[0] = steps[0];
+
+      for (int i = 0; i < 4; i++) {
+        m_steps[i] = steps[i];
     1b92:	ldr	r4, [pc, #484]	; (1d78 <_GLOBAL__sub_I_currentMode+0x280>)
     1b94:	ldr	r2, [pc, #484]	; (1d7c <_GLOBAL__sub_I_currentMode+0x284>)
-      m_steps[2] = steps[2];
-      m_steps[3] = steps[3];
+      
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;
+      
       m_leds[4]->toggle();
     1b96:	ldr	r5, [r4, #36]	; 0x24
-
       for (int i = 0; i < 6; i++) {
         m_leds[i] = leds[i];
       };
-      
-      m_steps[0] = steps[0];
+
+      for (int i = 0; i < 4; i++) {
+        m_steps[i] = steps[i];
     1b98:	ldr	r1, [r2, #0]
       blinkingCounter = times;
       lastBlink = millis();  
@@ -6041,31 +6042,14 @@ Led led6(24, LOW);
     void toggle () {
       m_state = !m_state;
     1b9a:	ldr	r3, [r5, #4]
-      m_steps[1] = steps[1];
     1b9c:	ldr	r0, [r2, #4]
-      m_steps[2] = steps[2];
-      m_steps[3] = steps[3];
     1b9e:	ldr	r6, [r2, #12]
-
-      for (int i = 0; i < 6; i++) {
-        m_leds[i] = leds[i];
-      };
-      
-      m_steps[0] = steps[0];
     1ba0:	str	r1, [r4, #4]
     1ba2:	clz	r3, r3
-      m_steps[1] = steps[1];
-      m_steps[2] = steps[2];
     1ba6:	ldr	r1, [r2, #8]
-      for (int i = 0; i < 6; i++) {
-        m_leds[i] = leds[i];
+    1ba8:	str	r0, [r4, #8]
       };
       
-      m_steps[0] = steps[0];
-      m_steps[1] = steps[1];
-    1ba8:	str	r0, [r4, #8]
-      m_steps[2] = steps[2];
-      m_steps[3] = steps[3];
       m_currentStep = 0;
     1baa:	movs	r2, #0
     1bac:	lsrs	r3, r3, #5
@@ -6073,18 +6057,19 @@ Led led6(24, LOW);
     1bae:	strb.w	r2, [r4, #44]	; 0x2c
       m_reverse = false;
     1bb2:	strb.w	r2, [r4, #45]	; 0x2d
+      for (int i = 0; i < 6; i++) {
         m_leds[i] = leds[i];
       };
-      
-      m_steps[0] = steps[0];
-      m_steps[1] = steps[1];
-      m_steps[2] = steps[2];
+
+      for (int i = 0; i < 4; i++) {
+        m_steps[i] = steps[i];
     1bb6:	str	r1, [r4, #12]
-      m_steps[3] = steps[3];
     1bb8:	str	r6, [r4, #16]
     1bba:	movs	r1, #8
     1bbc:	str	r3, [r5, #4]
     1bbe:	ldr	r0, [pc, #448]	; (1d80 <_GLOBAL__sub_I_currentMode+0x288>)
+      };
+      
       m_currentStep = 0;
     1bc0:	str	r2, [r4, #0]
     1bc2:	bl	1e88 <usb_serial_write>
@@ -6108,6 +6093,7 @@ Led led6(24, LOW);
     1be2:	bl	2498 <digitalWrite>
       m_mode = PITCH;
       m_reverse = false;
+      
       m_leds[4]->toggle();
       m_leds[5]->toggle();
     1be6:	ldr	r5, [r4, #40]	; 0x28
@@ -6607,12 +6593,12 @@ Led led6(24, LOW);
     1d58:	.word	0x1fff184c
     1d5c:	.word	0x1fff15d8
     1d60:	.word	0x1fff15f0
-    1d64:	.word	0x1fff16e4
-    1d68:	.word	0x1fff16f8
-    1d6c:	.word	0x1fff170c
-    1d70:	.word	0x1fff1720
-    1d74:	.word	0x1fff17d0
-    1d78:	.word	0x1fff17c0
+    1d64:	.word	0x1fff1714
+    1d68:	.word	0x1fff1728
+    1d6c:	.word	0x1fff173c
+    1d70:	.word	0x1fff1750
+    1d74:	.word	0x1fff16f4
+    1d78:	.word	0x1fff16e4
     1d7c:	.word	0x1fff0c40
     1d80:	.word	0x00004d9c
     1d84:	.word	0x1fff0c70
@@ -6623,11 +6609,11 @@ Led led6(24, LOW);
     1d98:	.word	0x1fff1678
     1d9c:	.word	0x1fff169c
     1da0:	.word	0x1fff16c0
-    1da4:	.word	0x1fff1734
-    1da8:	.word	0x1fff1750
-    1dac:	.word	0x1fff176c
-    1db0:	.word	0x1fff1788
-    1db4:	.word	0x1fff17a4
+    1da4:	.word	0x1fff1764
+    1da8:	.word	0x1fff1780
+    1dac:	.word	0x1fff179c
+    1db0:	.word	0x1fff17b8
+    1db4:	.word	0x1fff17d4
     1db8:	.word	0x1fff1608
 
 00001dbc <usb_serial_getchar>:
