@@ -13,6 +13,7 @@ class Sequence {
     Modes m_mode;
     boolean m_reverse;
     boolean m_shiftMode;
+    int m_page = 1;
 
     Sequence (Step* steps[4], Led* leds[6]) {
       for (int i = 0; i < 6; i++) {
@@ -31,8 +32,28 @@ class Sequence {
       m_leds[5]->toggle();
     };
 
-    void toggleShiftMode () {
+    void enterShiftMode () {
       m_shiftMode = true;
+    };
+
+    void exitShiftMode () {
+      m_shiftMode = true;
+    };
+
+    boolean getShiftMode () {
+      return m_page;
+    }
+
+    int getPage () {
+      return m_page;
+    }
+
+    void nextPage () {
+      if (m_page < 4) m_page++;
+    };
+
+    void previousPage () {
+      if (m_page > 1) m_page--;
     };
 
     void toggleGlobalMode () {

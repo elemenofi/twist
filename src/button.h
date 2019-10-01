@@ -44,10 +44,20 @@ class Button {
 
     void onClick () {
       if (m_state == LOW && m_shiftButton) {
-        m_sequence.toggleGlobalMode();
+        if (m_sequence.getShiftMode()) {
+          m_sequence.previousPage();
+          Serial.println(m_sequence.getPage());
+        } else {
+          m_sequence.toggleGlobalMode();
+        }
       } else if (m_state == LOW && m_reverseButton) {
-        m_led.toggle();
-        reverse();
+        if (m_sequence.getShiftMode()) {
+          m_sequence.nextPage();
+          Serial.println(m_sequence.getPage());
+        } else {
+          m_led.toggle();
+          reverse();
+        }
       } else if (m_state == LOW) {
         m_led.toggle();
         m_sequence.m_steps[m_id - 1]->toggle();
@@ -99,10 +109,13 @@ class Button {
         // check if the button was released since we last checked
         if (current == LOW && previous == HIGH) {
           if (secs_held >= 1) {
+            m_sequence.enterShiftMode();
             Serial.print("Seconds held: ");
             Serial.print(secs_held);
             Serial.print("Milliseconds held: ");
             Serial.println(millis_held);
+          } else {
+            m_sequence.exitShiftMode();
           }
         }
       }
