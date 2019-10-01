@@ -12,6 +12,7 @@ class Sequence {
     Led* m_leds[6];
     Modes m_mode;
     boolean m_reverse;
+    boolean m_shiftMode;
 
     Sequence (Step* steps[4], Led* leds[6]) {
       for (int i = 0; i < 6; i++) {
@@ -28,6 +29,10 @@ class Sequence {
       
       m_leds[4]->toggle();
       m_leds[5]->toggle();
+    };
+
+    void toggleShiftMode () {
+      m_shiftMode = true;
     };
 
     void toggleGlobalMode () {

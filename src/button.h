@@ -14,6 +14,12 @@ class Button {
     unsigned long m_lastDebounceTime;
     Led &m_led;
     Sequence &m_sequence;
+    int current;
+    long millis_held;    // How long the button was held (milliseconds)
+    long secs_held;      // How long the button was held (seconds)
+    long prev_secs_held; // How long the button was held in the previous check
+    byte previous = LOW;
+    unsigned long firstTime; // how long since the button was first pressed 
 
   public:
     int m_pin;
@@ -52,14 +58,16 @@ class Button {
       m_sequence.reverse();
     }
 
-    boolean debounce (int reading) {
-      if (reading != m_lastState) {  
+    boolean debounce (int current) {
+      if (current != previous) {  
         m_lastDebounceTime = millis();
       }
 
+      // if the debounce time has passed
       if ((millis() - m_lastDebounceTime) > 00) {
-        if (reading != m_state) {
-          m_state = reading;
+        // and the current changed
+        if (current != m_state) {
+          m_state = current;
           
           return true;       
         }
@@ -69,15 +77,38 @@ class Button {
     }
 
     void check (void) {
-      m_reading = digitalRead(m_pin);
+      current = digitalRead(m_pin);
 
-      boolean debounced = debounce(m_reading);
+      // if the button state changes to pressed, remember the start time 
+      if (current == HIGH && previous == LOW && (millis() - firstTime) > 200) {
+        firstTime = millis();
+        m_led.blink();
+      }
 
-      if (debounced) {
+      millis_held = (millis() - firstTime);
+      secs_held = millis_held / 1000;
+
+      boolean debounced = debounce(current);
+
+      if (debounced && secs_held < 1) {
         onClick();
       }
  
-      m_lastState = m_reading;
+      if (millis_held > 50) {
+
+        // check if the button was released since we last checked
+        if (current == LOW && previous == HIGH) {
+          if (secs_held >= 1) {
+            Serial.print("Seconds held: ");
+            Serial.print(secs_held);
+            Serial.print("Milliseconds held: ");
+            Serial.println(millis_held);
+          }
+        }
+      }
+
+      previous = current;
+      prev_secs_held = secs_held;
     };
 };
 
