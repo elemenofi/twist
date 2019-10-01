@@ -14,19 +14,18 @@ class Sequence {
     boolean m_reverse;
 
     Sequence (Step* steps[4], Led* leds[6]) {
-      m_leds[0] = leds[0];
-      m_leds[1] = leds[1];
-      m_leds[2] = leds[2];
-      m_leds[3] = leds[3];
-      m_leds[4] = leds[4];
-      m_leds[5] = leds[5];
-      m_steps[0] = steps[0];
-      m_steps[1] = steps[1];
-      m_steps[2] = steps[2];
-      m_steps[3] = steps[3];
+      for (int i = 0; i < 6; i++) {
+        m_leds[i] = leds[i];
+      };
+
+      for (int i = 0; i < 4; i++) {
+        m_steps[i] = steps[i];
+      };
+      
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;
+      
       m_leds[4]->toggle();
       m_leds[5]->toggle();
     };
