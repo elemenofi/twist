@@ -20,6 +20,7 @@ class Button {
     long prev_secs_held; // How long the button was held in the previous check
     byte previous = LOW;
     unsigned long firstTime; // how long since the button was first pressed 
+    unsigned long firstHoldTime; // how long since the button was first pressed 
 
   public:
     int m_pin;
@@ -42,18 +43,24 @@ class Button {
       pinMode(pin, INPUT);
     };
 
-    void onClick () {
+    void onPress () {
+      Paginator* paginator = m_sequence.m_paginator;
+      Serial.println("onPress shiftMode");
+      Serial.println(m_sequence.getShiftMode());
+      Serial.println("onPress page");
+      Serial.println(m_sequence.m_paginator->getPage());
+
       if (m_state == LOW && m_shiftButton) {
         if (m_sequence.getShiftMode()) {
-          m_sequence.previousPage();
-          Serial.println(m_sequence.getPage());
+          paginator->previousPage();
+          Serial.println(paginator->getPage());
         } else {
           m_sequence.toggleGlobalMode();
         }
       } else if (m_state == LOW && m_reverseButton) {
         if (m_sequence.getShiftMode()) {
-          m_sequence.nextPage();
-          Serial.println(m_sequence.getPage());
+          paginator->nextPage();
+          Serial.println(paginator->getPage());
         } else {
           m_led.toggle();
           reverse();
@@ -86,6 +93,14 @@ class Button {
       return false;
     }
 
+    // cleanup all this timing madness
+
+    // in this microcontrollers i have to remember that this is a loop
+    // and then i can save a point in time and store it in x
+    // and then if x < millis() it is in the past
+    // and if x > millis() its in the future
+    // and if i want to know how much time has passed i do millis() - x
+    // and if i compare millis() - x > z i check if z time has passed
     void check (void) {
       current = digitalRead(m_pin);
 
@@ -93,6 +108,13 @@ class Button {
       if (current == HIGH && previous == LOW && (millis() - firstTime) > 200) {
         firstTime = millis();
         m_led.blink();
+        Serial.println("onPress");
+      }
+
+      if (current == HIGH && previous == HIGH && (millis() - firstTime) > 1000) {
+        firstHoldTime = millis();
+        if (!m_sequence.getShiftMode()) Serial.println("onHold");
+        m_sequence.enterShiftMode();
       }
 
       millis_held = (millis() - firstTime);
@@ -101,20 +123,17 @@ class Button {
       boolean debounced = debounce(current);
 
       if (debounced && secs_held < 1) {
-        onClick();
+        onPress();
       }
  
       if (millis_held > 50) {
-
         // check if the button was released since we last checked
         if (current == LOW && previous == HIGH) {
           if (secs_held >= 1) {
-            m_sequence.enterShiftMode();
             Serial.print("Seconds held: ");
             Serial.print(secs_held);
             Serial.print("Milliseconds held: ");
             Serial.println(millis_held);
-          } else {
             m_sequence.exitShiftMode();
           }
         }

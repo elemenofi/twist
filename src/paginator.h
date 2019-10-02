@@ -1,12 +1,19 @@
 #ifndef paginator_h
 #define paginator_h
 
+#include "sequence.h"
+
+class Sequence;
+
 class Paginator {
+  Sequence* m_sequence;
   private:
-    int m_page = 1; 
-  
+    int m_page = 1;  
+
   public:
-    Paginator () {};
+    Paginator () {
+      // this->m_page = 1;
+    };
 
     int getPage () {
       return m_page;

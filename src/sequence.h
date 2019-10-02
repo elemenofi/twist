@@ -6,6 +6,8 @@
 #include "step.h"
 #include "paginator.h"
 
+class Paginator;
+
 class Sequence {  
   public:
     int m_currentStep;
@@ -15,6 +17,7 @@ class Sequence {
     boolean m_reverse;
     boolean m_shiftMode;
     int m_page = 1;
+    Paginator* m_paginator;
 
     Sequence (Step* steps[4], Led* leds[6]) {
       for (int i = 0; i < 6; i++) {
@@ -28,9 +31,12 @@ class Sequence {
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;
-      
-      m_leds[4]->toggle();
-      m_leds[5]->toggle();
+
+      m_paginator = new Paginator();
+      // m_leds[4]->toggle();
+      // m_leds[5]->toggle();
+      Serial.println("Inited Sequence");
+      Serial.println(m_paginator->getPage());
     };
 
     void enterShiftMode () {
@@ -44,18 +50,6 @@ class Sequence {
     boolean getShiftMode () {
       return m_shiftMode;
     }
-
-    int getPage () {
-      return m_page;
-    }
-
-    void nextPage () {
-      if (m_page < 4) m_page++;
-    };
-
-    void previousPage () {
-      if (m_page > 1) m_page--;
-    };
 
     void toggleGlobalMode () {
       

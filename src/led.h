@@ -30,7 +30,6 @@ class Led {
 
     void toggle () {
       m_state = !m_state;
-      Serial.println("Toggling");
 
       digitalWrite(m_pin, m_state);
 
