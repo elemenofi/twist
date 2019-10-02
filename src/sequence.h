@@ -4,6 +4,7 @@
 #include "led.h"
 #include "definitions.h"
 #include "step.h"
+#include "paginator.h"
 
 class Sequence {  
   public:
@@ -37,11 +38,11 @@ class Sequence {
     };
 
     void exitShiftMode () {
-      m_shiftMode = true;
+      m_shiftMode = false;
     };
 
     boolean getShiftMode () {
-      return m_page;
+      return m_shiftMode;
     }
 
     int getPage () {

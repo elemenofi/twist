@@ -2,13 +2,11 @@
 #define paginator_h
 
 class Paginator {
-  Sequence m_sequence;
   private:
     int m_page = 1; 
   
   public:
-    Paginator (Sequence& sequence): m_sequence(sequence) {
-    };
+    Paginator () {};
 
     int getPage () {
       return m_page;
