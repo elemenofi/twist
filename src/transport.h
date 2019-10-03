@@ -76,6 +76,7 @@ class Transport {
     void advancePPQN () {
       ++ppqn;
 
+      Serial.println("Tick in transport");
       m_sequence.tick();
 
       if (ppqn == max_ppqn) {

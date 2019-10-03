@@ -72,6 +72,7 @@ class Sequence {
     }
 
     void tick () {
+      Serial.println("Tick in sequence");
       m_controller.tick();
     };
 
