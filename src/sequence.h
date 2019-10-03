@@ -18,8 +18,9 @@ class Sequence {
     boolean m_shiftMode;
     int m_page = 1;
     Paginator* m_paginator;
+    Controller &m_controller;
 
-    Sequence (Step* steps[4], Led* leds[6]) {
+    Sequence (Step* steps[4], Led* leds[6], Controller& controller): m_controller(controller) {
       for (int i = 0; i < 6; i++) {
         m_leds[i] = leds[i];
       };
@@ -31,7 +32,7 @@ class Sequence {
       m_currentStep = 0;
       m_mode = PITCH;
       m_reverse = false;
-
+      m_controller = controller;
       m_paginator = new Paginator();
       m_leds[4]->toggle();
       m_leds[5]->toggle();
@@ -52,12 +53,7 @@ class Sequence {
     }
 
     void toggleGlobalMode () {
-      
-      // i would like to add a global mode here 
-      // where each knob does something globally
-      // special, but no good ideas yet so just a
-      // reminder
-      
+            
       if (currentMode == PITCH) {
         currentMode = VELOCITY;
         Serial.println("VELOCITY");
@@ -75,11 +71,21 @@ class Sequence {
       }
     }
 
+    void tick () {
+      m_controller.tick();
+    };
+
     void doStep () {  
       m_leds[m_currentStep]->blink();
 
-      if (m_steps[m_currentStep]->m_state) {
-        m_steps[m_currentStep]->play();
+      Step* current = m_steps[m_currentStep];
+
+      if (current->m_state) {
+        m_controller.play(
+          current->m_pitch,
+          current->m_velocity,
+          current->m_length
+        );
       }
 
       if (!m_reverse) {
@@ -97,14 +103,6 @@ class Sequence {
       }
     };
 
-    boolean stepIsOver (int ppqn) {
-      return ppqn >= m_steps[m_currentStep]->m_length;
-    };
-
-    void stopCurrentStep () {
-      m_steps[m_currentStep]->stop();
-    };
-
     void resetStep () {
       m_currentStep = 0;
     };
@@ -112,14 +110,6 @@ class Sequence {
     void reverse () {
       m_reverse = !m_reverse;
     };
-
-    void stopSteps (int ppqn) {
-      if (stepIsOver(ppqn)) {
-        // here i have to check the note length
-        // of the active note to see if i do the stop step
-        stopCurrentStep();
-      }
-    }
 };
 
 #endif

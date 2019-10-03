@@ -23,7 +23,7 @@ Step step3(controller);
 Step step4(controller);
 Step* steps[4] = {&step1, &step2, &step3, &step4};
 
-Sequence sequence(steps, leds);
+Sequence sequence(steps, leds, controller);
 Transport transport(sequence);
 
 // implement a hold function to be able to switch pages with the right and left
@@ -40,6 +40,7 @@ Knob knob3(A2, sequence, transport, THIRD, 2);
 Knob knob4(A3, sequence, transport, FOURTH, 3);
 Knob knob5(A4, sequence, transport, FIFTH, 4);
 // implement a scale knob that transposes the sequencer
+// or implement a midi channel knob to change the sequence
 
 void setup() {
   Serial.begin(9600);

@@ -25,13 +25,19 @@ class Step {
       m_state = !m_state;
     };
 
-    void play () {
-      m_controller.noteOn(0, m_pitch, m_velocity);
-    };
 
-    void stop () {
-      m_controller.controlChange(0, 123, 127);
-    };
+    // i will move this responsibility to the 
+    // note manager that i will communicate with in the controller
+    // in this class i wanna save data per step and control that data
+
+    // void play () {
+    //   m_controller.noteOn(0, m_pitch, m_velocity);
+    // };
+
+    
+    // void stop () {
+    //   m_controller.controlChange(0, 123, 127);
+    // };
 
     void controlLength (int value) {
       int newValue = map(value, 0, 1023, 24, 1);
