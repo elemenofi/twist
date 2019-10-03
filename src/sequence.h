@@ -33,8 +33,8 @@ class Sequence {
       m_reverse = false;
 
       m_paginator = new Paginator();
-      // m_leds[4]->toggle();
-      // m_leds[5]->toggle();
+      m_leds[4]->toggle();
+      m_leds[5]->toggle();
       Serial.println("Inited Sequence");
       Serial.println(m_paginator->getPage());
     };

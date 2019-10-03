@@ -12,7 +12,6 @@ class Paginator {
 
   public:
     Paginator () {
-      // this->m_page = 1;
     };
 
     int getPage () {
