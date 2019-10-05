@@ -17,13 +17,10 @@ void Knob::onChange () {
   if (_id == 5) {
     _controller->_sequencer->_transport->controlTempo(_value);
   } else if (_controller->getMode() == VELOCITY) {
-    Serial.println("Velocity");
     _controller->_sequencer->_steps[_id]->controlVelocity(_value);
   } else if (_controller->getMode() == PITCH) {
-    Serial.println("Pitch");
    _controller->_sequencer->_steps[_id]->controlPitch(_value);
   } else if (_controller->getMode() == NOTELENGTH) {
-    Serial.println("Note length");
     _controller->_sequencer->_steps[_id]->controlLength(_value);
   }
 }
