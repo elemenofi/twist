@@ -6,26 +6,19 @@
 
 Piano::Piano (Sequencer* sequencer) {
   _sequencer = sequencer;
+  _notes[0] = new Note();
+  _notes[1] = new Note();
+  _notes[2] = new Note();
+  _notes[3] = new Note();
 };
 
 void Piano::tick () {
-  if (_notes[0]) _notes[0]->tick();
-
-  // i have to figure out how to destroy the objects because
-  // this length check is a hack. length would go infinite negative
-  // calling note off all the time
-  if (_notes[0]->_length == 0) {
-    noteOff(_notes[0]->_channel, _notes[0]->_pitch, _notes[0]->_velocity);
-    delete _notes[0];
-  }
-}
+  
+};
 
 void Piano::play (Step* step) {
-  // create new note pass self as reference
-  noteOn(0, step->pitch, step->velocity);
-  Note* note = new Note(step);
-  _notes[0] = note;
-}
+  Serial.println("Play");
+};
 
 // First parameter is the event type (0x09 = note on, 0x08 = note off).
 // Second parameter is note-on/note-off, combined with the channel.

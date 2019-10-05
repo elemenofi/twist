@@ -9,8 +9,10 @@ class Note {
     int _velocity;
     int _length;
     int _channel;
-    Note(Step* step);
+    int _active;
+    Note();
     void tick();
+    bool isActive();
 };
 
 #endif

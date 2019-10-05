@@ -3,14 +3,18 @@
 #include "step.h"
 #include "note.h"
 
-Note::Note (Step* step) {
-  _length = step->length;
-  _pitch = step->pitch;
-  _velocity = step->velocity;
+Note::Note () {
+  _length = 0;
+  _pitch = 0;
+  _velocity = 0;
   _channel = 0;
+  _active = false;
 };
 
 void Note::tick() {
-  Serial.println("Note updating");
-  _length--;
+
+};
+
+bool Note::isActive() {
+  return _active;
 };
