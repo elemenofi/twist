@@ -13,6 +13,8 @@ void Note::tick() {
   _length--;
 
   if (_length <= 0) {
+    Serial.println("length");
+    Serial.println(_length);
     noteOff(_channel, _pitch, _velocity);
     reset();
   }

@@ -19,7 +19,7 @@ void Piano::tick () {
 
 Note* Piano::findNote() {
   for (int i = 0; i < 4; i++) {
-    if (_notes[i]->_active) {
+    if (!_notes[i]->_active) {
       return _notes[i];
     }
   }
