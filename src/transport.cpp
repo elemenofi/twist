@@ -20,7 +20,9 @@ Transport::Transport (Sequencer* sequencer) {
 };
 
 void Transport::tick () {
-  processMidi();
+  if (usbMIDI.read()) {
+    processMidi();
+  }
 };
 
 int Transport::getPPQN () {
@@ -76,8 +78,6 @@ void Transport::processMidi () {
 
 void Transport::advancePPQN () {
   ++ppqn;
-
-  Serial.println("Tick in transport");
 
   if (ppqn == max_ppqn) {
     _sequencer->step(); 

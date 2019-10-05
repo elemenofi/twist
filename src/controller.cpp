@@ -4,6 +4,7 @@
 #include "button.h"
 #include "knob.h"
 #include "definitions.h"
+#include "sequencer.h"
 
 Controller::Controller (Sequencer* sequencer) {
   _sequencer = sequencer;
