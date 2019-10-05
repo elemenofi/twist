@@ -9,14 +9,14 @@ Piano::Piano (Sequencer* sequencer) {
 };
 
 void Piano::tick () {
-  Serial.println("Tick in controller");
-  // if (_notes[0]) _notes[0]->tick();
+  if (_notes[0]) _notes[0]->tick();
 
   // i have to figure out how to destroy the objects because
   // this length check is a hack. length would go infinite negative
   // calling note off all the time
-  if (_notes[0]->_ended && _notes[0]->_length == 0) {
+  if (_notes[0]->_length == 0) {
     noteOff(_notes[0]->_channel, _notes[0]->_pitch, _notes[0]->_velocity);
+    delete _notes[0];
   }
 }
 

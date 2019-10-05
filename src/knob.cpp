@@ -2,23 +2,29 @@
 #include "definitions.h"
 #include "knob.h"
 #include "controller.h"
+#include "step.h"
+#include "sequencer.h"
+#include "transport.h"
 
 Knob::Knob (uint8_t pin, int id, Controller* controller) {
   _pin = pin;
   _id = id;
   _controller = controller;
+  _value = 0;
 };
 
 void Knob::onChange () {
-  if (_controller->getMode() == VELOCITY) {
+  if (_id == 5) {
+    _controller->_sequencer->_transport->controlTempo(_value);
+  } else if (_controller->getMode() == VELOCITY) {
     Serial.println("Velocity");
-    // m_sequence.m_steps[m_id]->controlVelocity(_value);
+    _controller->_sequencer->_steps[_id]->controlVelocity(_value);
   } else if (_controller->getMode() == PITCH) {
     Serial.println("Pitch");
-    // m_sequence.m_steps[m_id]->controlPitch(_value);
+   _controller->_sequencer->_steps[_id]->controlPitch(_value);
   } else if (_controller->getMode() == NOTELENGTH) {
     Serial.println("Note length");
-    // m_sequence.m_steps[m_id]->controlLength(_value);
+    _controller->_sequencer->_steps[_id]->controlLength(_value);
   }
 }
 

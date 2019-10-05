@@ -22,7 +22,6 @@ Sequencer::Sequencer () {
 
 void Sequencer::tick() {
   _transport->tick();
-  // _piano->tick();
   _controller->tick();
 }
 
@@ -31,6 +30,8 @@ void Sequencer::reverse() {
 }
 
 void Sequencer::step () {  
+  _piano->tick();
+
   _controller->_leds[_currentStep]->blink(1);
 
   Step* current = _steps[_currentStep];

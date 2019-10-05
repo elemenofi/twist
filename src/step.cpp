@@ -6,7 +6,7 @@ Step::Step(Sequencer* sequencer) {
   _sequencer = sequencer;
   pitch = 38;
   velocity = 100;
-  length = 4;
+  length = 1;
 };
 
 void Step::toggle () {

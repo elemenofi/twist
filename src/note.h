@@ -9,10 +9,8 @@ class Note {
     int _velocity;
     int _length;
     int _channel;
-    bool _ended;
     Note(Step* step);
     void tick();
 };
-
 
 #endif

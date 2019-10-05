@@ -8,12 +8,12 @@ class Step;
 class Piano;
 
 class Sequencer {
-  Transport* _transport;
   Piano* _piano;
   bool _reversed;
   int _currentStep;
 
   public:
+    Transport* _transport;
     Controller* _controller;
     Paginator* _paginator;
     Step* _steps[4];
