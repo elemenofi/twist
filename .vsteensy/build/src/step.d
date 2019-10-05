@@ -1,4 +1,4 @@
-.vsteensy/build/src/controller.o: src/controller.cpp \
+.vsteensy/build/src/step.o: src/step.cpp \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/Arduino.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/WProgram.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/avr/pgmspace.h \
@@ -36,4 +36,4 @@
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/elapsedMillis.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/Arduino.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/IntervalTimer.h \
- src/controller.h src/definitions.h src/led.h src/button.h src/knob.h
+ src/step.h

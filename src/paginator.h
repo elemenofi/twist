@@ -1,30 +1,17 @@
 #ifndef paginator_h
 #define paginator_h
 
-#include "sequence.h"
-
-class Sequence;
+class Sequencer;
 
 class Paginator {
-  Sequence* m_sequence;
-  private:
-    int m_page = 1;  
+  int _page;
+  Sequencer* _sequencer;
 
   public:
-    Paginator () {
-    };
-
-    int getPage () {
-      return m_page;
-    }
-
-    void nextPage () {
-      if (m_page < 4) m_page++;
-    };
-
-    void previousPage () {
-      if (m_page > 1) m_page--;
-    };
+    Paginator(Sequencer* sequencer);
+    int getPage();
+    void nextPage();
+    void previousPage();
 };
 
 #endif

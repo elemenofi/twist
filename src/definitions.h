@@ -14,14 +14,4 @@ enum Modes {
   NOTELENGTH,
 };
 
-enum Knobs {
-  FIRST,
-  SECOND,
-  THIRD,
-  FOURTH,
-  FIFTH,
-};
-
-Modes currentMode = PITCH;
-
 #endif

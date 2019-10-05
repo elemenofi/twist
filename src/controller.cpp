@@ -1,59 +1,79 @@
+#include <Arduino.h>
+#include "controller.h"
+#include "led.h"
+#include "button.h"
+#include "knob.h"
+#include "definitions.h"
 
-// #include "controller.h"
-// #include "note.h"
+Controller::Controller (Sequencer* sequencer) {
+  _sequencer = sequencer;
+  _currentMode = PITCH;
+  _shiftMode = false;
+  
+  _leds[0] = new Led(3, LOW);
+  _leds[1] = new Led(5, LOW);
+  _leds[2] = new Led(7, LOW);
+  _leds[3] = new Led(9, LOW);
+  _leds[4] = new Led(11, LOW);
+  _leds[5] = new Led(24, LOW);
 
-// void Controller::play (int pitch, int velocity, int length) {
-//   // create new note pass self as reference
-//   Note* note = new Note(pitch, velocity, length, 0, *this);
-//   m_notes[0] = note;
-// }
+  _leds[4]->toggle();
+  _leds[5]->toggle();
 
-// void Controller::noteOn(byte channel, byte pitch, byte velocity) {
-//   usbMIDI.sendNoteOn(pitch, velocity, channel);
-//   usbMIDI.send_now();
-// };
+  _buttons[0] = new Button(1, step1pin, _leds[0], false, false, this);
+  _buttons[1] = new Button(2, step2pin, _leds[1], false, false, this);
+  _buttons[2] = new Button(3, step3pin, _leds[2], false, false, this);
+  _buttons[3] = new Button(4, step4pin, _leds[3], false, false, this);
+  _buttons[4] = new Button(5, shiftPin, _leds[4], true, false, this);
+  _buttons[5] = new Button(6, playPin, _leds[5], false, true, this);
 
-// void Controller::noteOff(byte channel, byte pitch, byte velocity) {
-//   usbMIDI.sendNoteOff(pitch, velocity, channel);
-//   usbMIDI.send_now();
-// };
+  _knobs[0] = new Knob(A0, 0, this);
+  _knobs[1] = new Knob(A1, 1, this);
+  _knobs[2] = new Knob(A2, 2, this);
+  _knobs[3] = new Knob(A3, 3, this);
+  _knobs[4] = new Knob(A4, 4, this);
+  _knobs[5] = new Knob(A5, 5, this);
+};
 
-// void Controller::controlChange (byte channel, byte control, byte value) {
-//   usbMIDI.sendControlChange(control, value, channel);
-// };
+void Controller::tick() {
+  for (size_t i = 0; i < 6; i++) {
+    _buttons[i]->tick();
+    _leds[i]->tick();
+    _knobs[i]->tick();
+  }
+}
 
-// // class Controller {
-// //   Note* m_notes[4];
+void Controller::toggleMode () {
+  if (_currentMode == PITCH) {
+    _currentMode = VELOCITY;
+    Serial.println("VELOCITY");
+    _leds[4]->blink(999);
+  } else if (_currentMode == VELOCITY) {
+    _currentMode = NOTELENGTH;
+    Serial.println("NOTELENGTH");
+    _leds[4]->blink();
+    _leds[4]->off();
+  } else if (_currentMode == NOTELENGTH) {
+    _currentMode = PITCH;
+    Serial.println("PITCH");
+    _leds[4]->blink(); // shut the 999 blinks off
+    _leds[4]->on();
+  }
+};
 
-// //   public:
-// //     Controller () {};
+void Controller::enterShiftMode () {
+  _shiftMode = true;
+};
 
-// //     void play (int pitch, int velocity, int length) {
-// //       // create new note pass self as reference
-// //       Note* note = new Note(pitch, velocity, length, 0, *this);
-// //       m_notes[0] = note;
-// //     }
+void Controller::exitShiftMode () {
+  _shiftMode = false;
+};
 
-// //     // First parameter is the event type (0x09 = note on, 0x08 = note off).
-// //     // Second parameter is note-on/note-off, combined with the channel.
-// //     // Channel can be anything between 0-15. Typically reported to the user as 1-16.
-// //     // Third parameter is the note number (48 = middle C).
-// //     // Fourth parameter is the velocity (64 = normal, 127 = fastest).
-// //     void noteOn(byte channel, byte pitch, byte velocity) {
-// //       usbMIDI.sendNoteOn(pitch, velocity, channel);
-// //       usbMIDI.send_now();
-// //     };
+bool Controller::getShiftMode () {
+  return _shiftMode;
+};
 
-// //     void noteOff(byte channel, byte pitch, byte velocity) {
-// //       usbMIDI.sendNoteOff(pitch, velocity, channel);
-// //       usbMIDI.send_now();
-// //     };
+Modes Controller::getMode() {
+  return _currentMode;
+};
 
-// //     // First parameter is the event type (0x0B = control change).
-// //     // Second parameter is the event type, combined with the channel.
-// //     // Third parameter is the control number number (0-119).
-// //     // Fourth parameter is the control value (0-127).
-// //     void controlChange (byte channel, byte control, byte value) {
-// //       usbMIDI.sendControlChange(control, value, channel);
-// //     };
-// // };
