@@ -37,4 +37,4 @@
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/Arduino.h \
  C:\PROGRA~2\Arduino\hardware\teensy\avr\cores\teensy3/IntervalTimer.h \
  src/sequencer.h src/controller.h src/definitions.h src/transport.h \
- src/paginator.h src/step.h src/led.h
+ src/paginator.h src/step.h src/led.h src/piano.h

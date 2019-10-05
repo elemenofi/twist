@@ -5,9 +5,11 @@ class Controller;
 class Transport;
 class Paginator;
 class Step;
+class Piano;
 
 class Sequencer {
   Transport* _transport;
+  Piano* _piano;
   bool _reversed;
   int _currentStep;
 

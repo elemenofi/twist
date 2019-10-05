@@ -5,11 +5,13 @@
 #include "paginator.h"
 #include "step.h"
 #include "led.h"
+#include "piano.h"
 
 Sequencer::Sequencer () {
   _controller = new Controller(this);
   _transport = new Transport(this);
   _paginator = new Paginator(this);
+  _piano = new Piano(this);
   _reversed = false;
   _currentStep = 0;
 
@@ -20,6 +22,7 @@ Sequencer::Sequencer () {
 
 void Sequencer::tick() {
   _transport->tick();
+  // _piano->tick();
   _controller->tick();
 }
 
@@ -33,12 +36,7 @@ void Sequencer::step () {
   Step* current = _steps[_currentStep];
 
   if (current->_state) {
-    // piano play step
-    // m_controller.play(
-    //   current->m_pitch,
-    //   current->m_velocity,
-    //   current->m_length
-    // );
+    _piano->play(current);
   }
 
   if (!_reversed) {

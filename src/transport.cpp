@@ -20,9 +20,7 @@ Transport::Transport (Sequencer* sequencer) {
 };
 
 void Transport::tick () {
-  if (usbMIDI.read()) {
-    processMidi();
-  }
+  processMidi();
 };
 
 int Transport::getPPQN () {
@@ -109,6 +107,6 @@ void Transport::printBytes(const byte *data, unsigned int size) {
     if (size > 1) Serial.print(' ');
     size = size - 1;
   }
-};
+}
 
 
