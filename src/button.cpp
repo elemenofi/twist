@@ -26,15 +26,12 @@ Button::Button (
 };
 
 void Button::onPress () {
-  // Serial.println(_id);
-  // Serial.println(_controller.getShiftMode());
-  // Serial.println("currentPage");
-  // Serial.println(_controller._paginator->getPage());
   Paginator * paginator = _controller->_sequencer->_paginator;
 
   if (_state == HIGH && _shiftButton) {
     if (_controller->getShiftMode()) {
       paginator->previousPage();
+      Serial.println("Previous page: ");
       Serial.println(paginator->getPage());
     } else {
       _controller->toggleMode();
@@ -42,6 +39,7 @@ void Button::onPress () {
   } else if (_state == HIGH && _reverseButton) {
     if (_controller->getShiftMode()) {
       paginator->nextPage();
+      Serial.println("Next page: ");
       Serial.println(paginator->getPage());
     } else {
       _controller->_sequencer->reverse();
@@ -51,26 +49,6 @@ void Button::onPress () {
     _led->toggle();
     _controller->_sequencer->_steps[_id - 1]->toggle();
   } 
-}
-
-bool Button::currentIsUp() {
-  return _current == HIGH && _previous == HIGH;
-};
-
-bool Button::currentWentUp() {
-  return _current == HIGH && _previous == LOW;
-};
-
-bool Button::currentWentDown () {
-  return _current == LOW && _previous == HIGH;
-}
-
-bool Button::currentChanged () {
-  return _current != _previous;
-}
-
-unsigned long Button::timeSincePress () {
-  return (millis() - _firstTime);
 }
 
 void Button::tick () {
@@ -106,4 +84,24 @@ void Button::tick () {
   }
 
   _previous = _current;
+};
+
+bool Button::currentIsUp() {
+  return _current == HIGH && _previous == HIGH;
+};
+
+bool Button::currentWentUp() {
+  return _current == HIGH && _previous == LOW;
+};
+
+bool Button::currentWentDown () {
+  return _current == LOW && _previous == HIGH;
+};
+
+bool Button::currentChanged () {
+  return _current != _previous;
+};
+
+unsigned long Button::timeSincePress () {
+  return (millis() - _firstTime);
 };

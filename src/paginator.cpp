@@ -4,14 +4,16 @@
 
 Paginator::Paginator (Sequencer* sequencer) {
   _sequencer = sequencer;
-  _page = 1;
+  _page = 0;
 
-  Step * page[4] = {
-    new Step(_sequencer), 
-    new Step(_sequencer), 
-    new Step(_sequencer), 
-    new Step(_sequencer),
-  };
+  for (int i = 0; i < 4; i++) {
+    Step * _pages[i] = {
+      new Step(_sequencer), 
+      new Step(_sequencer), 
+      new Step(_sequencer), 
+      new Step(_sequencer),
+    };
+  }
 };
 
 int Paginator::getPage () {
@@ -20,7 +22,6 @@ int Paginator::getPage () {
 
 void Paginator::nextPage () {
   if (_page < 4) _page++;
-  createPage();
 };
 
 void Paginator::previousPage () {
