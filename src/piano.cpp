@@ -5,10 +5,9 @@
 
 Piano::Piano (Sequencer* sequencer) {
   _sequencer = sequencer;
-  _notes[0] = new Note();
-  _notes[1] = new Note();
-  _notes[2] = new Note();
-  _notes[3] = new Note();
+  for (int i = 0; i < 4; i++) {
+    _notes[i] = new Note();
+  } 
 };
 
 void Piano::tick () {
