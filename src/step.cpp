@@ -14,7 +14,11 @@ void Step::toggle () {
 };
 
 void Step::controlLength (int value) {
-  int newValue = map(value, 0, 1023, 24, 1);
+  // String controlLog = "Control length raw value: ";
+  // Serial.println(controlLog + value);
+  int newValue = map(value, 0, 1000, 4, 0); // <- hack i guess
+  // String controlLog2 = "Control length: ";
+  // Serial.println(controlLog2 + newValue);
   length = newValue;
 };
 
