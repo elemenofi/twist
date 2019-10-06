@@ -45,11 +45,17 @@ void Button::onPress () {
       _controller->_sequencer->reverse();
       _led->toggle();
     }
-  } else if (_state == HIGH) {
+  }
+}
+
+void Button::onRelease () {
+  if (_reverseButton || _shiftButton) return;
+
+  if (timeSincePress() < _holdThreshold) {
     _led->toggle();
     _controller->_sequencer->_steps[_id - 1]->toggle();
   } 
-}
+};
 
 void Button::tick () {
   _current = digitalRead(_pin);
@@ -77,6 +83,7 @@ void Button::tick () {
           Serial.println("onHoldRelease");
           _controller->exitShiftMode();
         } else {
+          onRelease();
           Serial.println("onRelease");
         }
       }

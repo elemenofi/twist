@@ -33,6 +33,7 @@ class Button {
     );
 
     void onPress();
+    void onRelease();
     void reverse();
     bool currentIsUp();
     bool currentWentUp();
