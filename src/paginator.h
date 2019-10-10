@@ -7,37 +7,14 @@ class Step;
 class Paginator {
   int _currentPage;
   Sequencer* _sequencer;
-  // int _pages[4][4][4];
-  // int _pages[4][4][4] = {
-  //   {
-  //     {38, 100, 1, 0},
-  //     {38, 100, 1, 0},
-  //     {38, 100, 1, 0},
-  //     {38, 100, 1, 0}
-  //   },
-  //   {
-  //     {40, 100, 1, 0},
-  //     {40, 100, 1, 0},
-  //     {40, 100, 1, 0},
-  //     {40, 100, 1, 0}
-  //   },
-  //   {
-  //     {43, 100, 1, 0},
-  //     {43, 100, 1, 0},
-  //     {43, 100, 1, 0},
-  //     {43, 100, 1, 0}
-  //   },
-  //   {
-  //     {45, 100, 1, 0},
-  //     {45, 100, 1, 0},
-  //     {45, 100, 1, 0},
-  //     {45, 100, 1, 0}
-  //   }
-  // };
+  
   void logPages();
 
   public:
     Paginator(Sequencer* sequencer);
+    int _pages[4][4][4];
+    int _stepValues[4];
+
     int getPage();
     void nextPage();
     void previousPage();

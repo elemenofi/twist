@@ -14,7 +14,7 @@ Knob::Knob (uint8_t pin, int id, Controller* controller) {
 };
 
 void Knob::onChange () {
-  // Serial.println("Knob onChange");
+  Serial.println("Knob onChange");
   if (_id == 5) {
     _controller->_sequencer->_transport->controlTempo(_value);
   } else if (_controller->getMode() == VELOCITY) {
