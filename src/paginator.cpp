@@ -8,12 +8,6 @@
 Paginator::Paginator (Sequencer* sequencer) {
   _sequencer = sequencer;
   _currentPage = 0;
-  Step * _pages[4][4] = {
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0}
-  };
 };
 
 int Paginator::getPage () {

@@ -13,11 +13,11 @@ class Paginator {
     Paginator(Sequencer* sequencer);
     int _currentPage;
     Step * _pages[4][4] = {
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0},
-    {0,0,0,0}
-  };
+      {0,0,0,0},
+      {0,0,0,0},
+      {0,0,0,0},
+      {0,0,0,0}
+    };
 
     int getPage();
     void nextPage();
