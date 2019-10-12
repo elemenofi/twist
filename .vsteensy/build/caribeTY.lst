@@ -480,7 +480,7 @@ SYMBOL TABLE:
 1fff1594 g       .data	00000000 _edata
 00002f7c  w    F .text	00000006 i2s0_tx_isr
 00002f7c  w    F .text	00000006 adc1_isr
-00000ba0 g     F .text	00000012 Step::controlVelocity(int)
+00000ba0 g     F .text	00000014 Step::controlVelocity(int)
 00002b30  w    F .text	00000004 usb_serial_class::availableForWrite()
 00002f7c  w    F .text	00000006 cmp0_isr
 1fff15d0 g     O .bss	00000004 usb_midi_handleClock
@@ -3055,11 +3055,10 @@ void Step::toggle () {
      b6e:	nop
 
 00000b70 <Step::controlLength(int)>:
-  // String controlLog = "Control length raw value: ";
-  // Serial.println(controlLog + value);
+};
+
+void Step::controlLength (int value) {
   int newValue = map(value, 0, 1000, 4, 0); // <- hack i guess
-  // String controlLog2 = "Control length: ";
-  // Serial.println(controlLog2 + newValue);
   length = newValue;
      b70:	ldr	r3, [pc, #20]	; (b88 <Step::controlLength(int)+0x18>)
      b72:	sub.w	r1, r1, r1, lsl #2
@@ -3076,10 +3075,10 @@ void Step::toggle () {
 };
 
 void Step::controlPitch (int value) {
-  int newValue = map(value, 0, 1023, 51, 38);
+  int newValue = map(value, 0, 1023, 51, 36);
   pitch = newValue;
-     b8c:	sub.w	r1, r1, r1, lsl #2
-     b90:	lsls	r1, r1, #2
+     b8c:	sub.w	r1, r1, r1, lsl #3
+     b90:	lsls	r1, r1, #1
      b92:	it	mi
      b94:	addwmi	r1, r1, #1023	; 0x3ff
      b98:	asrs	r1, r1, #10
@@ -3091,16 +3090,16 @@ void Step::controlPitch (int value) {
 };
 
 void Step::controlVelocity (int value) {
-  int newValue = map(value, 0, 1023, 127, 63);
+  int newValue = map(value, 0, 1023, 127, 62);
   velocity = newValue;
-     ba0:	subs.w	r1, r1, r1, lsl #6
-     ba4:	it	mi
-     ba6:	addwmi	r1, r1, #1023	; 0x3ff
-     baa:	asrs	r1, r1, #10
-     bac:	adds	r1, #127	; 0x7f
-     bae:	str	r1, [r0, #8]
-     bb0:	bx	lr
-     bb2:	nop
+     ba0:	rsb	r1, r1, r1, lsl #26
+     ba4:	lsls	r1, r1, #6
+     ba6:	it	mi
+     ba8:	addwmi	r1, r1, #1023	; 0x3ff
+     bac:	asrs	r1, r1, #10
+     bae:	adds	r1, #127	; 0x7f
+     bb0:	str	r1, [r0, #8]
+     bb2:	bx	lr
 
 00000bb4 <Knob::Knob(unsigned char, int, Controller*)>:
 #include "controller.h"
