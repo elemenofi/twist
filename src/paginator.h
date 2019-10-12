@@ -12,7 +12,12 @@ class Paginator {
 
   public:
     Paginator(Sequencer* sequencer);
-    Step * _pages[4][4];
+    Step * _pages[4][4] = {
+    {0,0,0,0},
+    {0,0,0,0},
+    {0,0,0,0},
+    {0,0,0,0}
+  };
 
     int getPage();
     void nextPage();
