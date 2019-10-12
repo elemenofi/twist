@@ -34,8 +34,6 @@ void Paginator::previousPage () {
   };
 };
 
-// copy the steps of the current sequence into
-// the state of the paginator
 void Paginator::changePage (int direction) {
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
