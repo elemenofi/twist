@@ -23,6 +23,7 @@ class Paginator {
     void nextPage();
     void previousPage();
     void changePage(int direction);
+    void debugPages();
 };
 
 #endif

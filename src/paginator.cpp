@@ -19,6 +19,8 @@ void Paginator::nextPage () {
     changePage(1);
     _currentPage++;
   }
+
+  debugPages();
 };
 
 void Paginator::previousPage () {
@@ -32,8 +34,6 @@ void Paginator::changePage (int direction) {
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
     _pages[_currentPage][i] = _sequencer->_steps[i];
-    Step * memoryStep = _pages[_currentPage][i];
-    Serial.println(memoryStep->pitch); 
 
     // create new 4 steps or load them from memory
     if (_pages[_currentPage + direction][i] == 0) {
@@ -52,4 +52,13 @@ void Paginator::changePage (int direction) {
       newStepLed->on();
     }
   }  
+};
+
+void Paginator::debugPages () {
+  for (size_t i = 0; i < 4; i++) {
+    for (size_t y = 0; y < 4; y++) {
+      Step * step = _pages[i][y];
+      Serial.println(step->pitch);
+    }
+  }
 };
