@@ -41,16 +41,14 @@ void Paginator::changePage (int direction) {
     Step * memoryStep = _pages[_currentPage][i];
     Serial.println(memoryStep->pitch); 
 
-    // create new 4 steps
-    // here i will load the steps from memory
-    // when there was already a page
+    // create new 4 steps or load them from memory
     if (_pages[_currentPage + direction][i] == 0) {
       _sequencer->_steps[i] = new Step(_sequencer);
     } else {
       _sequencer->_steps[i] = _pages[_currentPage + direction][i];
     }
 
-    // toggle the leds for the new steps
+    // toggle the leds for the loaded steps
     Step * newStep = _sequencer->_steps[i];
     Led * newStepLed = _sequencer->_controller->_leds[i];
 
