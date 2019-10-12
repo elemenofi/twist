@@ -5,13 +5,13 @@ class Sequencer;
 class Step;
 
 class Paginator {
-  int _currentPage;
   Sequencer* _sequencer;
   
   void logPages();
 
   public:
     Paginator(Sequencer* sequencer);
+    int _currentPage;
     Step * _pages[4][4] = {
     {0,0,0,0},
     {0,0,0,0},
