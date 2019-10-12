@@ -24,7 +24,6 @@ void Paginator::nextPage () {
   if (_currentPage < 4) {
     savePage();
     loadPage(1);
-    logPages();
     _currentPage++;
   }
 };
@@ -33,7 +32,6 @@ void Paginator::previousPage () {
   if (_currentPage > 1) {
     savePage();
     loadPage(-1);
-    logPages();
     _currentPage--;
   };
 };
@@ -48,6 +46,7 @@ void Paginator::savePage () {
     Step * memoryStep = _pages[_currentPage - 1][i];
     Serial.println(memoryStep->pitch); 
 
+    // create new 4 steps
     _sequencer->_steps[i] = new Step(_sequencer);
     Step * newStep = _sequencer->_steps[i];
     Serial.println(newStep->pitch);
@@ -58,5 +57,3 @@ void Paginator::savePage () {
     } 
   }  
 };
-
-void Paginator::logPages () {};
