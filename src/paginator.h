@@ -11,7 +11,9 @@ class Paginator {
 
   public:
     Paginator(Sequencer* sequencer);
-    int _currentPage;
+    int _currentEditPage;
+    int _currentPlaybackPage;
+    int _createdPages;
     Step * _pages[4][4] = {
       {0,0,0,0},
       {0,0,0,0},
@@ -21,6 +23,7 @@ class Paginator {
 
     int getPage();
     void nextPage();
+    void getNextPage();
     void previousPage();
     void changePage(int direction);
     void debugPages();

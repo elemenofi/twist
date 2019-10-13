@@ -37,6 +37,8 @@ void Sequencer::step () {
   Step* current = _steps[_currentStep];
 
   if (current->_state) {
+    Serial.println(current->pitch);
+    
     _piano->play(current);
   }
 
@@ -44,6 +46,7 @@ void Sequencer::step () {
     _currentStep++;
 
     if (_currentStep > 3) {
+      _paginator->getNextPage();
       _currentStep = 0;
     }
   } else {

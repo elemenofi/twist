@@ -7,39 +7,60 @@
 
 Paginator::Paginator (Sequencer* sequencer) {
   _sequencer = sequencer;
-  _currentPage = 0;
+  _currentEditPage = 0;
+  _createdPages = 0;
+  _currentPlaybackPage = 0;
 };
 
 int Paginator::getPage () {
-  return _currentPage;
+  return _currentEditPage;
+};
+
+void Paginator::getNextPage () {
+  if (_createdPages == 0) return;
+  
+  if (_currentPlaybackPage < _createdPages) {
+    _currentPlaybackPage++;
+  } else if (_currentPlaybackPage == _createdPages) {
+    _currentPlaybackPage = 0;
+  }
+
+  Serial.println("Current playback page");
+  Serial.println(_currentPlaybackPage);
+
+  for (size_t i = 0; i < 4; i++) {
+    _sequencer->_steps[i] = _pages[_currentPlaybackPage][i];
+  }
 };
 
 void Paginator::nextPage () {
-  if (_currentPage < 3) {
+  if (_currentEditPage < 3) {
     changePage(1);
-    _currentPage++;
+    _currentEditPage++;
   }
 
   debugPages();
 };
 
 void Paginator::previousPage () {
-  if (_currentPage > 0) {
+  if (_currentEditPage > 0) {
     changePage(-1);
-    _currentPage--;
+    _currentEditPage--;
   };
 };
 
 void Paginator::changePage (int direction) {
+  if (direction == 1 && _createdPages < 3) {
+    _createdPages++;
+  }
+
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
-    _pages[_currentPage][i] = _sequencer->_steps[i];
+    _pages[_currentEditPage][i] = _sequencer->_steps[i];
 
-    // create new 4 steps or load them from memory
-    if (_pages[_currentPage + direction][i] == 0) {
+    if (_pages[_currentEditPage + direction][i] == 0) {
       _sequencer->_steps[i] = new Step(_sequencer);
-    } else {
-      _sequencer->_steps[i] = _pages[_currentPage + direction][i];
+      _pages[_currentEditPage + direction][i] = _sequencer->_steps[i];
     }
 
     // toggle the leds for the loaded steps
