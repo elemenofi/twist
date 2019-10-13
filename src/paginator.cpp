@@ -18,9 +18,11 @@ int Paginator::getPage () {
 
 void Paginator::getNextPage (int direction) {
   if (_createdPages == 0) return;
-  
+
   if (_currentPlaybackPage < _createdPages && direction == 1) {
     _currentPlaybackPage++;
+  } else if (_currentPlaybackPage > 0 && direction == -1) {
+    _currentPlaybackPage--;
   } else if (_currentPlaybackPage == 0 && direction == -1) {
     _currentPlaybackPage = _createdPages;
   } else if (_currentPlaybackPage == _createdPages) {
