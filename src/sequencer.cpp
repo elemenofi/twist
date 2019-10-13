@@ -38,8 +38,6 @@ void Sequencer::step () {
   Step* current = _stepsPlayback[_currentStep];
 
   if (current->_state) {
-    Serial.println(current->pitch);
-    
     _piano->play(current);
   }
 

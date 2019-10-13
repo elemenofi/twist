@@ -50,8 +50,10 @@ void Paginator::previousPage () {
 };
 
 void Paginator::changePage (int direction) {
-  if (direction == 1 && _createdPages < 3) {
+  if (direction == 1 && _createdPages < 3 && _currentEditPage == _createdPages) {
     _createdPages++;
+    // Serial.println("Incrementing created pages to:");
+    // Serial.println(_createdPages);
   }
 
   for (size_t i = 0; i < 4; i++) {
@@ -62,8 +64,11 @@ void Paginator::changePage (int direction) {
     if (_pages[_currentEditPage + direction][i] == 0) {
       _sequencer->_stepsEdit[i] = new Step(_sequencer);
       _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
-      setLeds(i);
+    } else {
+      _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
     }
+    
+    setLeds(i);
   }  
 };
 
