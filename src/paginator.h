@@ -24,7 +24,7 @@ class Paginator {
 
     int getPage();
     void nextPage();
-    void getNextPage();
+    void getNextPage(int direction);
     void previousPage();
     void changePage(int direction);
     void debugPages();

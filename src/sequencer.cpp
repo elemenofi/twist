@@ -45,13 +45,14 @@ void Sequencer::step () {
     _currentStep++;
 
     if (_currentStep > 3) {
-      _paginator->getNextPage();
+      _paginator->getNextPage(1);
       _currentStep = 0;
     }
   } else {
     _currentStep--;
 
     if (_currentStep == -1) {
+      _paginator->getNextPage(-1);
       _currentStep = 3;
     }
   }
