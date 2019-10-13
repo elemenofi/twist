@@ -58,21 +58,25 @@ void Paginator::changePage (int direction) {
     // put current page steps in memory
     _pages[_currentEditPage][i] = _sequencer->_stepsEdit[i];
 
+    // i think something is going on here when you go backwards
     if (_pages[_currentEditPage + direction][i] == 0) {
       _sequencer->_stepsEdit[i] = new Step(_sequencer);
       _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
-    }
-
-    // toggle the leds for the loaded steps
-    Step * newStep = _sequencer->_stepsEdit[i];
-    Led * newStepLed = _sequencer->_controller->_leds[i];
-
-    if (newStep->_state == 0) {
-      newStepLed->off();
-    } else {
-      newStepLed->on();
+      setLeds(i);
     }
   }  
+};
+
+void Paginator::setLeds (size_t i) {
+  // toggle the leds for the loaded steps
+  Step * newStep = _sequencer->_stepsEdit[i];
+  Led * newStepLed = _sequencer->_controller->_leds[i];
+
+  if (newStep->_state == 0) {
+    newStepLed->off();
+  } else {
+    newStepLed->on();
+  }
 };
 
 void Paginator::debugPages () {
