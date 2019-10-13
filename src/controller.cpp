@@ -66,7 +66,7 @@ void Controller::toggleMode () {
 void Controller::enterShiftMode () {
   _shiftMode = true;
 
-  for (size_t i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     if (_sequencer->_paginator->_currentEditPage != i) _leds[i]->off();
   }
 

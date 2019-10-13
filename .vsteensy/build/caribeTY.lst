@@ -4061,16 +4061,16 @@ void Controller::enterShiftMode () {
     1004:	strb.w	r2, [r0, #48]	; 0x30
     1008:	add.w	r5, r0, #52	; 0x34
 
-  for (size_t i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     100c:	movs	r4, #0
     if (_sequencer->_paginator->_currentEditPage != i) _leds[i]->off();
-    100e:	cmp	r3, r4
+    100e:	cmp	r4, r3
 };
 
 void Controller::enterShiftMode () {
   _shiftMode = true;
 
-  for (size_t i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     1010:	add.w	r4, r4, #1
     if (_sequencer->_paginator->_currentEditPage != i) _leds[i]->off();
     1014:	beq.n	1022 <Controller::enterShiftMode()+0x2a>
@@ -4084,7 +4084,7 @@ void Controller::enterShiftMode () {
 void Controller::enterShiftMode () {
   _shiftMode = true;
 
-  for (size_t i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     1022:	cmp	r4, #4
     1024:	add.w	r5, r5, #4
     1028:	bne.n	100e <Controller::enterShiftMode()+0x16>
@@ -4097,7 +4097,7 @@ void Controller::enterShiftMode () {
 };
     1030:	ldmia.w	sp!, {r4, r5, r6, lr}
 
-  for (size_t i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     if (_sequencer->_paginator->_currentEditPage != i) _leds[i]->off();
   }
 
