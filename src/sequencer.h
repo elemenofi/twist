@@ -15,7 +15,8 @@ class Sequencer {
     Transport* _transport;
     Controller* _controller;
     Paginator* _paginator;
-    Step* _steps[4];
+    Step* _stepsEdit[4];
+    Step* _stepsPlayback[4];
     int _currentStep;
 
     Sequencer();

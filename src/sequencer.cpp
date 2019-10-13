@@ -15,9 +15,10 @@ Sequencer::Sequencer () {
   _reversed = false;
   _currentStep = 0;
 
-  for (int i = 0; i < 4; i++){
-    _steps[i] = new Step(this);
-  }
+  for (int i = 0; i < 4; i++) {
+    _stepsEdit[i] = new Step(this);
+    _stepsPlayback[i] = _stepsEdit[i];
+  };
 };
 
 void Sequencer::tick() {
@@ -34,7 +35,7 @@ void Sequencer::step () {
 
   _controller->_leds[_currentStep]->blink();
 
-  Step* current = _steps[_currentStep];
+  Step* current = _stepsPlayback[_currentStep];
 
   if (current->_state) {
     Serial.println(current->pitch);

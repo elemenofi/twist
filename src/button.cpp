@@ -53,7 +53,7 @@ void Button::onRelease () {
 
   if (timeSincePress() < _holdThreshold) {
     _led->toggle();
-    _controller->_sequencer->_steps[_id - 1]->toggle();
+    _controller->_sequencer->_stepsEdit[_id - 1]->toggle();
   } 
 };
 

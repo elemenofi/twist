@@ -29,7 +29,7 @@ void Paginator::getNextPage () {
   Serial.println(_currentPlaybackPage);
 
   for (size_t i = 0; i < 4; i++) {
-    _sequencer->_steps[i] = _pages[_currentPlaybackPage][i];
+    _sequencer->_stepsPlayback[i] = _pages[_currentPlaybackPage][i];
   }
 };
 
@@ -56,15 +56,15 @@ void Paginator::changePage (int direction) {
 
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
-    _pages[_currentEditPage][i] = _sequencer->_steps[i];
+    _pages[_currentEditPage][i] = _sequencer->_stepsEdit[i];
 
     if (_pages[_currentEditPage + direction][i] == 0) {
-      _sequencer->_steps[i] = new Step(_sequencer);
-      _pages[_currentEditPage + direction][i] = _sequencer->_steps[i];
+      _sequencer->_stepsEdit[i] = new Step(_sequencer);
+      _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
     }
 
     // toggle the leds for the loaded steps
-    Step * newStep = _sequencer->_steps[i];
+    Step * newStep = _sequencer->_stepsEdit[i];
     Led * newStepLed = _sequencer->_controller->_leds[i];
 
     if (newStep->_state == 0) {

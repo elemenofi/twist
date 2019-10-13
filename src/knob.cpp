@@ -19,11 +19,11 @@ void Knob::onChange () {
   } else if (_id == 5) {
     _controller->_sequencer->_transport->controlTempo(_value);
   } else if (_controller->getMode() == VELOCITY) {
-    _controller->_sequencer->_steps[_id]->controlVelocity(_value);
+    _controller->_sequencer->_stepsEdit[_id]->controlVelocity(_value);
   } else if (_controller->getMode() == PITCH) {
-   _controller->_sequencer->_steps[_id]->controlPitch(_value);
+   _controller->_sequencer->_stepsEdit[_id]->controlPitch(_value);
   } else if (_controller->getMode() == NOTELENGTH) {
-    _controller->_sequencer->_steps[_id]->controlLength(_value);
+    _controller->_sequencer->_stepsEdit[_id]->controlLength(_value);
   }
 }
 
