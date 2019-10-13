@@ -4,6 +4,7 @@
 #include "sequencer.h"
 #include "controller.h"
 #include "led.h"
+#include "piano.h"
 
 // this class has to keep track of the midi packets coming from the outside
 // it also has the implementation of the top right knob that controls resolution
@@ -78,9 +79,11 @@ void Transport::processMidi () {
 
 void Transport::advancePPQN () {
   ++ppqn;
+  _sequencer->_piano->tick();
 
   if (ppqn == max_ppqn) {
-    _sequencer->step(); 
+    _sequencer->step();
+
     ppqn = 0;
   }
 };
@@ -88,7 +91,8 @@ void Transport::advancePPQN () {
 void Transport::startPPQN () {
   _state = true;
   ppqn = 0;
-  _sequencer->step(); 
+  _sequencer->step();
+  _sequencer->_piano->tick();
   _sequencer->_controller->_leds[5]->toggle();
 };
 

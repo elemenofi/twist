@@ -8,7 +8,6 @@ class Step;
 class Piano;
 
 class Sequencer {
-  Piano* _piano;
   bool _reversed;
 
   public:
@@ -18,6 +17,7 @@ class Sequencer {
     Step* _stepsEdit[4];
     Step* _stepsPlayback[4];
     int _currentStep;
+    Piano* _piano;
 
     Sequencer();
     void tick();

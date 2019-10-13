@@ -31,8 +31,6 @@ void Sequencer::reverse() {
 }
 
 void Sequencer::step () {  
-  _piano->tick();
-
   if (!_controller->getShiftMode()) {
     _controller->_leds[_currentStep]->blink();
   }

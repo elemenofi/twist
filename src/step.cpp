@@ -6,7 +6,7 @@ Step::Step(Sequencer* sequencer) {
   _sequencer = sequencer;
   pitch = 38;
   velocity = 100;
-  length = 1;
+  length = 4;
 };
 
 void Step::toggle () {
@@ -14,7 +14,7 @@ void Step::toggle () {
 };
 
 void Step::controlLength (int value) {
-  int newValue = map(value, 0, 1000, 4, 0); // <- hack i guess
+  int newValue = map(value, 0, 1000, 16, 0); // <- hack i guess
   length = newValue;
 };
 
