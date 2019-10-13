@@ -1299,7 +1299,7 @@ Button::Button (
   _pin = pin;
   _shiftButton = shiftButton;
   _reverseButton = reverseButton;
-  _holdThreshold = 1000;
+  _holdThreshold = 300;
   _led = led;
      580:	str	r3, [r0, #52]	; 0x34
 ) {
@@ -1307,8 +1307,8 @@ Button::Button (
   _pin = pin;
   _shiftButton = shiftButton;
   _reverseButton = reverseButton;
-  _holdThreshold = 1000;
-     582:	mov.w	r1, #1000	; 0x3e8
+  _holdThreshold = 300;
+     582:	mov.w	r1, #300	; 0x12c
   bool shiftButton,
   bool reverseButton,
   Controller* controller
@@ -1317,7 +1317,7 @@ Button::Button (
   _pin = pin;
      586:	str	r2, [r0, #24]
   _reverseButton = reverseButton;
-  _holdThreshold = 1000;
+  _holdThreshold = 300;
   _led = led;
   _controller = controller;
 
@@ -1328,7 +1328,7 @@ Button::Button (
   _pin = pin;
   _shiftButton = shiftButton;
   _reverseButton = reverseButton;
-  _holdThreshold = 1000;
+  _holdThreshold = 300;
      58a:	str	r1, [r4, #44]	; 0x2c
   bool reverseButton,
   Controller* controller
@@ -1339,7 +1339,7 @@ Button::Button (
      58c:	strb	r7, [r4, #16]
   _reverseButton = reverseButton;
      58e:	strb	r6, [r4, #17]
-  _holdThreshold = 1000;
+  _holdThreshold = 300;
   _led = led;
   _controller = controller;
      590:	str	r5, [r4, #48]	; 0x30

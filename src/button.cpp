@@ -18,7 +18,7 @@ Button::Button (
   _pin = pin;
   _shiftButton = shiftButton;
   _reverseButton = reverseButton;
-  _holdThreshold = 1000;
+  _holdThreshold = 300;
   _led = led;
   _controller = controller;
 
