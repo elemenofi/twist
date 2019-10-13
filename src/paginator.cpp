@@ -39,6 +39,7 @@ void Paginator::nextPage () {
   if (_currentEditPage < 3) {
     changePage(1);
     _currentEditPage++;
+    _sequencer->_controller->_leds[_currentEditPage]->blink(3);
   }
 
   debugPages();
@@ -48,6 +49,7 @@ void Paginator::previousPage () {
   if (_currentEditPage > 0) {
     changePage(-1);
     _currentEditPage--;
+    _sequencer->_controller->_leds[_currentEditPage]->blink(3);
   };
 };
 
