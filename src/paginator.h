@@ -8,7 +8,6 @@ class Paginator {
   Sequencer* _sequencer;
   
   void logPages();
-  void setLeds(size_t i);
 
   public:
     Paginator(Sequencer* sequencer);
@@ -28,6 +27,7 @@ class Paginator {
     void previousPage();
     void changePage(int direction);
     void debugPages();
+    void setLeds(size_t i);
 };
 
 #endif

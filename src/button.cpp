@@ -68,10 +68,6 @@ void Button::tick () {
     _firstHoldTime = millis();
     if (!_controller->getShiftMode()) {
       Serial.println("onHold");
-      for (size_t i = 0; i < 4; i++) {
-        _controller->_leds[i]->blink();
-      }
-      
     };
     _controller->enterShiftMode();
   }

@@ -5,6 +5,7 @@
 #include "knob.h"
 #include "definitions.h"
 #include "sequencer.h"
+#include "paginator.h"
 
 Controller::Controller (Sequencer* sequencer) {
   _sequencer = sequencer;
@@ -64,10 +65,21 @@ void Controller::toggleMode () {
 
 void Controller::enterShiftMode () {
   _shiftMode = true;
+
+  for (size_t i = 0; i < 4; i++) {
+    if (_sequencer->_paginator->_currentEditPage != i) _leds[i]->off();
+  }
+
+  _leds[_sequencer->_paginator->_currentEditPage]->on();
 };
 
 void Controller::exitShiftMode () {
   _shiftMode = false;
+  for (size_t i = 0; i < 4; i++) {
+    _leds[i]->off();
+    _sequencer->_paginator->setLeds(i);
+  }
+  
 };
 
 bool Controller::getShiftMode () {
