@@ -1911,7 +1911,7 @@ void loop() {
      6fe:	ldrb	r3, [r4, #16]
      700:	cbnz	r3, 75c <loop+0x2c8>
       // int tempo = map(value, 0, 1023, 60, 280);
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -1943,7 +1943,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      750:	ldr	r1, [r2, #52]	; 0x34
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -1954,7 +1954,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      754:	cmp	r1, #5
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -1981,7 +1981,7 @@ void loop() {
      75e:	add	sp, #88	; 0x58
      760:	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
       // int tempo = map(value, 0, 1023, 60, 280);
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2000,7 +2000,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      76e:	ldr	r1, [r2, #52]	; 0x34
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2011,7 +2011,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      772:	cmp	r1, #5
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2031,7 +2031,7 @@ void loop() {
      778:	str	r3, [r2, #52]	; 0x34
      77a:	b.n	6ec <loop+0x258>
       // int tempo = map(value, 0, 1023, 60, 280);
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2044,7 +2044,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      786:	ldr	r1, [r2, #52]	; 0x34
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2055,7 +2055,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      78a:	cmp	r1, #5
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2075,7 +2075,7 @@ void loop() {
      790:	str	r3, [r2, #52]	; 0x34
      792:	b.n	6d4 <loop+0x240>
       // int tempo = map(value, 0, 1023, 60, 280);
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2088,7 +2088,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      79c:	ldr	r1, [r2, #52]	; 0x34
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2099,7 +2099,7 @@ void loop() {
         // ...
         if (ppqn >= 6) {
      7a0:	cmp	r1, #5
-      // Serial.println(tempo);
+      // //Serial.println(tempo);
       // millisTempo = 60000 / tempo;
       // 96
 
@@ -2707,8 +2707,8 @@ void loop() {
 
       switch (type) {
         case usbMIDI.Clock: // 0xF8
-          Serial.println("clock");
-          Serial.println(ppqn);
+          //Serial.println("clock");
+          //Serial.println(ppqn);
      a36:	ldr	r5, [pc, #120]	; (ab0 <loop+0x61c>)
      a38:	ldr	r0, [pc, #120]	; (ab4 <loop+0x620>)
      a3a:	movs	r1, #5

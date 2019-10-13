@@ -71,8 +71,8 @@ void Transport::processMidi () {
       stopPPQN();
       break;
 
-    default:
-      Serial.println("Opps, an unknown MIDI message type!");
+    default:;
+      //Serial.println("Opps, an unknown MIDI message type!");
   }
 }
 

@@ -27,8 +27,8 @@ void Paginator::getNextPage (int direction) {
     _currentPlaybackPage = 0;
   }
 
-  Serial.println("Current playback page");
-  Serial.println(_currentPlaybackPage);
+  //Serial.println("Current playback page");
+  //Serial.println(_currentPlaybackPage);
 
   for (size_t i = 0; i < 4; i++) {
     _sequencer->_stepsPlayback[i] = _pages[_currentPlaybackPage][i];
@@ -56,8 +56,8 @@ void Paginator::previousPage () {
 void Paginator::changePage (int direction) {
   if (direction == 1 && _createdPages < 3 && _currentEditPage == _createdPages) {
     _createdPages++;
-    // Serial.println("Incrementing created pages to:");
-    // Serial.println(_createdPages);
+    // //Serial.println("Incrementing created pages to:");
+    // //Serial.println(_createdPages);
   }
 
   for (size_t i = 0; i < 4; i++) {
@@ -92,7 +92,7 @@ void Paginator::debugPages () {
   for (size_t i = 0; i < 4; i++) {
     for (size_t y = 0; y < 4; y++) {
       Step * step = _pages[i][y];
-      Serial.println(step->pitch);
+      //Serial.println(step->pitch);
     }
   }
 };

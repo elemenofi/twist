@@ -48,16 +48,16 @@ void Controller::tick() {
 void Controller::toggleMode () {
   if (_currentMode == PITCH) {
     _currentMode = VELOCITY;
-    Serial.println("VELOCITY");
+    //Serial.println("VELOCITY");
     _leds[4]->blink(999);
   } else if (_currentMode == VELOCITY) {
     _currentMode = NOTELENGTH;
-    Serial.println("NOTELENGTH");
+    //Serial.println("NOTELENGTH");
     _leds[4]->blink();
     _leds[4]->off();
   } else if (_currentMode == NOTELENGTH) {
     _currentMode = PITCH;
-    Serial.println("PITCH");
+    //Serial.println("PITCH");
     _leds[4]->blink(); // shut the 999 blinks off
     _leds[4]->on();
   }

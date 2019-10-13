@@ -14,7 +14,7 @@ void Note::tick() {
 
   if (_length <= 0) {
     // String noteLog = "Note off, pitch: ";
-    // Serial.println(noteLog + _pitch);    
+    // //Serial.println(noteLog + _pitch);    
     noteOff(_channel, _pitch, _velocity);
     reset();
   }
@@ -38,7 +38,7 @@ void Note::play(Step* step) {
   _pitch = step->pitch;
   _velocity = step->velocity;
   // String noteLog = "Playing note, length: ";
-  // Serial.println(noteLog + _length);
+  // //Serial.println(noteLog + _length);
   noteOn(_channel, _pitch, _velocity);
 };
 

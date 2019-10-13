@@ -31,16 +31,16 @@ void Button::onPress () {
   if (_state == HIGH && _shiftButton) {
     if (_controller->getShiftMode()) {
       paginator->previousPage();
-      Serial.println("Previous page: ");
-      Serial.println(paginator->getPage());
+      //Serial.println("Previous page: ");
+      //Serial.println(paginator->getPage());
     } else {
       _controller->toggleMode();
     }
   } else if (_state == HIGH && _reverseButton) {
     if (_controller->getShiftMode()) {
       paginator->nextPage();
-      Serial.println("Next page: ");
-      Serial.println(paginator->getPage());
+      //Serial.println("Next page: ");
+      //Serial.println(paginator->getPage());
     } else {
       _controller->_sequencer->reverse();
       _led->toggle();
@@ -67,7 +67,7 @@ void Button::tick () {
   if (currentIsUp() && timeSincePress() > _holdThreshold) {
     _firstHoldTime = millis();
     if (!_controller->getShiftMode()) {
-      Serial.println("onHold");
+      //Serial.println("onHold");
     };
     _controller->enterShiftMode();
   }
@@ -77,16 +77,16 @@ void Button::tick () {
       _state = _current;
 
       if (_state == HIGH) {
-        Serial.println("onPress");      
+        //Serial.println("onPress");      
         onPress();
       } else {
         
         if (timeSincePress() >= _holdThreshold) {
-          Serial.println("onHoldRelease");
+          //Serial.println("onHoldRelease");
           _controller->exitShiftMode();
         } else {
           onRelease();
-          Serial.println("onRelease");
+          //Serial.println("onRelease");
         }
       }
     }
