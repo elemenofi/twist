@@ -1,10 +1,12 @@
 #include <Arduino.h>
 #include "step.h"
+#include "sequencer.h"
+#include "piano.h"
 
 Step::Step(Sequencer* sequencer) {
   _state = false;
   _sequencer = sequencer;
-  pitch = 38;
+  pitch = _sequencer->_piano->_scale[0];
   velocity = 100;
   length = 4;
 };
@@ -19,8 +21,18 @@ void Step::controlLength (int value) {
 };
 
 void Step::controlPitch (int value) {
-  int newValue = map(value, 0, 1023, 51, 36); // <- hack i guess
-  pitch = newValue;
+  int newValue = value;
+
+  if (value < 330) {
+    newValue = 2;
+  } else if (value < 660) {
+    newValue = 1;
+  } else if (value <= 1023) {
+    newValue = 0;
+  }
+  
+  Serial.println(_sequencer->_piano->_scale[newValue]);
+  pitch = _sequencer->_piano->_scale[newValue];
 };
 
 void Step::controlVelocity (int value) {

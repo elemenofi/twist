@@ -45,7 +45,9 @@ bool Led::blinkTimePassed () {
 };
 
 void Led::tick () {
-  if (millis() < 3000) return;
+  // hack
+  if (millis() < 3000) return; 
+
   if (_blinking && blinkTimePassed()) {
     digitalWrite(_pin, !digitalRead(_pin));
     _blinking = false;

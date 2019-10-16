@@ -9,8 +9,6 @@
 // this class has to keep track of the midi packets coming from the outside
 // it also has the implementation of the top right knob that controls resolution
 // and its job is also to tell the sequence when the next step starts
-// its then responsibility of the controller to create the note and its responsibility
-// of the note when to stop sounding. 
 // step timing is what is handled here
 
 Transport::Transport (Sequencer* sequencer) {

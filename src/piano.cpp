@@ -5,6 +5,7 @@
 
 Piano::Piano (Sequencer* sequencer) {
   _sequencer = sequencer;
+
   for (int i = 0; i < 4; i++) {
     _notes[i] = new Note();
   } 
@@ -22,6 +23,8 @@ Note* Piano::findNote() {
       return _notes[i];
     }
   }
+
+  return 0; // <-- hack to get rid of a warning, hate my life
 };
 
 void Piano::play (Step* step) {
