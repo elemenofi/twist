@@ -2088,8 +2088,8 @@ void Led::tick () {
      7d4:	str	r3, [sp, #0]
 	return ret;
      7d6:	ldr	r2, [sp, #0]
-  if (millis() < 1500) return;
-     7d8:	movw	r3, #1499	; 0x5db
+  if (millis() < 3000) return;
+     7d8:	movw	r3, #2999	; 0xbb7
      7dc:	cmp	r2, r3
      7de:	bls.n	80a <Led::tick()+0x3e>
   if (_blinking && blinkTimePassed()) {
@@ -2146,7 +2146,7 @@ void Led::tick () {
 };
 
 void Led::tick () {
-  if (millis() < 1500) return;
+  if (millis() < 3000) return;
   if (_blinking && blinkTimePassed()) {
      814:	ldr	r1, [r0, #8]
      816:	ldr	r2, [r0, #12]
@@ -2176,7 +2176,7 @@ void Led::tick () {
      838:	str	r3, [r4, #8]
 
 void Led::tick () {
-  if (millis() < 1500) return;
+  if (millis() < 3000) return;
   if (_blinking && blinkTimePassed()) {
     digitalWrite(_pin, !digitalRead(_pin));
     _blinking = false;
