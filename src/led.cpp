@@ -6,6 +6,7 @@ Led::Led (int pin = 0, int state = LOW) {
   _state = state;
   _blinkLength = 75;
   _blinking = false;
+  _blinkingCounter = 0;
 
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, _state);
