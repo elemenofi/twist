@@ -47,7 +47,6 @@ void Transport::controlTempo (int value) {
   }
 };
 
-  // move midi to midi class
 void Transport::processMidi () {
   byte type;
   // byte type, channel, data1, data2, cable;
