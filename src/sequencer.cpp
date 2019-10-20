@@ -38,7 +38,8 @@ void Sequencer::step () {
   Step* current = _stepsPlayback[_currentStep];
 
   if (current->_state) {
-    _piano->play(current);
+    int rand = random(100);
+    if (rand <= current->chance) _piano->play(current);
   }
 
   if (!_reversed) {

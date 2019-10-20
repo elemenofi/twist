@@ -33,9 +33,7 @@ Note* Piano::findNote() {
 void Piano::play (Step* step) {
   Note* note = findNote();
   auto& scale = _scale[step->pitchScale];
-  // maybe i should implement the chance in the sequencer and not in the piano
-  int rand = random(100);
-  if (rand <= step->chance) note->play(step, scale);
+  note->play(step, scale);
 };
 
 void Piano::transpose (int value) {
