@@ -35,13 +35,6 @@ void Sequencer::step () {
     _controller->_leds[_currentStep]->blink();
   }
 
-  Step* current = _stepsPlayback[_currentStep];
-
-  if (current->_state) {
-    int rand = random(100);
-    if (rand <= current->chance) _piano->play(current);
-  }
-
   if (!_reversed) {
     _currentStep++;
 

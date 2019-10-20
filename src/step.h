@@ -13,6 +13,7 @@ class Step {
     int length;
     bool _state;
     int chance;
+    int swing;
 
     Step (Sequencer* sequencer);
     void toggle ();

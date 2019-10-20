@@ -5,6 +5,7 @@
 #include "controller.h"
 #include "led.h"
 #include "piano.h"
+#include "step.h"
 
 // this class has to keep track of the midi packets coming from the outside
 // it also has the implementation of the top right knob that controls resolution
@@ -77,14 +78,30 @@ void Transport::processMidi () {
 
 void Transport::advancePPQN () {
   ++ppqn;
+
   _sequencer->_piano->tick();
+
+  Step* current = _sequencer->_stepsPlayback[_sequencer->_currentStep];
+
+  // todo maybe the chance logic should be in the sequencer
+  // so sequencer should have a play step function that
+  // gets called when the transport knows about a steps swing
+  // and then a normal step function to just advance the ui
+  // because that should be unaffected by swing
+
+  if (ppqn == (max_ppqn + current->swing) && current->_state) {
+    int rand = random(100);
+    if (rand <= current->chance) _sequencer->_piano->play(current);
+  }
 
   if (ppqn == max_ppqn) {
     _sequencer->step();
-
     ppqn = 0;
   }
 };
+
+
+  
 
 void Transport::startPPQN () {
   _state = true;

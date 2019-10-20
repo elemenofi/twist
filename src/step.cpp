@@ -11,6 +11,7 @@ Step::Step(Sequencer* sequencer) {
   velocity = 100;
   length = 4;
   chance = 100;
+  swing = 0;
 };
 
 void Step::toggle () {
