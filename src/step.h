@@ -19,6 +19,7 @@ class Step {
     void controlLength (int value);
     void controlPitch (int value);
     void controlVelocity (int value);
+    void controlChance (int value);
 };
 
 #endif

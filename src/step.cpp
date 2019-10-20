@@ -10,7 +10,7 @@ Step::Step(Sequencer* sequencer) {
   pitchGrade = 0;
   velocity = 100;
   length = 4;
-  chance = 75;
+  chance = 100;
 };
 
 void Step::toggle () {
@@ -39,4 +39,10 @@ void Step::controlPitch (int value) {
 void Step::controlVelocity (int value) {
   int newValue = map(value, 0, 1023, 127, 62);
   velocity = newValue;
+};
+
+void Step::controlChance (int value) {
+  int newValue = map(value, 0, 1023, 100, 0);
+  chance = newValue;
+  Serial.println(chance);
 };
