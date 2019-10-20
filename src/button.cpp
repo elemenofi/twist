@@ -63,6 +63,9 @@ void Button::onRelease () {
 
 void Button::onHold () {
   if (_id == 1) _controller->enterShiftMode();
+  if (_id == 2 && _controller->getShiftMode()){
+    _controller->enterCopyMode();
+  } 
   else if (_id == 5) _controller->enterChanceMode();
   else if (_id == 6 && _controller->getChanceMode()) {
     _controller->enterSwingMode();
@@ -70,8 +73,14 @@ void Button::onHold () {
 }
 
 void Button::onHoldRelease () {
-  if (_id == 1) _controller->exitShiftMode();
-  else if (_id == 5) {
+  if (_id == 1) {
+    _controller->exitShiftMode();
+    if (_controller->getCopyMode()) {
+      _controller->exitCopyMode();
+    }
+  } else if (_id == 2) {
+    _controller->exitCopyMode();
+  } else if (_id == 5) {
     _controller->exitChanceMode();
     if (_controller->getSwingMode()) {
       _controller->exitSwingMode();

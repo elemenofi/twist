@@ -18,6 +18,7 @@ class Controller {
   public:
     Led* _leds[6];
     Sequencer* _sequencer;
+    bool _copyMode;
     Controller(Sequencer* sequencer);
     void tick();
     Modes getMode();
@@ -31,6 +32,9 @@ class Controller {
     void enterSwingMode();
     void exitSwingMode();
     bool getSwingMode();
+    void enterCopyMode();
+    void exitCopyMode();
+    bool getCopyMode();
 };
 
 

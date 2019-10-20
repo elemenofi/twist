@@ -12,6 +12,7 @@ Controller::Controller (Sequencer* sequencer) {
   _modeBeforeChance = PITCH;
   _currentMode = PITCH;
   _shiftMode = false;
+  _copyMode = false;
   
   _leds[0] = new Led(3, LOW);
   _leds[1] = new Led(5, LOW);
@@ -84,6 +85,14 @@ void Controller::exitShiftMode () {
   }
 };
 
+void Controller::enterCopyMode () {
+  _copyMode = true;
+}
+
+void Controller::exitCopyMode () {
+  _copyMode = false;
+}
+
 void Controller::enterChanceMode () {
   if (_currentMode != CHANCE && _currentMode != SWING) {
     _modeBeforeChance = _currentMode;
@@ -114,6 +123,10 @@ bool Controller::getChanceMode () {
 
 bool Controller::getSwingMode () {
   return _currentMode == SWING;
+}
+
+bool Controller::getCopyMode () {
+  return _copyMode;
 }
 
 bool Controller::getShiftMode () {

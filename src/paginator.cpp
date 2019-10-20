@@ -66,12 +66,23 @@ void Paginator::changePage (int direction) {
     // put current page steps in memory
     _pages[_currentEditPage][i] = _sequencer->_stepsEdit[i];
 
-    // i think something is going on here when you go backwards
+    // if there is not a defined step for the page then create steps
+      // if 1+2 is being hold then copy the current ones instead of creating new
+    // if there are steps put them into the stepsEdit of the sequencer
     if (_pages[_currentEditPage + direction][i] == 0) {
-      _sequencer->_stepsEdit[i] = new Step(_sequencer);
+      if (_sequencer->_controller->getCopyMode()) {
+        _sequencer->_stepsEdit[i] = _sequencer->_stepsPlayback[i];
+      } else {
+        _sequencer->_stepsEdit[i] = new Step(_sequencer);
+      }
       _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
     } else {
-      _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
+      if (_sequencer->_controller->getCopyMode()) {
+        // this might not be correct
+        _sequencer->_stepsEdit[i] = _sequencer->_stepsPlayback[i];
+      } else {
+        _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
+      }
     }
     
     setLeds(i);
@@ -94,7 +105,7 @@ void Paginator::debugPages () {
   for (size_t i = 0; i < 4; i++) {
     for (size_t y = 0; y < 4; y++) {
       Step * step = _pages[i][y];
-      //Serial.println(step->pitch);
+      Serial.println(step->_state);
     }
   }
 };
