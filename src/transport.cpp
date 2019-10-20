@@ -87,7 +87,7 @@ void Transport::advancePPQN () {
   // gets called when the transport knows about a steps swing
   // and then a normal step function to just advance the ui
   // because that should be unaffected by swing
-
+  
   if (ppqn == (max_ppqn + current->swing) && current->_state) {
     int rand = random(100);
     if (rand <= current->chance) _sequencer->_piano->play(current);

@@ -28,6 +28,9 @@ class Controller {
     void enterChanceMode();
     void exitChanceMode();
     bool getChanceMode();
+    void enterSwingMode();
+    void exitSwingMode();
+    bool getSwingMode();
 };
 
 

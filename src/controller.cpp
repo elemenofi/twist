@@ -85,21 +85,36 @@ void Controller::exitShiftMode () {
 };
 
 void Controller::enterChanceMode () {
-  if (_currentMode != CHANCE) {
+  if (_currentMode != CHANCE && _currentMode != SWING) {
     _modeBeforeChance = _currentMode;
     Serial.println("CHANCE");
+    _currentMode = CHANCE;
   }
-  _currentMode = CHANCE;
 };
 
 void Controller::exitChanceMode () {
   _currentMode = _modeBeforeChance;
-  Serial.println(_currentMode);
+};
+
+void Controller::enterSwingMode () {
+  if (_currentMode != SWING) {
+    Serial.println("SWING");
+  }
+
+  _currentMode = SWING;
+};
+
+void Controller::exitSwingMode () {
+  _currentMode = _modeBeforeChance;
 };
 
 bool Controller::getChanceMode () {
   return _currentMode == CHANCE;
 };
+
+bool Controller::getSwingMode () {
+  return _currentMode == SWING;
+}
 
 bool Controller::getShiftMode () {
   return _shiftMode;

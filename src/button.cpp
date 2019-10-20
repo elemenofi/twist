@@ -29,6 +29,8 @@ Button::Button (
 void Button::onPressWhileHolding () {
   Paginator * paginator = _controller->_sequencer->_paginator;
 
+  // todo: implement copy and paste
+
   if (_state == HIGH && _shiftButton) {
     if (_controller->getShiftMode()) {
       paginator->previousPage();
@@ -62,11 +64,21 @@ void Button::onRelease () {
 void Button::onHold () {
   if (_id == 1) _controller->enterShiftMode();
   else if (_id == 5) _controller->enterChanceMode();
+  else if (_id == 6 && _controller->getChanceMode()) {
+    _controller->enterSwingMode();
+  }
 }
 
 void Button::onHoldRelease () {
   if (_id == 1) _controller->exitShiftMode();
-  else if (_id == 5) _controller->exitChanceMode();
+  else if (_id == 5) {
+    _controller->exitChanceMode();
+    if (_controller->getSwingMode()) {
+      _controller->exitSwingMode();
+    }
+  } else if (_id == 6) {
+    _controller->exitSwingMode();
+  }
 };
 
 void Button::tick () {

@@ -47,3 +47,19 @@ void Step::controlChance (int value) {
   chance = newValue;
   Serial.println(chance);
 };
+
+void Step::controlSwing (int value) {
+  int newValue = value;
+
+  if (value < 100) {
+    newValue = -3;
+  } else if (value < 200) {
+    newValue = -2;
+  } else if (value <= 600) {
+    newValue = -1;
+  } else if (value <= 1023) {
+    newValue = 0;
+  }
+
+  swing = newValue;
+};

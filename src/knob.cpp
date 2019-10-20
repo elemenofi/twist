@@ -27,6 +27,8 @@ void Knob::onChange () {
     _controller->_sequencer->_stepsEdit[_id]->controlLength(_value);
   } else if (_controller->getMode() == CHANCE) {
     _controller->_sequencer->_stepsEdit[_id]->controlChance(_value);
+  } else if (_controller->getMode() == SWING) {
+    _controller->_sequencer->_stepsEdit[_id]->controlSwing(_value);
   }
 }
 
