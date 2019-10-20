@@ -100,9 +100,6 @@ void Transport::advancePPQN () {
   }
 };
 
-
-  
-
 void Transport::startPPQN () {
   _state = true;
   ppqn = 0;
