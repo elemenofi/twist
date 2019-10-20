@@ -32,10 +32,10 @@ void Note::reset() {
   _active = false;
 };
 
-void Note::play(Step* step) {
+void Note::play(Step* step, int scale[3]) {
   _active = true;
   _length = step->length;
-  _pitch = step->pitch;
+  _pitch = scale[step->pitchGrade];
   _velocity = step->velocity;
   // String noteLog = "Playing note, length: ";
   // //Serial.println(noteLog + _length);

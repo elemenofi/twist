@@ -14,7 +14,7 @@ class Note {
     void tick();
     bool isActive();
     void reset();
-    void play(Step* step);
+    void play(Step* step, int scale[3]);
     void noteOn(byte channel, byte pitch, byte velocity);
     void noteOff(byte channel, byte pitch, byte velocity);
     // First parameter is the event type (0x0B = control change).

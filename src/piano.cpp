@@ -2,6 +2,7 @@
 #include "note.h"
 #include "piano.h"
 #include "step.h"
+#include "sequencer.h"
 
 Piano::Piano (Sequencer* sequencer) {
   _sequencer = sequencer;
@@ -31,7 +32,35 @@ Note* Piano::findNote() {
 
 void Piano::play (Step* step) {
   Note* note = findNote();
-  note->play(step);
+  auto& scale = _scale[step->pitchScale];
+  note->play(step, scale);
+};
+
+void Piano::transpose (int value) {
+  int newValue = value;
+
+  if (value < 330) {
+    newValue = 2;
+  } else if (value < 660) {
+    newValue = 1;
+  } else if (value <= 1023) {
+    newValue = 0;
+  }
+
+  // i should not set a steps pitch but instead a steps grade
+  // that way the piano can decide which pitch it is depending on the grade
+  // and the current scale
+
+  if (_currentScale != newValue) {
+    Serial.println("New Scale:");
+    Serial.println(newValue);
+    for (size_t i = 0; i < 4; i++) {
+      _sequencer->_stepsEdit[i]->pitchScale = newValue;
+    }
+  }
+
+  
+  _currentScale = newValue;
 };
 
 

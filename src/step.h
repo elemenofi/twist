@@ -7,7 +7,8 @@ class Step {
   Sequencer* _sequencer;
 
   public:
-    int pitch;
+    int pitchScale;
+    int pitchGrade;
     int velocity;
     int length;
     bool _state;
