@@ -49,6 +49,7 @@ void Button::onRelease () {
     if (_shiftButton) {
       _controller->toggleMode();
     } else if (_reverseButton) {
+      // todo: make reverse wait until current page is done
       _controller->_sequencer->reverse();
       _led->toggle();
     }else {
