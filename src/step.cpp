@@ -10,6 +10,7 @@ Step::Step(Sequencer* sequencer) {
   pitchGrade = 0;
   velocity = 100;
   length = 4;
+  chance = 75;
 };
 
 void Step::toggle () {

@@ -33,7 +33,8 @@ Note* Piano::findNote() {
 void Piano::play (Step* step) {
   Note* note = findNote();
   auto& scale = _scale[step->pitchScale];
-  note->play(step, scale);
+  int rand = random(100);
+  if (rand >= step->chance) note->play(step, scale);
 };
 
 void Piano::transpose (int value) {
@@ -59,7 +60,6 @@ void Piano::transpose (int value) {
     }
   }
 
-  
   _currentScale = newValue;
 };
 
