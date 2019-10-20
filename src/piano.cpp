@@ -36,6 +36,7 @@ void Piano::play (Step* step) {
   note->play(step, scale);
 };
 
+// todo: implement global transport
 void Piano::transpose (int value) {
   int newValue = value;
 
