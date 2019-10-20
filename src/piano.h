@@ -13,14 +13,16 @@ class Piano {
 
   public:
     Piano(Sequencer* sequencer);
-    int _scale[2][3] = {
+    int _scale[3][3] = {
       { 36, 41, 43 },
       { 45, 50, 52 },
+      { 38, 45, 47 }
     };
     int _currentScale;
     void tick();
     void play(Step* step);
     Note* findNote();
+    void transpose(int value);
 };
 
 #endif

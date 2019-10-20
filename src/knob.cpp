@@ -5,6 +5,7 @@
 #include "step.h"
 #include "sequencer.h"
 #include "transport.h"
+#include "piano.h"
 
 Knob::Knob (uint8_t pin, int id, Controller* controller) {
   _pin = pin;
@@ -15,7 +16,7 @@ Knob::Knob (uint8_t pin, int id, Controller* controller) {
 
 void Knob::onChange () {
   if (_id == 4) {
-    //Serial.println("Knob number 5 still does not have a function");
+    _controller->_sequencer->_piano->transpose(_value);
   } else if (_id == 5) {
     _controller->_sequencer->_transport->controlTempo(_value);
   } else if (_controller->getMode() == VELOCITY) {
