@@ -33,8 +33,9 @@ Note* Piano::findNote() {
 void Piano::play (Step* step) {
   Note* note = findNote();
   auto& scale = _scale[step->pitchScale];
+  // maybe i should implement the chance in the sequencer and not in the piano
   int rand = random(100);
-  if (rand >= step->chance) note->play(step, scale);
+  if (rand <= step->chance) note->play(step, scale);
 };
 
 void Piano::transpose (int value) {
@@ -48,13 +49,7 @@ void Piano::transpose (int value) {
     newValue = 0;
   }
 
-  // i should not set a steps pitch but instead a steps grade
-  // that way the piano can decide which pitch it is depending on the grade
-  // and the current scale
-
   if (_currentScale != newValue) {
-    Serial.println("New Scale:");
-    Serial.println(newValue);
     for (size_t i = 0; i < 4; i++) {
       _sequencer->_stepsEdit[i]->pitchScale = newValue;
     }
