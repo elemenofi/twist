@@ -25,7 +25,8 @@ Button::Button (
   pinMode(pin, INPUT);
 };
 
-void Button::onPress () {
+// this is actually on press while hold
+void Button::onPressWhileHolding () {
   Paginator * paginator = _controller->_sequencer->_paginator;
 
   if (_state == HIGH && _shiftButton) {
@@ -33,28 +34,38 @@ void Button::onPress () {
       paginator->previousPage();
       //Serial.println("Previous page: ");
       //Serial.println(paginator->getPage());
-    } else {
-      _controller->toggleMode();
     }
   } else if (_state == HIGH && _reverseButton) {
     if (_controller->getShiftMode()) {
       paginator->nextPage();
       //Serial.println("Next page: ");
       //Serial.println(paginator->getPage());
-    } else {
-      _controller->_sequencer->reverse();
-      _led->toggle();
     }
   }
 }
 
 void Button::onRelease () {
-  if (_reverseButton || _shiftButton) return;
-
   if (timeSincePress() < _holdThreshold) {
-    _led->toggle();
-    _controller->_sequencer->_stepsEdit[_id - 1]->toggle();
+    if (_shiftButton) {
+      _controller->toggleMode();
+    } else if (_reverseButton) {
+      _controller->_sequencer->reverse();
+      _led->toggle();
+    }else {
+      _led->toggle();
+      _controller->_sequencer->_stepsEdit[_id - 1]->toggle();
+    }
   } 
+};
+
+void Button::onHold () {
+  if (_id == 1) _controller->enterShiftMode();
+  else if (_id == 5) _controller->enterChanceMode();
+}
+
+void Button::onHoldRelease () {
+  if (_id == 1) _controller->exitShiftMode();
+  else if (_id == 5) _controller->exitChanceMode();
 };
 
 void Button::tick () {
@@ -67,9 +78,10 @@ void Button::tick () {
   if (currentIsUp() && timeSincePress() > _holdThreshold) {
     _firstHoldTime = millis();
     if (!_controller->getShiftMode()) {
-      //Serial.println("onHold");
+      //Serial.println("shiftMode")
     };
-    _controller->enterShiftMode();
+    //Serial.println("onHold");
+    onHold();
   }
 
   if (timeSincePress() > 10) {    
@@ -77,13 +89,13 @@ void Button::tick () {
       _state = _current;
 
       if (_state == HIGH) {
-        //Serial.println("onPress");      
-        onPress();
+        //Serial.println("onPressWhileHolding");      
+        onPressWhileHolding();
       } else {
         
         if (timeSincePress() >= _holdThreshold) {
           //Serial.println("onHoldRelease");
-          _controller->exitShiftMode();
+          onHoldRelease();
         } else {
           onRelease();
           //Serial.println("onRelease");

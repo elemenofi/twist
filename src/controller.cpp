@@ -9,6 +9,7 @@
 
 Controller::Controller (Sequencer* sequencer) {
   _sequencer = sequencer;
+  _modeBeforeChance = PITCH;
   _currentMode = PITCH;
   _shiftMode = false;
   
@@ -48,22 +49,23 @@ void Controller::tick() {
 void Controller::toggleMode () {
   if (_currentMode == PITCH) {
     _currentMode = VELOCITY;
-    //Serial.println("VELOCITY");
+    Serial.println("VELOCITY");
     _leds[4]->blink(999);
   } else if (_currentMode == VELOCITY) {
     _currentMode = NOTELENGTH;
-    //Serial.println("NOTELENGTH");
+    Serial.println("NOTELENGTH");
     _leds[4]->blink();
     _leds[4]->off();
   } else if (_currentMode == NOTELENGTH) {
     _currentMode = PITCH;
-    //Serial.println("PITCH");
+    Serial.println("PITCH");
     _leds[4]->blink(); // shut the 999 blinks off
     _leds[4]->on();
   }
 };
 
 void Controller::enterShiftMode () {
+  // todo: maybe shift mode should be a mode like the others duh
   _shiftMode = true;
 
   for (int i = 0; i < 4; i++) {
@@ -75,11 +77,28 @@ void Controller::enterShiftMode () {
 
 void Controller::exitShiftMode () {
   _shiftMode = false;
+
   for (size_t i = 0; i < 4; i++) {
     _leds[i]->off();
     _sequencer->_paginator->setLeds(i);
   }
-  
+};
+
+void Controller::enterChanceMode () {
+  if (_currentMode != CHANCE) {
+    _modeBeforeChance = _currentMode;
+    Serial.println("CHANCE");
+  }
+  _currentMode = CHANCE;
+};
+
+void Controller::exitChanceMode () {
+  _currentMode = _modeBeforeChance;
+  Serial.println(_currentMode);
+};
+
+bool Controller::getChanceMode () {
+  return _currentMode == CHANCE;
 };
 
 bool Controller::getShiftMode () {

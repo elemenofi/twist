@@ -32,8 +32,10 @@ class Button {
       Controller* controller
     );
 
-    void onPress();
+    void onPressWhileHolding();
     void onRelease();
+    void onHold();
+    void onHoldRelease();
     void reverse();
     bool currentIsUp();
     bool currentWentUp();

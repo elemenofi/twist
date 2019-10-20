@@ -12,6 +12,7 @@ enum Modes {
   PITCH,
   VELOCITY,
   NOTELENGTH,
+  CHANCE
 };
 
 #endif

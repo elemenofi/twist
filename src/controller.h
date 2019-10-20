@@ -13,6 +13,7 @@ class Controller {
   Knob* _knobs[6];
   bool _shiftMode;
   Modes _currentMode;
+  Modes _modeBeforeChance;
 
   public:
     Led* _leds[6];
@@ -24,6 +25,9 @@ class Controller {
     void enterShiftMode();
     void exitShiftMode();
     bool getShiftMode();
+    void enterChanceMode();
+    void exitChanceMode();
+    bool getChanceMode();
 };
 
 
