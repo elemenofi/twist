@@ -6,7 +6,7 @@
 Step::Step(Sequencer* sequencer) {
   _state = false;
   _sequencer = sequencer;
-  pitch = _sequencer->_piano->_scale[0];
+  pitch = _sequencer->_piano->_scale[_sequencer->_piano->_currentScale][0];
   velocity = 100;
   length = 4;
 };
@@ -30,9 +30,11 @@ void Step::controlPitch (int value) {
   } else if (value <= 1023) {
     newValue = 0;
   }
+
+  auto& scale = _sequencer->_piano->_scale[_sequencer->_piano->_currentScale];
   
-  Serial.println(_sequencer->_piano->_scale[newValue]);
-  pitch = _sequencer->_piano->_scale[newValue];
+  Serial.println(scale[newValue]);
+  pitch = scale[newValue];
 };
 
 void Step::controlVelocity (int value) {

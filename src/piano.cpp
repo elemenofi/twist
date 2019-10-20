@@ -6,6 +6,8 @@
 Piano::Piano (Sequencer* sequencer) {
   _sequencer = sequencer;
 
+  _currentScale = 0;
+
   for (int i = 0; i < 4; i++) {
     _notes[i] = new Note();
   } 
