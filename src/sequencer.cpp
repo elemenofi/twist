@@ -21,6 +21,9 @@ Sequencer::Sequencer () {
   };
 };
 
+// todo: implement sequencer motion record
+// todo: implement multi midi channel
+
 void Sequencer::tick() {
   _transport->tick();
   _controller->tick();
