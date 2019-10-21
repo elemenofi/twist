@@ -74,19 +74,10 @@ void Paginator::changePage (int direction) {
       // if 1+2 is being hold then copy the current ones instead of creating new
     // if there are steps put them into the stepsEdit of the sequencer
     if (_pages[_currentEditPage + direction][i] == 0) {
-      if (_sequencer->_controller->getCopyMode()) {
-        _sequencer->_stepsEdit[i] = _sequencer->_stepsPlayback[i];
-      } else {
-        _sequencer->_stepsEdit[i] = new Step(_sequencer);
-      }
+      _sequencer->_stepsEdit[i] = new Step(_sequencer);
       _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
     } else {
-      if (_sequencer->_controller->getCopyMode()) {
-        // this might not be correct
-        _sequencer->_stepsEdit[i] = _sequencer->_stepsPlayback[i];
-      } else {
-        _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
-      }
+      _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
     }
     
     setLeds(i);

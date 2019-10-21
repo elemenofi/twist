@@ -22,6 +22,7 @@ class Step {
     void controlVelocity (int value);
     void controlChance (int value);
     void controlSwing (int value);
+    void setStep (Step* step);
 };
 
 #endif

@@ -14,6 +14,10 @@ Step::Step(Sequencer* sequencer) {
   swing = 0;
 };
 
+void Step::setStep (Step* step) {
+  _state = step->_state;
+};
+
 void Step::toggle () {
   _state = !_state;
 };
