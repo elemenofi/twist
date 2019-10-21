@@ -26,35 +26,33 @@ Button::Button (
 };
 
 // this is actually on press while hold
+// and maybe i dont need this function, there is
+// also a redundancy with _state == HIGH 
+// in the tick function, i have to take a look at refactoring this
+// im handling only shift and reverse
 void Button::onPressWhileHolding () {
   Paginator * paginator = _controller->_sequencer->_paginator;
-
-  // todo: implement copy and paste
 
   if (_state == HIGH && _shiftButton) {
     if (_controller->getShiftMode()) {
       paginator->previousPage();
-      //Serial.println("Previous page: ");
-      //Serial.println(paginator->getPage());
     }
   } else if (_state == HIGH && _reverseButton) {
     if (_controller->getShiftMode()) {
       paginator->nextPage();
-      //Serial.println("Next page: ");
-      //Serial.println(paginator->getPage());
     }
   }
 }
 
 void Button::onRelease () {
   if (timeSincePress() < _holdThreshold) {
-    if (_shiftButton) {
+    if (_shiftButton && !_controller->getShiftMode()) {
       _controller->toggleMode();
-    } else if (_reverseButton) {
+    } else if (_reverseButton && !_controller->getShiftMode()) {
       // todo: make reverse wait until current page is done
       _controller->_sequencer->reverse();
       _led->toggle();
-    }else {
+    } else if (!_reverseButton && !_shiftButton) {
       _led->toggle();
       _controller->_sequencer->_stepsEdit[_id - 1]->toggle();
     }
@@ -63,7 +61,7 @@ void Button::onRelease () {
 
 void Button::onHold () {
   if (_id == 1) _controller->enterShiftMode();
-  if (_id == 2 && _controller->getShiftMode()){
+  if (_id == 2 && _controller->getShiftMode()) {
     _controller->enterCopyMode();
   } 
   else if (_id == 5) _controller->enterChanceMode();
@@ -75,6 +73,7 @@ void Button::onHold () {
 void Button::onHoldRelease () {
   if (_id == 1) {
     _controller->exitShiftMode();
+
     if (_controller->getCopyMode()) {
       _controller->exitCopyMode();
     }
@@ -82,6 +81,7 @@ void Button::onHoldRelease () {
     _controller->exitCopyMode();
   } else if (_id == 5) {
     _controller->exitChanceMode();
+
     if (_controller->getSwingMode()) {
       _controller->exitSwingMode();
     }

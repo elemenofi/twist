@@ -53,6 +53,8 @@ void Paginator::previousPage () {
     _currentEditPage--;
     _sequencer->_controller->_leds[_currentEditPage]->blink(3);
   };
+
+  debugPages();
 };
 
 void Paginator::changePage (int direction) {
@@ -62,6 +64,8 @@ void Paginator::changePage (int direction) {
     // //Serial.println(_createdPages);
   }
 
+
+  // there is a bug when i go backwards from the last page
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
     _pages[_currentEditPage][i] = _sequencer->_stepsEdit[i];
