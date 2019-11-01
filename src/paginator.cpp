@@ -87,7 +87,27 @@ void Paginator::changePage (int direction) {
       _sequencer->_stepsEdit[i] = step;
       _pages[_currentEditPage + direction][i] = step;
     } else {
-      _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
+      Step * step = new Step(_sequencer);
+      // 
+      if (_sequencer->_controller->getCopyMode()) {
+        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
+        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+        step->length = _sequencer->_stepsEdit[i]->length;
+        step->_state = _sequencer->_stepsEdit[i]->_state;
+        step->chance = _sequencer->_stepsEdit[i]->chance;
+        step->swing = _sequencer->_stepsEdit[i]->swing;
+      } else {
+        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
+        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
+        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
+        step->length = _pages[_currentEditPage + direction][i]->length;
+        step->_state = _pages[_currentEditPage + direction][i]->_state;
+        step->chance = _pages[_currentEditPage + direction][i]->chance;
+        step->swing = _pages[_currentEditPage + direction][i]->swing;
+      }
+
+      _sequencer->_stepsEdit[i] = step;
     }
     
     setLeds(i);
