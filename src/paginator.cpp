@@ -16,7 +16,7 @@ int Paginator::getPage () {
   return _currentEditPage;
 };
 
-void Paginator::getNextPage (int direction) {
+void Paginator::getNextPlaybackPage (int direction) {
   if (_createdPages == 0) return;
 
   if (_currentPlaybackPage < _createdPages && direction == 1) {
@@ -59,30 +59,42 @@ void Paginator::previousPage () {
 
 void Paginator::changePage (int direction) {
   if (direction == 1 && _createdPages < 3 && _currentEditPage == _createdPages) {
+    // this is a nasty flag i should get rid of
     _createdPages++;
     // //Serial.println("Incrementing created pages to:");
     // //Serial.println(_createdPages);
   }
 
-
-  // there is a bug when i go backwards from the last page
   for (size_t i = 0; i < 4; i++) {
     // put current page steps in memory
     _pages[_currentEditPage][i] = _sequencer->_stepsEdit[i];
 
     // if there is not a defined step for the page then create steps
-      // if 1+2 is being hold then copy the current ones instead of creating new
     // if there are steps put them into the stepsEdit of the sequencer
     if (_pages[_currentEditPage + direction][i] == 0) {
-      _sequencer->_stepsEdit[i] = new Step(_sequencer);
-      _pages[_currentEditPage + direction][i] = _sequencer->_stepsEdit[i];
+      Step * step = new Step(_sequencer);
+
+      if (_sequencer->_controller->getCopyMode()) {
+        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
+        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+        step->length = _sequencer->_stepsEdit[i]->length;
+        step->_state = _sequencer->_stepsEdit[i]->_state;
+        step->chance = _sequencer->_stepsEdit[i]->chance;
+        step->swing = _sequencer->_stepsEdit[i]->swing;
+      }
+
+      _sequencer->_stepsEdit[i] = step;
+      _pages[_currentEditPage + direction][i] = step;
     } else {
       _sequencer->_stepsEdit[i] = _pages[_currentEditPage + direction][i];
     }
     
     setLeds(i);
-  }  
+  }
 };
+
+
 
 void Paginator::setLeds (size_t i) {
   // toggle the leds for the loaded steps
