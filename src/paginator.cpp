@@ -72,6 +72,7 @@ void Paginator::changePage (int direction) {
     // if there is not a defined step for the page then create steps
     // if there are steps put them into the stepsEdit of the sequencer
     if (_pages[_currentEditPage + direction][i] == 0) {
+      Serial.println("no steps yet");
       Step * step = new Step(_sequencer);
 
       if (_sequencer->_controller->getCopyMode()) {
@@ -81,14 +82,22 @@ void Paginator::changePage (int direction) {
       _sequencer->_stepsEdit[i] = step;
       _pages[_currentEditPage + direction][i] = step;
     } else {
+      Serial.println("loading from memory");
+
       Step * step = new Step(_sequencer);
-      // 
+
       if (_sequencer->_controller->getCopyMode()) {
+        Serial.println("copying and setting in memory");
+
         copyStep(step, _sequencer->_stepsEdit[i]);
+        _pages[_currentEditPage + direction][i] = step;
       } else {
+        Serial.println("copying only from memory");
+
         copyStep(step, _pages[_currentEditPage + direction][i]);
       }
 
+      Serial.println("Setting steps for editing");
       _sequencer->_stepsEdit[i] = step;
     }
     
@@ -97,7 +106,6 @@ void Paginator::changePage (int direction) {
 };
 
 // maybe this function should be in the
-// step object like step.setValues(Step* step)
 void Paginator::copyStep (Step* step1, Step* step2) {
   step1->pitchScale = step2->pitchScale;
   step1->pitchGrade = step2->pitchGrade;
