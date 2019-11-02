@@ -75,13 +75,7 @@ void Paginator::changePage (int direction) {
       Step * step = new Step(_sequencer);
 
       if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+        copyStep(step, _sequencer->_stepsEdit[i]);
       }
 
       _sequencer->_stepsEdit[i] = step;
@@ -90,21 +84,9 @@ void Paginator::changePage (int direction) {
       Step * step = new Step(_sequencer);
       // 
       if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+        copyStep(step, _sequencer->_stepsEdit[i]);
       } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
-        step->length = _pages[_currentEditPage + direction][i]->length;
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
-        step->chance = _pages[_currentEditPage + direction][i]->chance;
-        step->swing = _pages[_currentEditPage + direction][i]->swing;
+        copyStep(step, _pages[_currentEditPage + direction][i]);
       }
 
       _sequencer->_stepsEdit[i] = step;
@@ -114,7 +96,17 @@ void Paginator::changePage (int direction) {
   }
 };
 
-
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
+  step1->swing = step2->swing;
+};
 
 void Paginator::setLeds (size_t i) {
   // toggle the leds for the loaded steps

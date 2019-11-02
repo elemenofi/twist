@@ -27,7 +27,9 @@ class Paginator {
     void previousPage();
     void changePage(int direction);
     void debugPages();
+    // maybe setLeds could actually be in the led object like .setLedsForSteps
     void setLeds(size_t i);
+    void copyStep(Step* step1, Step* step2);
 };
 
 #endif

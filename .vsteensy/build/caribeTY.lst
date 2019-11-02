@@ -3398,8 +3398,8 @@ void Paginator::getNextPlaybackPage (int direction) {
      c1c:	.word	0x1fff0c48
 
 00000c20 <Paginator::setLeds(unsigned int)>:
-
-
+  step1->swing = step2->swing;
+};
 
 void Paginator::setLeds (size_t i) {
   // toggle the leds for the loaded steps
@@ -3411,7 +3411,7 @@ void Paginator::setLeds (size_t i) {
 
   if (newStep->_state == 0) {
      c26:	ldr.w	r2, [r2, r0, lsl #2]
-
+};
 
 void Paginator::setLeds (size_t i) {
   // toggle the leds for the loaded steps
@@ -3421,7 +3421,7 @@ void Paginator::setLeds (size_t i) {
 
   if (newStep->_state == 0) {
      c2e:	ldrb	r3, [r2, #20]
-
+};
 
 void Paginator::setLeds (size_t i) {
   // toggle the leds for the loaded steps
@@ -3526,63 +3526,67 @@ void Paginator::changePage (int direction) {
      c80:	ldr	r0, [r3, #8]
      c82:	bl	1350 <Controller::getCopyMode()>
      c86:	cbz	r0, cc2 <Paginator::changePage(int)+0x86>
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+        copyStep(step, _sequencer->_stepsEdit[i]);
      c88:	ldr	r2, [r4, #0]
      c8a:	ldr.w	r3, [r2, r8, lsl #2]
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
      c8e:	adds	r0, r3, #4
      c90:	ldmia	r0, {r0, r1, r7}
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
      c92:	ldrb.w	r9, [r3, #20]
-      Step * step = new Step(_sequencer);
-      // 
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
      c96:	str	r7, [r6, #12]
-        step->length = _sequencer->_stepsEdit[i]->length;
+  step1->length = step2->length;
      c98:	ldr	r7, [r3, #16]
-      _pages[_currentEditPage + direction][i] = step;
-    } else {
-      Step * step = new Step(_sequencer);
-      // 
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+};
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
      c9a:	str	r0, [r6, #4]
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
+  step1->pitchGrade = step2->pitchGrade;
      c9c:	str	r1, [r6, #8]
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
+  step1->swing = step2->swing;
      c9e:	ldr	r0, [r3, #28]
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
      ca0:	ldr	r1, [r3, #24]
-      // 
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
      ca2:	str	r7, [r6, #16]
-        step->_state = _sequencer->_stepsEdit[i]->_state;
+  step1->_state = step2->_state;
      ca4:	strb.w	r9, [r6, #20]
-        step->chance = _sequencer->_stepsEdit[i]->chance;
+  step1->chance = step2->chance;
      ca8:	str	r1, [r6, #24]
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+  step1->swing = step2->swing;
      caa:	str	r0, [r6, #28]
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
-        step->chance = _pages[_currentEditPage + direction][i]->chance;
-        step->swing = _pages[_currentEditPage + direction][i]->swing;
+        copyStep(step, _sequencer->_stepsEdit[i]);
+      } else {
+        copyStep(step, _pages[_currentEditPage + direction][i]);
       }
 
       _sequencer->_stepsEdit[i] = step;
@@ -3617,75 +3621,80 @@ void Paginator::changePage (int direction) {
      cbe:	ldr	r3, [r4, #4]
      cc0:	b.n	c4c <Paginator::changePage(int)+0x10>
      cc2:	ldmia.w	r4, {r2, r3}
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+      Step * step = new Step(_sequencer);
+      // 
+      if (_sequencer->_controller->getCopyMode()) {
+        copyStep(step, _sequencer->_stepsEdit[i]);
       } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
+        copyStep(step, _pages[_currentEditPage + direction][i]);
      cc6:	add	r3, sl
      cc8:	add.w	r3, r5, r3, lsl #2
      ccc:	adds	r3, #4
      cce:	ldr.w	r3, [r4, r3, lsl #2]
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
      cd2:	ldr	r1, [r3, #8]
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
-      } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
+};
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
      cd4:	ldr	r7, [r3, #4]
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
-        step->length = _pages[_currentEditPage + direction][i]->length;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
      cd6:	ldr	r0, [r3, #16]
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
+  step1->_state = step2->_state;
      cd8:	ldrb.w	r9, [r3, #20]
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
-      } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
      cdc:	str	r1, [r6, #8]
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
+  step1->velocity = step2->velocity;
      cde:	ldr	r1, [r3, #12]
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
-      } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
+};
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
      ce0:	str	r7, [r6, #4]
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
-        step->length = _pages[_currentEditPage + direction][i]->length;
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
-        step->chance = _pages[_currentEditPage + direction][i]->chance;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
      ce2:	ldr	r7, [r3, #24]
-        step->swing = _pages[_currentEditPage + direction][i]->swing;
+  step1->swing = step2->swing;
      ce4:	ldr	r3, [r3, #28]
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
-        step->length = _pages[_currentEditPage + direction][i]->length;
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
-        step->chance = _pages[_currentEditPage + direction][i]->chance;
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
      ce6:	str	r7, [r6, #24]
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
-      } else {
-        step->pitchScale = _pages[_currentEditPage + direction][i]->pitchScale;
-        step->pitchGrade = _pages[_currentEditPage + direction][i]->pitchGrade;
-        step->velocity = _pages[_currentEditPage + direction][i]->velocity;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
      ce8:	str	r1, [r6, #12]
-        step->length = _pages[_currentEditPage + direction][i]->length;
+  step1->length = step2->length;
      cea:	str	r0, [r6, #16]
-        step->_state = _pages[_currentEditPage + direction][i]->_state;
+  step1->_state = step2->_state;
      cec:	strb.w	r9, [r6, #20]
-        step->chance = _pages[_currentEditPage + direction][i]->chance;
-        step->swing = _pages[_currentEditPage + direction][i]->swing;
+  step1->chance = step2->chance;
+  step1->swing = step2->swing;
      cf0:	str	r3, [r6, #28]
      cf2:	b.n	cac <Paginator::changePage(int)+0x70>
      cf4:	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
@@ -3706,16 +3715,15 @@ void Paginator::changePage (int direction) {
      d08:	bl	1350 <Controller::getCopyMode()>
      d0c:	cbnz	r0, d24 <Paginator::changePage(int)+0xe8>
      d0e:	ldr	r0, [r4, #0]
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+        copyStep(step, _sequencer->_stepsEdit[i]);
       }
 
       _sequencer->_stepsEdit[i] = step;
       _pages[_currentEditPage + direction][i] = step;
      d10:	ldr	r3, [r4, #4]
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+
+      if (_sequencer->_controller->getCopyMode()) {
+        copyStep(step, _sequencer->_stepsEdit[i]);
       }
 
       _sequencer->_stepsEdit[i] = step;
@@ -3731,63 +3739,69 @@ void Paginator::changePage (int direction) {
       Step * step = new Step(_sequencer);
 
       if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+        copyStep(step, _sequencer->_stepsEdit[i]);
      d24:	ldr	r0, [r4, #0]
      d26:	ldr.w	r3, [r0, r8, lsl #2]
+};
+
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
      d2a:	ldr	r1, [r3, #4]
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
+  step1->pitchGrade = step2->pitchGrade;
      d2c:	ldr	r2, [r3, #8]
-    // if there are steps put them into the stepsEdit of the sequencer
-    if (_pages[_currentEditPage + direction][i] == 0) {
-      Step * step = new Step(_sequencer);
+};
 
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
      d2e:	str	r1, [r6, #4]
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
      d30:	ldr	r1, [r3, #12]
-    if (_pages[_currentEditPage + direction][i] == 0) {
-      Step * step = new Step(_sequencer);
 
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
      d32:	str	r2, [r6, #8]
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
      d34:	ldr	r2, [r3, #16]
-      Step * step = new Step(_sequencer);
-
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
+// maybe this function should be in the
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
      d36:	str	r1, [r6, #12]
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
      d38:	ldrb	r1, [r3, #20]
-
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
+// step object like step.setValues(Step* step)
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
      d3a:	str	r2, [r6, #16]
-        step->_state = _sequencer->_stepsEdit[i]->_state;
-        step->chance = _sequencer->_stepsEdit[i]->chance;
+  step1->_state = step2->_state;
+  step1->chance = step2->chance;
      d3c:	ldr	r2, [r3, #24]
-        step->swing = _sequencer->_stepsEdit[i]->swing;
+  step1->swing = step2->swing;
      d3e:	ldr	r3, [r3, #28]
      d40:	str	r3, [r6, #28]
-      if (_sequencer->_controller->getCopyMode()) {
-        step->pitchScale = _sequencer->_stepsEdit[i]->pitchScale;
-        step->pitchGrade = _sequencer->_stepsEdit[i]->pitchGrade;
-        step->velocity = _sequencer->_stepsEdit[i]->velocity;
-        step->length = _sequencer->_stepsEdit[i]->length;
-        step->_state = _sequencer->_stepsEdit[i]->_state;
+void Paginator::copyStep (Step* step1, Step* step2) {
+  step1->pitchScale = step2->pitchScale;
+  step1->pitchGrade = step2->pitchGrade;
+  step1->velocity = step2->velocity;
+  step1->length = step2->length;
+  step1->_state = step2->_state;
      d42:	strb	r1, [r6, #20]
-        step->chance = _sequencer->_stepsEdit[i]->chance;
+  step1->chance = step2->chance;
      d44:	str	r2, [r6, #24]
      d46:	b.n	d10 <Paginator::changePage(int)+0xd4>
 
