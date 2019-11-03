@@ -90,7 +90,6 @@ void Paginator::changePage (int direction) {
         Serial.println("copying and setting in memory");
 
         copyStep(step, _sequencer->_stepsEdit[i]);
-        _pages[_currentEditPage + direction][i] = step;
       } else {
         Serial.println("copying only from memory");
 
@@ -98,6 +97,7 @@ void Paginator::changePage (int direction) {
       }
 
       Serial.println("Setting steps for editing");
+      _pages[_currentEditPage + direction][i] = step;
       _sequencer->_stepsEdit[i] = step;
     }
     
