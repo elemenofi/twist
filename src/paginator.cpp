@@ -29,8 +29,8 @@ void Paginator::getNextPlaybackPage (int direction) {
     _currentPlaybackPage = 0;
   }
 
-  Serial.println("Current playback page");
-  Serial.println(_currentPlaybackPage);
+  // Serial.println("Current playback page");
+  // Serial.println(_currentPlaybackPage);
 
   for (size_t i = 0; i < 4; i++) {
     _sequencer->_stepsPlayback[i] = _pages[_currentPlaybackPage][i];

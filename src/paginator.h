@@ -14,6 +14,12 @@ class Paginator {
     int _currentEditPage;
     int _currentPlaybackPage;
     int _createdPages;
+    // Pages are important because they are used to when moving
+    // around with 1 + shift and 1 + reverse, and also when the
+    // sequencer gets to the last step it asks the paginator
+    // what the next page should be, this way the paginator
+    // sets the playback steps that have been copied or saved
+    // by the user
     Step * _pages[4][4] = {
       {0,0,0,0},
       {0,0,0,0},
