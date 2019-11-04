@@ -13,7 +13,8 @@ enum Modes {
   VELOCITY,
   NOTELENGTH,
   CHANCE,
-  SWING
+  SWING,
+  MOTION
 };
 
 #endif

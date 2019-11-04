@@ -65,16 +65,26 @@ void Button::onRelease () {
 // the problem is that copy mode is accessed through shift mode
 // and swing mode is accessed through chance mode, which is also strange
 void Button::onHold () {
-  if (_id == 1) _controller->enterShiftMode();
-  if (_id == 2 && _controller->getShiftMode()) {
+  if (_id == 1) {
+    _controller->enterShiftMode();
+  } else if (_id == 2 && _controller->getShiftMode()) {
     _controller->enterCopyMode();
-  } 
-  else if (_id == 5) _controller->enterChanceMode();
-  else if (_id == 6 && _controller->getChanceMode()) {
+  } else if (_id == 5) {
+    _controller->enterChanceMode();
+  } else if (_id == 6 && _controller->getChanceMode()) {
     _controller->enterSwingMode();
+  } else if (_id == 6 && !_controller->getSwingMode()) {
+    _controller->enterMotionMode();
   }
 }
 
+// for key combinations like 1 + 2 for copy mode,
+// its important that when you release 1 or 2 you check for
+// both shift and copy. if user releases 1 but not 2 
+// we still want to quit both modes, but if the user
+// releases 2 but still holds 1, we want to stay in shift mode
+// == behavior for chance mode and swing mode, maybe they
+// could be refactored into 1
 void Button::onHoldRelease () {
   if (_id == 1) {
     _controller->exitShiftMode();

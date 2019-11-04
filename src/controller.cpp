@@ -10,6 +10,7 @@
 Controller::Controller (Sequencer* sequencer) {
   _sequencer = sequencer;
   _modeBeforeChance = PITCH;
+  _modeBeforeMotion = PITCH;
   _currentMode = PITCH;
   _shiftMode = false;
   _copyMode = false;
@@ -94,6 +95,9 @@ void Controller::exitCopyMode () {
 }
 
 void Controller::enterChanceMode () {
+  // this if is so that it happens only the first
+  // clock cycle in which the user enters the chance mode
+  // so it checks that the chance mode is not already true
   if (_currentMode != CHANCE && _currentMode != SWING) {
     _modeBeforeChance = _currentMode;
     Serial.println("CHANCE");
@@ -103,6 +107,11 @@ void Controller::enterChanceMode () {
 
 void Controller::exitChanceMode () {
   _currentMode = _modeBeforeChance;
+  if (_currentMode == PITCH) {
+    Serial.println("PITCH");
+  } else if (_currentMode == VELOCITY) {
+    Serial.println("VELOCITY");
+  }
 };
 
 void Controller::enterSwingMode () {
@@ -115,6 +124,28 @@ void Controller::enterSwingMode () {
 
 void Controller::exitSwingMode () {
   _currentMode = _modeBeforeChance;
+  if (_currentMode == PITCH) {
+    Serial.println("PITCH");
+  } else if (_currentMode == VELOCITY) {
+    Serial.println("VELOCITY");
+  }
+};
+
+void Controller::enterMotionMode () {
+  if (_currentMode != MOTION) {
+    _modeBeforeMotion = _currentMode;
+    Serial.println("MOTION");
+    _currentMode = MOTION;
+  }
+};
+
+void Controller::exitMotionMode () {
+  _currentMode = _modeBeforeMotion;
+  if (_currentMode == PITCH) {
+    Serial.println("PITCH");
+  } else if (_currentMode == VELOCITY) {
+    Serial.println("VELOCITY");
+  }
 };
 
 bool Controller::getChanceMode () {
@@ -123,6 +154,10 @@ bool Controller::getChanceMode () {
 
 bool Controller::getSwingMode () {
   return _currentMode == SWING;
+}
+
+bool Controller::getMotionMode () {
+  return _currentMode == MOTION;
 }
 
 bool Controller::getCopyMode () {
