@@ -5,6 +5,7 @@
 #include "step.h"
 #include "sequencer.h"
 #include "transport.h"
+#include "paginator.h"
 #include "piano.h"
 
 Knob::Knob (uint8_t pin, int id, Controller* controller) {
@@ -23,17 +24,21 @@ Knob::Knob (uint8_t pin, int id, Controller* controller) {
 // and 4 the chance
 void Knob::onChange () {
   if (_controller->getMotionMode()) {
-    // right now its only controlling the 4 steps you are editing
-    // but i want to edit the steps edit and also the pages in memory
-    // of the paginator, so that i can edit stuff that im not currently seeing
+    Paginator * paginator = _controller->_sequencer->_paginator;
+    Sequencer * sequencer = _controller->_sequencer;
+
     if (_id == 0) {
-      _controller->_sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlPitch(_value);
+      sequencer->_stepsEdit[sequencer->_currentStep]->controlPitch(_value);
+      paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlPitch(_value);
     } else if (_id == 1) {
-      _controller->_sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlVelocity(_value);
+      sequencer->_stepsEdit[sequencer->_currentStep]->controlVelocity(_value);
+      paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlVelocity(_value);
     } else if (_id == 2) {
-      _controller->_sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlLength(_value);
+      sequencer->_stepsEdit[sequencer->_currentStep]->controlLength(_value);
+      paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlLength(_value);
     } else if (_id == 3) {
-      _controller->_sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlChance(_value);
+      sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlChance(_value);
+      paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlChance(_value);
     }
   } else {
     if (_id == 4) {
