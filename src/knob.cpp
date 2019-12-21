@@ -27,6 +27,8 @@ void Knob::onChange () {
     Paginator * paginator = _controller->_sequencer->_paginator;
     Sequencer * sequencer = _controller->_sequencer;
 
+    // todo: there is a bug when you only have 1 page,
+    // the sequencer crashes when you use motion record
     if (_id == 0) {
       sequencer->_stepsEdit[sequencer->_currentStep]->controlPitch(_value);
       paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlPitch(_value);
