@@ -63,10 +63,12 @@ void Transport::processMidi () {
       break;
 
     case usbMIDI.Start: // 0xFA
+      Serial.println("START");
       startPPQN();
       break;
 
     case usbMIDI.Stop: // 0xFC
+      Serial.println("STOP");
       stopPPQN();
       break;
 
@@ -93,6 +95,8 @@ void Transport::advancePPQN () {
     if (rand <= current->chance) _sequencer->_piano->play(current);
   }
 
+  // this maybe should go before so that the sequencer does not get
+  // out of sync from the master
   if (ppqn == max_ppqn) {
     _sequencer->step();
     ppqn = 0;
