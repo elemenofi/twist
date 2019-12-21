@@ -101,7 +101,7 @@ void Button::onHoldRelease () {
       _controller->exitSwingMode();
     }
   } else if (_id == 6) {
-    _controller->exitSwingMode();
+    _controller->exitMotionMode();
   }
 };
 

@@ -16,6 +16,9 @@ class Controller {
   Button* _buttons[6];
   Knob* _knobs[6];
   bool _shiftMode;
+  bool _swingMode;
+  bool _motionMode;
+  bool _chanceMode;
   Modes _currentMode;
   Modes _modeBeforeChance;
   Modes _modeBeforeMotion;
@@ -45,6 +48,7 @@ class Controller {
     void enterMotionMode();
     void exitMotionMode();
     bool getMotionMode();
+    void printCurrentMode();
 };
 
 

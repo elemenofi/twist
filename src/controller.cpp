@@ -14,6 +14,9 @@ Controller::Controller (Sequencer* sequencer) {
   _currentMode = PITCH;
   _shiftMode = false;
   _copyMode = false;
+  _chanceMode = false;
+  _swingMode = false;
+  _motionMode = false;
   
   _leds[0] = new Led(3, LOW);
   _leds[1] = new Led(5, LOW);
@@ -48,6 +51,16 @@ void Controller::tick() {
   }
 }
 
+void Controller::printCurrentMode () {
+  if (_currentMode == PITCH) {
+    Serial.println("PITCH");
+  } else if (_currentMode == VELOCITY) {
+    Serial.println("VELOCITY");
+  } else if (_currentMode == NOTELENGTH) {
+    Serial.println("NOTELENGTH");
+  }
+}
+
 void Controller::toggleMode () {
   if (_currentMode == PITCH) {
     _currentMode = VELOCITY;
@@ -67,7 +80,11 @@ void Controller::toggleMode () {
 };
 
 void Controller::enterShiftMode () {
-  // todo: maybe shift mode should be a mode like the others duh
+
+  if (!_shiftMode) {
+    Serial.println("NAVIGATE");
+  } 
+
   _shiftMode = true;
 
   for (int i = 0; i < 4; i++) {
@@ -87,6 +104,10 @@ void Controller::exitShiftMode () {
 };
 
 void Controller::enterCopyMode () {
+  if (!_copyMode) {
+    Serial.println("COPY");
+  }
+
   _copyMode = true;
 }
 
@@ -98,66 +119,55 @@ void Controller::enterChanceMode () {
   // this if is so that it happens only the first
   // clock cycle in which the user enters the chance mode
   // so it checks that the chance mode is not already true
-  if (_currentMode != CHANCE && _currentMode != SWING) {
-    _modeBeforeChance = _currentMode;
+  if (!_chanceMode && !_swingMode) {
+    _chanceMode = true;
     Serial.println("CHANCE");
-    _currentMode = CHANCE;
   }
 };
 
 void Controller::exitChanceMode () {
-  _currentMode = _modeBeforeChance;
-  if (_currentMode == PITCH) {
-    Serial.println("PITCH");
-  } else if (_currentMode == VELOCITY) {
-    Serial.println("VELOCITY");
-  }
+  _chanceMode = false;
+
+  printCurrentMode();
 };
 
 void Controller::enterSwingMode () {
-  if (_currentMode != SWING) {
+  if (!_swingMode) {
     Serial.println("SWING");
   }
 
-  _currentMode = SWING;
+  _swingMode = true;
 };
 
 void Controller::exitSwingMode () {
-  _currentMode = _modeBeforeChance;
-  if (_currentMode == PITCH) {
-    Serial.println("PITCH");
-  } else if (_currentMode == VELOCITY) {
-    Serial.println("VELOCITY");
-  }
+  _swingMode = false;
+
+  printCurrentMode();
 };
 
 void Controller::enterMotionMode () {
-  if (_currentMode != MOTION) {
-    _modeBeforeMotion = _currentMode;
+  if (!_motionMode) {
     Serial.println("MOTION");
-    _currentMode = MOTION;
+    _motionMode = true;
   }
 };
 
 void Controller::exitMotionMode () {
-  _currentMode = _modeBeforeMotion;
-  if (_currentMode == PITCH) {
-    Serial.println("PITCH");
-  } else if (_currentMode == VELOCITY) {
-    Serial.println("VELOCITY");
-  }
+  _motionMode = false;
+  
+  printCurrentMode();
 };
 
 bool Controller::getChanceMode () {
-  return _currentMode == CHANCE;
+  return _chanceMode == true;
 };
 
 bool Controller::getSwingMode () {
-  return _currentMode == SWING;
+  return _swingMode == true;
 }
 
 bool Controller::getMotionMode () {
-  return _currentMode == MOTION;
+  return _motionMode == true;
 }
 
 bool Controller::getCopyMode () {
