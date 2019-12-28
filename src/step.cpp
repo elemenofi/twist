@@ -25,45 +25,34 @@ void Step::toggle () {
 void Step::controlLength (int value) {
   int newValue = map(value, 0, 1000, 16, 0); // <- hack i guess
   length = newValue;
+  Serial.println("length");
+  Serial.println(length);
 };
 
 void Step::controlPitch (int value) {
-  int newValue = value;
-
-  if (value < 330) {
-    newValue = 2;
-  } else if (value < 660) {
-    newValue = 1;
-  } else if (value <= 1023) {
-    newValue = 0;
-  }
-
+  int newValue = map(value, 0, 1023, 6, -2);
   pitchGrade = newValue;
+  Serial.println("pitchGrade");
+  Serial.println(pitchGrade);
 };
 
 void Step::controlVelocity (int value) {
   int newValue = map(value, 0, 1023, 127, 62);
   velocity = newValue;
+  Serial.println("velocity");
+  Serial.println(velocity);
 };
 
 void Step::controlChance (int value) {
   int newValue = map(value, 0, 1023, 100, 0);
   chance = newValue;
+  Serial.println("chance");
   Serial.println(chance);
 };
 
 void Step::controlSwing (int value) {
-  int newValue = value;
-
-  if (value < 100) {
-    newValue = -3;
-  } else if (value < 200) {
-    newValue = -2;
-  } else if (value <= 600) {
-    newValue = -1;
-  } else if (value <= 1023) {
-    newValue = 0;
-  }
-
+  int newValue = map(value, 0, 1023, 0, -3);
   swing = newValue;
+  Serial.println("swing");
+  Serial.println(swing);
 };
