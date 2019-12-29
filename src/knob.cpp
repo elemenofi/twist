@@ -49,13 +49,13 @@ void Knob::onChange () {
       _controller->_sequencer->_transport->controlTempo(_value);
     } else if (_controller->getMode() == VELOCITY) {
       _controller->_sequencer->_stepsEdit[_id]->controlVelocity(_value);
-    } else if (_controller->getMode() == PITCH) {
+    } else if (_controller->getMode() == PITCH && !_controller->getChanceMode()) {
     _controller->_sequencer->_stepsEdit[_id]->controlPitch(_value);
     } else if (_controller->getMode() == NOTELENGTH) {
       _controller->_sequencer->_stepsEdit[_id]->controlLength(_value);
-    } else if (_controller->getMode() == CHANCE) {
+    } else if (_controller->getChanceMode()) {
       _controller->_sequencer->_stepsEdit[_id]->controlChance(_value);
-    } else if (_controller->getMode() == SWING) {
+    } else if (_controller->getSwingMode()) {
       _controller->_sequencer->_stepsEdit[_id]->controlSwing(_value);
     }
   }

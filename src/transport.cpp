@@ -30,20 +30,26 @@ int Transport::getPPQN () {
 }
 
 void Transport::controlTempo (int value) {
-  if (value < 400) {
+  if (value < 250) {
     max_ppqn = 6;
 
     if (ppqn >= 6) {
       ppqn = 0;
     }
-  } else if (value >= 400 && value < 800) {
+  } else if (value >= 250 && value < 500) {
     max_ppqn = 8;
 
     if (ppqn >= 8) {
       ppqn = 0;
     }
-  } else if (value >= 800 && value <= 1023) {
+  } else if (value >= 500 && value < 750) {
     max_ppqn = 10;
+
+    if (ppqn >= 10) {
+      ppqn = 0;
+    }
+  } else if (value >= 750 && value <= 1023) {
+    max_ppqn = 24;
   }
 };
 
@@ -89,7 +95,7 @@ void Transport::advancePPQN () {
   // gets called when the transport knows about a steps swing
   // and then a normal step function to just advance the ui
   // because that should be unaffected by swing
-  
+
   if (ppqn == (max_ppqn + current->swing) && current->_state) {
     int rand = random(100);
     if (rand <= current->chance) _sequencer->_piano->play(current);
@@ -108,6 +114,8 @@ void Transport::startPPQN () {
   ppqn = 0;
   _sequencer->step();
   _sequencer->_piano->tick();
+  Step* current = _sequencer->_stepsPlayback[_sequencer->_currentStep];
+  if (current->_state) _sequencer->_piano->play(current);
   _sequencer->_controller->_leds[5]->toggle();
 };
 

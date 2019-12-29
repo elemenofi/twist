@@ -9,7 +9,6 @@ Note::Note () {
 
 void Note::tick() {
   if (!_active) return;
-
   _length--;
 
   if (_length <= 0) {
@@ -37,8 +36,6 @@ void Note::play(Step* step, int scale[3]) {
   _length = step->length;
   _pitch = scale[step->pitchGrade];
   _velocity = step->velocity;
-  // String noteLog = "Playing note, length: ";
-  // //Serial.println(noteLog + _length);
   noteOn(_channel, _pitch, _velocity);
 };
 
