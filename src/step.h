@@ -23,6 +23,7 @@ class Step {
     void controlChance (int value);
     void controlSwing (int value);
     void setStep (Step* step);
+    void reset();
 };
 
 #endif

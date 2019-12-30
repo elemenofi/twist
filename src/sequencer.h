@@ -24,6 +24,7 @@ class Sequencer {
     int getNumber();
     void reverse();
     void step();
+    void reset();
     void resetStep();
 };
 

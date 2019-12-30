@@ -36,6 +36,28 @@ void Sequencer::tick() {
   _controller->tick();
 }
 
+#define CPU_RESTART_ADDR (uint32_t *)0xE000ED0C
+#define CPU_RESTART_VAL 0x5FA0004
+#define CPU_RESTART (*CPU_RESTART_ADDR = CPU_RESTART_VAL);
+
+void Sequencer::reset() {
+  // CPU_RESTART
+  
+  _paginator->_currentEditPage = 0;
+  _paginator->_createdPages = 0;
+  _paginator->_currentPlaybackPage = 0;
+
+  for (int i = 0; i < 4; i++) {
+    _stepsEdit[i]->reset();
+    _stepsPlayback[i]->reset();
+    if (_paginator->_pages[i][0] != 0) _paginator->_pages[i][0]->reset();
+    if (_paginator->_pages[i][1] != 0) _paginator->_pages[i][1]->reset();
+    if (_paginator->_pages[i][2] != 0) _paginator->_pages[i][2]->reset();
+    if (_paginator->_pages[i][3] != 0) _paginator->_pages[i][3]->reset();
+    _controller->_leds[i]->off();
+  }
+}
+
 void Sequencer::reverse() {
   _reversed = !_reversed;
 }

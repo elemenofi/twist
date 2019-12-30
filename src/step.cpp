@@ -14,6 +14,16 @@ Step::Step(Sequencer* sequencer) {
   swing = 0;
 };
 
+void Step::reset () {
+  _state = false;
+  pitchScale = 0;
+  pitchGrade = 0;
+  velocity = 100;
+  length = 4;
+  chance = 100;
+  swing = 0;
+}
+
 void Step::setStep (Step* step) {
   _state = step->_state;
 };

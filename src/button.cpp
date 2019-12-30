@@ -69,6 +69,8 @@ void Button::onHold () {
     _controller->enterShiftMode();
   } else if (_id == 2 && _controller->getShiftMode()) {
     _controller->enterCopyMode();
+  } else if (_id == 3) {
+    _controller->_sequencer->reset(); 
   } else if (_id == 5) {
     _controller->enterChanceMode();
   } else if (_id == 6 && _controller->getChanceMode()) {
