@@ -18,6 +18,13 @@ Sequencer::Sequencer () {
   for (int i = 0; i < 4; i++) {
     _stepsEdit[i] = new Step(this);
     _stepsPlayback[i] = _stepsEdit[i];
+
+    // creating steps in paginator memory
+    // to prevent motion record bug in non existing pages
+    // in the beggining
+    Step * step = new Step(this);
+    _paginator->copyStep(step, _stepsEdit[i]);
+    _paginator->_pages[0][i] = step;
   };
 };
 
