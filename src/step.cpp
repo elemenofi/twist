@@ -51,7 +51,7 @@ void Step::controlChance (int value) {
 };
 
 void Step::controlSwing (int value) {
-  int newValue = map(value, 0, 1023, 0, -3);
+  int newValue = map(value, 0, 1023,  4, -4);
   swing = newValue;
   Serial.println("swing");
   Serial.println(swing);

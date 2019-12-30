@@ -12,6 +12,7 @@ class Transport {
     Transport();
     int max_ppqn;
     int ppqn;
+    int swingPpqn;
     int _state;
     Transport(Sequencer* sequence);
     void tick();

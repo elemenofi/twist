@@ -17,6 +17,7 @@ Transport::Transport (Sequencer* sequencer) {
   _state = false;
   max_ppqn = 24;
   ppqn = 0;
+  swingPpqn = 0;
 };
 
 void Transport::tick () {
@@ -99,13 +100,22 @@ void Transport::advancePPQN () {
   if (ppqn == (max_ppqn + current->swing) && current->_state) {
     int rand = random(100);
     if (rand <= current->chance) _sequencer->_piano->play(current);
+  } else if (ppqn == swingPpqn && ppqn > 0) {
+    int rand = random(100);
+    if (rand <= current->chance) _sequencer->_piano->play(current);
+    swingPpqn = 0; 
   }
 
   // this maybe should go before so that the sequencer does not get
   // out of sync from the master
   if (ppqn == max_ppqn) {
     _sequencer->step();
+    
     ppqn = 0;
+
+    if (current->swing > 0) {
+      swingPpqn = current->swing;
+    }
   }
 };
 
