@@ -37,7 +37,7 @@ void Step::controlPitch (int value) {
 };
 
 void Step::controlVelocity (int value) {
-  int newValue = map(value, 0, 1023, 127, 62);
+  int newValue = map(value, 0, 1023, 127, 0);
   velocity = newValue;
   Serial.println("velocity");
   Serial.println(velocity);

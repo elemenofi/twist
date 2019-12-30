@@ -24,6 +24,7 @@ Knob::Knob (uint8_t pin, int id, Controller* controller) {
 // and 4 the chance
 void Knob::onChange () {
   if (_controller->getMotionMode()) {
+    Serial.println("motion");
     Paginator * paginator = _controller->_sequencer->_paginator;
     Sequencer * sequencer = _controller->_sequencer;
 
@@ -41,23 +42,26 @@ void Knob::onChange () {
     } else if (_id == 3) {
       sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlChance(_value);
       paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlChance(_value);
+    } else if (_id == 4) {
+      sequencer->_stepsEdit[_controller->_sequencer->_currentStep]->controlSwing(_value);
+      paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlSwing(_value);
     }
   } else {
     if (_id == 4) {
       _controller->_sequencer->_piano->transpose(_value);
     } else if (_id == 5) {
       _controller->_sequencer->_transport->controlTempo(_value);
-    } else if (_controller->getMode() == VELOCITY) {
-      _controller->_sequencer->_stepsEdit[_id]->controlVelocity(_value);
-    } else if (_controller->getMode() == PITCH && !_controller->getChanceMode()) {
-    _controller->_sequencer->_stepsEdit[_id]->controlPitch(_value);
-    } else if (_controller->getMode() == NOTELENGTH) {
-      _controller->_sequencer->_stepsEdit[_id]->controlLength(_value);
-    } else if (_controller->getChanceMode()) {
-      _controller->_sequencer->_stepsEdit[_id]->controlChance(_value);
     } else if (_controller->getSwingMode()) {
       _controller->_sequencer->_stepsEdit[_id]->controlSwing(_value);
-    }
+    } else if (_controller->getChanceMode()) {
+      _controller->_sequencer->_stepsEdit[_id]->controlChance(_value);
+    } else if (_controller->getMode() == VELOCITY && !_controller->getChanceMode() && !_controller->getSwingMode()) {
+      _controller->_sequencer->_stepsEdit[_id]->controlVelocity(_value);
+    } else if (_controller->getMode() == PITCH && !_controller->getChanceMode() && !_controller->getSwingMode()) {
+    _controller->_sequencer->_stepsEdit[_id]->controlPitch(_value);
+    } else if (_controller->getMode() == NOTELENGTH && !_controller->getChanceMode() && !_controller->getSwingMode()) {
+      _controller->_sequencer->_stepsEdit[_id]->controlLength(_value);
+    }  
   }
 }
 
