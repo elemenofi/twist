@@ -23,6 +23,13 @@ Knob::Knob (uint8_t pin, int id, Controller* controller) {
 // controls the velocity and knob 3 the length
 // and 4 the chance
 void Knob::onChange () {
+  if(_controller->getCCMode()) {
+    int _channel = 9;
+    int newValue = map(_value, 0, 1023,  127, 0);
+    int _cc = _id + 1;
+
+    usbMIDI.sendControlChange(_cc, newValue, _channel); // calculate CC for analog 1 and send
+  }// !swing mode?
   if (_controller->getMotionMode() && !_controller->getSwingMode()) {
     Serial.println("motion");
     Paginator * paginator = _controller->_sequencer->_paginator;
@@ -31,15 +38,8 @@ void Knob::onChange () {
     // todo: there is a bug when you only have 1 page,
     // the sequencer crashes when you use motion record
     if (_id == 0) {
-      Serial.println("current step");
-      Serial.println(sequencer->_currentStep);
-      Serial.println("current playback page");
-      Serial.println(paginator->_currentPlaybackPage);
-      Serial.println("current paginator step pitch");
-      Serial.println(paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->pitchGrade);
       sequencer->_stepsEdit[sequencer->_currentStep]->controlPitch(_value);
       paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlPitch(_value);
-      Serial.println("a");
     } else if (_id == 1) {
       sequencer->_stepsEdit[sequencer->_currentStep]->controlVelocity(_value);
       paginator->_pages[paginator->_currentPlaybackPage][sequencer->_currentStep]->controlVelocity(_value);

@@ -1,0 +1,1 @@
+pressing step 4 will let you select the key

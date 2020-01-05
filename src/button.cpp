@@ -59,11 +59,6 @@ void Button::onRelease () {
   } 
 };
 
-// there two ifs and then two else ifs and that is a bit strange
-// i have to check if shift mode is true when holding _id 2 after
-// changing it all to be ifs or a switch maybe is even better
-// the problem is that copy mode is accessed through shift mode
-// and swing mode is accessed through chance mode, which is also strange
 void Button::onHold () {
   if (_id == 1) {
     _controller->enterShiftMode();
@@ -71,6 +66,8 @@ void Button::onHold () {
     _controller->enterCopyMode();
   } else if (_id == 3) {
     _controller->_sequencer->reset(); 
+  } else if (_id == 4) {
+    _controller->enterCCMode(); 
   } else if (_id == 5) {
     _controller->enterChanceMode();
   } else if (_id == 6 && _controller->getChanceMode()) {
@@ -96,6 +93,8 @@ void Button::onHoldRelease () {
     }
   } else if (_id == 2) {
     _controller->exitCopyMode();
+  } else if (_id == 4) {
+    _controller->exitCCMode();
   } else if (_id == 5) {
     _controller->exitChanceMode();
 

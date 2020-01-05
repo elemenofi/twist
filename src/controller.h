@@ -19,9 +19,11 @@ class Controller {
   bool _swingMode;
   bool _motionMode;
   bool _chanceMode;
+  bool _ccMode;
   Modes _currentMode;
   Modes _modeBeforeChance;
   Modes _modeBeforeMotion;
+  // modebofreswing
 
   public:
     Led* _leds[6];
@@ -48,6 +50,9 @@ class Controller {
     void enterMotionMode();
     void exitMotionMode();
     bool getMotionMode();
+    void enterCCMode();
+    void exitCCMode();
+    bool getCCMode();
     void printCurrentMode();
 };
 

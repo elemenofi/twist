@@ -27,7 +27,7 @@ void Note::reset() {
   _length = 0;
   _pitch = 0;
   _velocity = 0;
-  _channel = 0;
+  _channel = 9;
   _active = false;
 };
 

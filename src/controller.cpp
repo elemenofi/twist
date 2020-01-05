@@ -17,6 +17,7 @@ Controller::Controller (Sequencer* sequencer) {
   _chanceMode = false;
   _swingMode = false;
   _motionMode = false;
+  _ccMode = false;
   
   _leds[0] = new Led(3, LOW);
   _leds[1] = new Led(5, LOW);
@@ -156,6 +157,24 @@ void Controller::exitMotionMode () {
   _motionMode = false;
   
   printCurrentMode();
+};
+
+void Controller::enterCCMode () {
+  Serial.println("aabb");
+  if (!_ccMode) {
+    Serial.println("CC");
+    _ccMode = true;
+  }
+};
+
+void Controller::exitCCMode () {
+  _ccMode = false;
+  
+  printCurrentMode();
+};
+
+bool Controller::getCCMode () {
+  return _ccMode == true;
 };
 
 bool Controller::getChanceMode () {
